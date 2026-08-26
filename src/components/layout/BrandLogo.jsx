@@ -4,7 +4,7 @@ import { BRAND_NAME } from '../../utils/constants'
 
 export default function BrandLogo({ dark = true, size = 'medium' }) {
   const color = dark ? '#f5f1e8' : '#211d17'
-  const iconSize = size === 'large' ? 40 : 30
+  const badgeSize = size === 'large' ? 46 : size === 'small' ? 32 : 38
 
   return (
     <Box
@@ -17,29 +17,32 @@ export default function BrandLogo({ dark = true, size = 'medium' }) {
         textDecoration: 'none',
       }}
     >
-      <svg
-        width={iconSize}
-        height={iconSize}
-        viewBox="0 0 48 48"
-        fill="none"
-        aria-hidden="true"
+      {/* The source file has a solid white background rather than
+          transparency — a small rounded white badge is the standard,
+          reliable way to place a white-bg mark on a dark header without
+          the raw square edges showing, and it reads identically well on
+          light surfaces too. */}
+      <Box
+        sx={{
+          width: badgeSize,
+          height: badgeSize,
+          borderRadius: '50%',
+          bgcolor: '#fff',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          overflow: 'hidden',
+          flexShrink: 0,
+          boxShadow: dark ? '0 0 0 1px rgba(31,128,117,0.35)' : '0 0 0 1px rgba(33,29,23,0.12)',
+        }}
       >
-        <path
-          d="M24 4C24 4 12 12 12 24C12 32.8366 17.6 39 24 44C30.4 39 36 32.8366 36 24C36 12 24 4 24 4Z"
-          stroke="#1f8075"
-          strokeWidth="1.5"
+        <Box
+          component="img"
+          src="/logo.png"
+          alt={BRAND_NAME}
+          sx={{ width: '78%', height: '78%', objectFit: 'contain' }}
         />
-        <path
-          d="M24 10V38"
-          stroke="#1f8075"
-          strokeWidth="1.5"
-        />
-        <path
-          d="M24 16C24 16 18 20 18 26C18 30 21 33 24 36C27 33 30 30 30 26C30 20 24 16 24 16Z"
-          stroke="#1f8075"
-          strokeWidth="1"
-        />
-      </svg>
+      </Box>
       <Box sx={{ lineHeight: 1 }}>
         <Typography
           sx={{
