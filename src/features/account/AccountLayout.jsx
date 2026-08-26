@@ -1,8 +1,14 @@
-import { Box, Grid2 as Grid, Typography, List, ListItemButton, ListItemText, ListItemIcon } from '@mui/material'
+import { Box, Grid2 as Grid, Typography, List, ListItemButton, ListItemText, ListItemIcon, Divider } from '@mui/material'
 import { NavLink, Outlet } from 'react-router-dom'
 import PersonOutlineRoundedIcon from '@mui/icons-material/PersonOutlineRounded'
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined'
 import ReceiptLongOutlinedIcon from '@mui/icons-material/ReceiptLongOutlined'
+import CreditCardOutlinedIcon from '@mui/icons-material/CreditCardOutlined'
+import LockResetRoundedIcon from '@mui/icons-material/LockResetRounded'
+import PolicyOutlinedIcon from '@mui/icons-material/PolicyOutlined'
+import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined'
+import SupportAgentOutlinedIcon from '@mui/icons-material/SupportAgentOutlined'
+import ChatBubbleOutlineRoundedIcon from '@mui/icons-material/ChatBubbleOutlineRounded'
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded'
 import { useLogout, useCurrentUser, useMe } from '../../hooks/useAuth'
 
@@ -10,6 +16,15 @@ const NAV_ITEMS = [
   { label: 'Profile', to: '/account/profile', icon: PersonOutlineRoundedIcon },
   { label: 'Address Book', to: '/account/addresses', icon: LocationOnOutlinedIcon },
   { label: 'My Orders', to: '/account/orders', icon: ReceiptLongOutlinedIcon },
+  { label: 'Payment Methods', to: '/account/payment-methods', icon: CreditCardOutlinedIcon },
+  { label: 'Update Password', to: '/account/change-password', icon: LockResetRoundedIcon },
+]
+
+const SUPPORT_ITEMS = [
+  { label: 'Chat with Us', to: '/account/chat', icon: ChatBubbleOutlineRoundedIcon },
+  { label: 'Support Center', to: '/contact', icon: SupportAgentOutlinedIcon },
+  { label: 'Privacy Policy', to: '/privacy-policy', icon: PolicyOutlinedIcon },
+  { label: 'Terms & Conditions', to: '/terms', icon: DescriptionOutlinedIcon },
 ]
 
 export default function AccountLayout() {
@@ -52,6 +67,31 @@ export default function AccountLayout() {
                 <ListItemText primary={item.label} />
               </ListItemButton>
             ))}
+
+            <Divider sx={{ my: 1 }} />
+
+            {SUPPORT_ITEMS.map((item) => (
+              <ListItemButton
+                key={item.to}
+                component={NavLink}
+                to={item.to}
+                sx={{
+                  '&.active': {
+                    bgcolor: '#fff',
+                    borderLeft: '2px solid',
+                    borderColor: 'primary.main',
+                  },
+                }}
+              >
+                <ListItemIcon sx={{ minWidth: 36 }}>
+                  <item.icon fontSize="small" />
+                </ListItemIcon>
+                <ListItemText primary={item.label} />
+              </ListItemButton>
+            ))}
+
+            <Divider sx={{ my: 1 }} />
+
             <ListItemButton onClick={() => logout.mutate()}>
               <ListItemIcon sx={{ minWidth: 36 }}>
                 <LogoutRoundedIcon fontSize="small" />

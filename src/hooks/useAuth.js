@@ -76,6 +76,9 @@ export const useUpdateProfile = () => {
   })
 }
 
+export const useChangePassword = () =>
+  useMutation({ mutationFn: authApi.changePassword })
+
 export const useLogout = () => {
   const clearAuth = useAuthStore((state) => state.clearAuth)
   const queryClient = useQueryClient()

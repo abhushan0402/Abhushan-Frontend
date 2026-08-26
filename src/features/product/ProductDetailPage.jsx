@@ -133,6 +133,15 @@ export default function ProductDetailPage() {
           </Grid>
 
           <Grid size={{ xs: 12, md: 6 }}>
+          <Box
+            sx={{
+              background: 'linear-gradient(160deg, #faf7f1 0%, #f1ebe0 100%)',
+              border: '1px solid',
+              borderColor: 'divider',
+              borderRadius: 3,
+              p: { xs: 2.5, md: 3.5 },
+            }}
+          >
             {product.subCategoryId?.name ? (
               <Typography variant="caption" sx={{ color: 'primary.dark', letterSpacing: '0.15em' }}>
                 {product.subCategoryId.name.toUpperCase()}
@@ -253,6 +262,7 @@ export default function ProductDetailPage() {
                 </Typography>
               </Box>
             </Box>
+          </Box>
           </Grid>
         </Grid>
 

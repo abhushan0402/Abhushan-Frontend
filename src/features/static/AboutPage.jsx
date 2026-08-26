@@ -1,11 +1,11 @@
 import { Box, Typography, Grid2 as Grid } from '@mui/material'
 import TrustBanner from '../home/TrustBanner'
 import { useBestSellers } from '../../hooks/useProducts'
-import { handleImageError } from '../../utils/handleImageError'
+import { handleImageError, pickWorkingImage } from '../../utils/handleImageError'
 
 export default function AboutPage() {
-  const { data: products = [] } = useBestSellers({ limit: 1 })
-  const image = products[0]?.images?.[0]
+  const { data: products = [] } = useBestSellers({ limit: 8 })
+  const image = pickWorkingImage(products)
 
   return (
     <Box>

@@ -12,6 +12,7 @@ export default function ProductRail({
   isLoading,
   isError,
   refetch,
+  autoScroll = false,
 }) {
   if (!isLoading && !isError && (!products || products.length === 0)) {
     return null
@@ -30,7 +31,7 @@ export default function ProductRail({
             onRetry={refetch}
           />
         ) : (
-          <ScrollCarousel products={products} />
+          <ScrollCarousel products={products} autoScroll={autoScroll} />
         )}
       </Box>
     </Box>

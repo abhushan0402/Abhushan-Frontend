@@ -2,9 +2,15 @@ import { Box, Grid2 as Grid, Typography, Stack, IconButton, Divider } from '@mui
 import { Link as RouterLink } from 'react-router-dom'
 import InstagramIcon from '@mui/icons-material/Instagram'
 import FacebookIcon from '@mui/icons-material/Facebook'
-import PinterestIcon from '@mui/icons-material/Pinterest'
+import YouTubeIcon from '@mui/icons-material/YouTube'
 import BrandLogo from './BrandLogo'
-import { FOOTER_LINKS } from '../../utils/constants'
+import { FOOTER_LINKS, SOCIAL_LINKS } from '../../utils/constants'
+
+const SOCIAL_ICONS = [
+  { Icon: InstagramIcon, href: SOCIAL_LINKS.instagram, label: 'Instagram' },
+  { Icon: FacebookIcon, href: SOCIAL_LINKS.facebook, label: 'Facebook' },
+  { Icon: YouTubeIcon, href: SOCIAL_LINKS.youtube, label: 'YouTube' },
+]
 
 function FooterColumn({ title, links }) {
   return (
@@ -56,15 +62,22 @@ export default function Footer() {
               hours of expert craftsmanship to perfect.
             </Typography>
             <Stack direction="row" spacing={1} sx={{ mt: 3 }}>
-              {[InstagramIcon, FacebookIcon, PinterestIcon].map((Icon, i) => (
+              {SOCIAL_ICONS.map(({ Icon, href, label }) => (
                 <IconButton
-                  key={i}
+                  key={label}
+                  component="a"
+                  href={href || undefined}
+                  target={href ? '_blank' : undefined}
+                  rel={href ? 'noopener noreferrer' : undefined}
+                  aria-label={label}
+                  disabled={!href}
                   size="small"
                   sx={{
                     color: '#f5f1e8',
                     border: '1px solid rgba(31,128,117,0.3)',
                     borderRadius: 0,
                     '&:hover': { color: '#1f8075', borderColor: '#1f8075' },
+                    '&.Mui-disabled': { color: 'rgba(245,241,232,0.35)' },
                   }}
                 >
                   <Icon fontSize="small" />

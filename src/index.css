@@ -35,6 +35,14 @@ html {
 
 body {
   margin: 0;
+  /* Subtle brand-toned glow behind the whole app — a lightweight CSS
+     gradient rather than a photographic asset, so it costs nothing to load
+     and never competes with foreground text/product-image contrast. */
+  background-color: var(--cream);
+  background-image:
+    radial-gradient(circle at 15% 0%, rgba(31, 128, 117, 0.06), transparent 45%),
+    radial-gradient(circle at 85% 15%, rgba(201, 180, 92, 0.07), transparent 40%);
+  background-attachment: fixed;
 }
 
 img {

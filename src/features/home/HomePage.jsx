@@ -1,8 +1,10 @@
 import Hero from './Hero'
+import WelcomeStrip from './WelcomeStrip'
 import CategoryShowcase from './CategoryShowcase'
 import ProductRail from './ProductRail'
 import ProductTypeStrip from './ProductTypeStrip'
 import CraftsmanshipBanner from './CraftsmanshipBanner'
+import VideoSection from './VideoSection'
 import TrustBanner from './TrustBanner'
 import {
   useBestSellers,
@@ -20,6 +22,7 @@ export default function HomePage() {
   return (
     <>
       <Hero />
+      <WelcomeStrip />
       <CategoryShowcase />
       <ProductRail
         eyebrow="Customer Favourites"
@@ -39,8 +42,10 @@ export default function HomePage() {
         isLoading={trending.isLoading}
         isError={trending.isError}
         refetch={trending.refetch}
+        autoScroll
       />
       <CraftsmanshipBanner />
+      <VideoSection />
       <ProductRail
         eyebrow="Just In"
         title="New Arrivals"

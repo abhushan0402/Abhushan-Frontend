@@ -8,7 +8,6 @@ export const GENDERS = [
   { value: 'men', label: 'Men' },
   { value: 'women', label: 'Women' },
   { value: 'kids', label: 'Kids' },
-  { value: 'gifting', label: 'Gifting' },
 ]
 
 export const SORT_OPTIONS = [
@@ -28,8 +27,6 @@ export const NAV_LINKS = [
     megaMenu: true,
   },
   { label: 'Bridal', to: '/shop?search=bridal' },
-  { label: 'Sale', to: '/shop?isBestSeller=true&sort=price-asc' },
-  { label: 'Gifting', to: '/shop?gender=gifting' },
 ]
 
 export const FOOTER_LINKS = {
@@ -44,6 +41,8 @@ export const FOOTER_LINKS = {
     { label: 'About Us', to: '/about' },
     { label: 'Track Order', to: '/account/orders' },
     { label: 'Returns & Exchange', to: '/contact' },
+    { label: 'Privacy Policy', to: '/privacy-policy' },
+    { label: 'Terms & Conditions', to: '/terms' },
   ],
   account: [
     { label: 'My Account', to: '/account/profile' },
@@ -61,3 +60,13 @@ export const TRUST_BADGES = [
 ]
 
 export const BRAND_NAME = 'Abhushan Vatika'
+
+// No real social/app URLs exist anywhere in this project yet — these are
+// intentionally left blank rather than invented. The icons are wired as
+// real anchor tags (target=_blank) so they'll work the instant a real URL
+// is filled in here; until then they're visually present but inert.
+export const SOCIAL_LINKS = {
+  instagram: '',
+  facebook: '',
+  youtube: '',
+}

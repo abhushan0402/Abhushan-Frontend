@@ -81,7 +81,19 @@ export const profileSchema = z.object({
   mobile: mobileSchema.optional().or(z.literal('')),
   dateOfBirth: z.string().optional().or(z.literal('')),
   gender: z.enum(['male', 'female', 'other']).optional(),
+  profileImage: z.string().url('Enter a valid image URL').optional().or(z.literal('')),
 })
+
+export const changePasswordSchema = z
+  .object({
+    currentPassword: passwordSchema,
+    newPassword: passwordSchema,
+    confirmNewPassword: passwordSchema,
+  })
+  .refine((data) => data.newPassword === data.confirmNewPassword, {
+    message: 'Passwords do not match',
+    path: ['confirmNewPassword'],
+  })
 
 export const reviewSchema = z.object({
   rating: z.number().min(1, 'Please select a rating').max(5),

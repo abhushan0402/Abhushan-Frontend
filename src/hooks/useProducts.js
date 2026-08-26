@@ -6,16 +6,36 @@ import {
   getTrendingProducts,
   getNewArrivals,
   getProductById,
+  searchProducts,
+  getSearchSuggestions,
 } from '../api/endpoints/products'
 import { queryKeys } from '../app/queryClient'
 
-export const useProducts = (filters = {}) =>
-  useQuery({
+// Whenever a search term is present, route through the dedicated search
+// endpoint (GET /api/products/search) rather than the generic list's
+// `search` filter param — every existing caller (ShopPage, etc.) gets this
+// for free without needing its own conditional.
+export const useProducts = (filters = {}) => {
+  const { search, ...rest } = filters
+  const hasSearch = Boolean(search && search.trim())
+  return useQuery({
     queryKey: queryKeys.products(filters),
-    queryFn: () => getProducts(filters),
+    queryFn: () => (hasSearch ? searchProducts({ q: search.trim(), ...rest }) : getProducts(filters)),
     select: (res) => res.data ?? { products: [], pagination: {} },
     placeholderData: keepPreviousData,
   })
+}
+
+export const useSearchSuggestions = (term, limit = 8) => {
+  const q = (term ?? '').trim()
+  return useQuery({
+    queryKey: ['search-suggestions', q, limit],
+    queryFn: () => getSearchSuggestions(q, limit),
+    select: (res) => res.data ?? [],
+    enabled: q.length > 1,
+    staleTime: 30 * 1000,
+  })
+}
 
 export const useBestSellers = (params = { limit: 8 }) =>
   useQuery({

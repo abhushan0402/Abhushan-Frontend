@@ -1,17 +1,21 @@
+import { useState } from 'react'
 import {
   Drawer,
   Box,
   List,
   ListItemButton,
   ListItemText,
+  Collapse,
   Divider,
   IconButton,
   Typography,
 } from '@mui/material'
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded'
+import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded'
 import { Link as RouterLink } from 'react-router-dom'
 import { useUIStore } from '../../store/uiStore'
 import { useIsAuthenticated, useLogout } from '../../hooks/useAuth'
+import { useCategories } from '../../hooks/useCategories'
 import { NAV_LINKS } from '../../utils/constants'
 import BrandLogo from './BrandLogo'
 
@@ -20,6 +24,8 @@ export default function MobileNav() {
   const close = useUIStore((s) => s.closeMobileNav)
   const isAuthenticated = useIsAuthenticated()
   const logout = useLogout()
+  const { data: categories = [] } = useCategories()
+  const [jewelleryOpen, setJewelleryOpen] = useState(false)
 
   return (
     <Drawer
@@ -44,22 +50,66 @@ export default function MobileNav() {
       </Box>
       <Divider sx={{ borderColor: 'rgba(31,128,117,0.2)' }} />
       <List sx={{ py: 1 }}>
-        {NAV_LINKS.map((link) => (
-          <ListItemButton
-            key={link.label}
-            component={RouterLink}
-            to={link.to}
-            onClick={close}
-            sx={{ py: 1.5 }}
-          >
-            <ListItemText
-              primaryTypographyProps={{
-                sx: { letterSpacing: '0.08em', textTransform: 'uppercase', fontSize: '0.85rem' },
-              }}
-              primary={link.label}
-            />
-          </ListItemButton>
-        ))}
+        {NAV_LINKS.map((link) =>
+          link.megaMenu ? (
+            <Box key={link.label}>
+              <ListItemButton onClick={() => setJewelleryOpen((v) => !v)} sx={{ py: 1.5 }}>
+                <ListItemText
+                  primaryTypographyProps={{
+                    sx: { letterSpacing: '0.08em', textTransform: 'uppercase', fontSize: '0.85rem' },
+                  }}
+                  primary={link.label}
+                />
+                <ExpandMoreRoundedIcon
+                  fontSize="small"
+                  sx={{
+                    transition: 'transform 0.2s ease',
+                    transform: jewelleryOpen ? 'rotate(180deg)' : 'none',
+                  }}
+                />
+              </ListItemButton>
+              <Collapse in={jewelleryOpen} timeout="auto" unmountOnExit>
+                <List disablePadding sx={{ pl: 2 }}>
+                  <ListItemButton component={RouterLink} to="/shop" onClick={close} sx={{ py: 1 }}>
+                    <ListItemText
+                      primaryTypographyProps={{ sx: { fontSize: '0.85rem', color: 'rgba(245,241,232,0.85)' } }}
+                      primary="All Jewellery"
+                    />
+                  </ListItemButton>
+                  {categories.map((cat) => (
+                    <ListItemButton
+                      key={cat._id}
+                      component={RouterLink}
+                      to={`/category/${cat.slug}`}
+                      onClick={close}
+                      sx={{ py: 1 }}
+                    >
+                      <ListItemText
+                        primaryTypographyProps={{ sx: { fontSize: '0.85rem', color: 'rgba(245,241,232,0.85)' } }}
+                        primary={cat.name}
+                      />
+                    </ListItemButton>
+                  ))}
+                </List>
+              </Collapse>
+            </Box>
+          ) : (
+            <ListItemButton
+              key={link.label}
+              component={RouterLink}
+              to={link.to}
+              onClick={close}
+              sx={{ py: 1.5 }}
+            >
+              <ListItemText
+                primaryTypographyProps={{
+                  sx: { letterSpacing: '0.08em', textTransform: 'uppercase', fontSize: '0.85rem' },
+                }}
+                primary={link.label}
+              />
+            </ListItemButton>
+          )
+        )}
       </List>
       <Divider sx={{ borderColor: 'rgba(31,128,117,0.2)' }} />
       <List sx={{ py: 1 }}>

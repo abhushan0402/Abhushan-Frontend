@@ -2,11 +2,11 @@ import { Box, Typography, Button, Grid2 as Grid } from '@mui/material'
 import { Link as RouterLink } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { useTrendingProducts } from '../../hooks/useProducts'
-import { handleImageError } from '../../utils/handleImageError'
+import { handleImageError, pickWorkingImage } from '../../utils/handleImageError'
 
 export default function CraftsmanshipBanner() {
-  const { data: products = [] } = useTrendingProducts({ limit: 1 })
-  const image = products[0]?.images?.[0]
+  const { data: products = [] } = useTrendingProducts({ limit: 8 })
+  const image = pickWorkingImage(products)
 
   return (
     <Box component="section" sx={{ bgcolor: '#faf7f1', py: { xs: 7, md: 10 } }}>

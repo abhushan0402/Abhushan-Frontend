@@ -14,10 +14,15 @@ import {
   Stack,
   Chip,
   Alert,
+  IconButton,
 } from '@mui/material'
 import { Link as RouterLink } from 'react-router-dom'
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded'
 import AddRoundedIcon from '@mui/icons-material/AddRounded'
+import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded'
+import CreditCardRoundedIcon from '@mui/icons-material/CreditCardRounded'
+import AccountBalanceRoundedIcon from '@mui/icons-material/AccountBalanceRounded'
+import QrCode2RoundedIcon from '@mui/icons-material/QrCode2Rounded'
 import { useAddresses, useAddAddress } from '../../hooks/useAddresses'
 import { useCart, normalizeCartItems, useClearCart } from '../../hooks/useCart'
 import { useCreateOrder } from '../../hooks/useOrders'
@@ -34,6 +39,49 @@ const STEPS = ['Delivery Address', 'Review Order', 'Payment']
 
 function extractOrderId(order) {
   return order?._id ?? order?.orderId ?? order?.order?._id ?? order?.id ?? null
+}
+
+// No brand asset exists for PhonePe (and pulling a random external logo URL
+// isn't safe/reliable) — a small text badge in its real brand colour reads
+// clearly as "PhonePe supported" without depending on an external image.
+function PaymentBadge({ label, bg, color = '#fff' }) {
+  return (
+    <Box
+      sx={{
+        px: 1.25,
+        py: 0.5,
+        bgcolor: bg,
+        color,
+        fontSize: '0.7rem',
+        fontWeight: 600,
+        letterSpacing: '0.02em',
+        borderRadius: 0.5,
+      }}
+    >
+      {label}
+    </Box>
+  )
+}
+
+function PaymentMethodIcons() {
+  return (
+    <Stack direction="row" spacing={1} alignItems="center" flexWrap="wrap" sx={{ rowGap: 1, mt: 1.5 }}>
+      <Stack direction="row" spacing={0.5} alignItems="center" sx={{ color: 'text.secondary' }}>
+        <CreditCardRoundedIcon fontSize="small" />
+        <Typography variant="caption">Cards</Typography>
+      </Stack>
+      <Stack direction="row" spacing={0.5} alignItems="center" sx={{ color: 'text.secondary' }}>
+        <QrCode2RoundedIcon fontSize="small" />
+        <Typography variant="caption">UPI</Typography>
+      </Stack>
+      <Stack direction="row" spacing={0.5} alignItems="center" sx={{ color: 'text.secondary' }}>
+        <AccountBalanceRoundedIcon fontSize="small" />
+        <Typography variant="caption">Netbanking</Typography>
+      </Stack>
+      <PaymentBadge label="PhonePe" bg="#5f259f" />
+      <PaymentBadge label="Razorpay" bg="#0b2540" />
+    </Stack>
+  )
 }
 
 export default function CheckoutPage() {
@@ -61,6 +109,10 @@ export default function CheckoutPage() {
   const items = normalizeCartItems(cart)
   const subtotal = items.reduce((sum, item) => sum + (item.product?.basePrice ?? 0) * item.quantity, 0)
   const selectedAddress = addresses.find((a) => a._id === selectedAddressId)
+  // The API has no shipping/discount fields — "Free" reflects the site's own
+  // stated shipping policy (see TRUST_BADGES) rather than an invented number,
+  // and there's no discount line at all since no coupon/discount system exists.
+  const total = subtotal
 
   if (!cartLoading && items.length === 0 && !placedOrder) {
     return (
@@ -219,8 +271,27 @@ export default function CheckoutPage() {
     }
   }
 
+  const handleTopBack = () => {
+    if (activeStep > 0) setActiveStep((s) => s - 1)
+  }
+
   return (
-    <Box className="av-container" sx={{ py: { xs: 4, md: 7 } }}>
+    <Box className="av-container" sx={{ py: { xs: 3, md: 5 } }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
+        <IconButton
+          component={activeStep === 0 ? RouterLink : 'button'}
+          to={activeStep === 0 ? '/cart' : undefined}
+          onClick={activeStep === 0 ? undefined : handleTopBack}
+          aria-label="Back"
+          sx={{ border: '1px solid', borderColor: 'divider', borderRadius: 0 }}
+        >
+          <ArrowBackRoundedIcon fontSize="small" />
+        </IconButton>
+        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+          {activeStep === 0 ? 'Back to Bag' : `Back to ${STEPS[activeStep - 1]}`}
+        </Typography>
+      </Box>
+
       <Typography variant="h3" sx={{ fontSize: { xs: '1.75rem', md: '2.25rem' }, mb: 4 }}>
         Checkout
       </Typography>
@@ -360,17 +431,21 @@ export default function CheckoutPage() {
                     ml: 0,
                   }}
                 />
-                <FormControlLabel
-                  value="online"
-                  control={<Radio />}
-                  label="Pay Online — Card / UPI / Netbanking (Razorpay)"
+                <Box
                   sx={{
                     border: '1px solid',
                     borderColor: paymentMethod === 'online' ? 'primary.main' : 'divider',
                     p: 1.5,
-                    ml: 0,
                   }}
-                />
+                >
+                  <FormControlLabel
+                    value="online"
+                    control={<Radio />}
+                    label="Pay Online (Razorpay)"
+                    sx={{ ml: 0 }}
+                  />
+                  <PaymentMethodIcons />
+                </Box>
               </RadioGroup>
               <Box sx={{ display: 'flex', gap: 2, mt: 4 }}>
                 <Button variant="outlined" color="secondary" onClick={() => setActiveStep(1)}>
@@ -391,7 +466,17 @@ export default function CheckoutPage() {
         </Grid>
 
         <Grid size={{ xs: 12, md: 4 }}>
-          <Box sx={{ bgcolor: '#faf7f1', p: 3.5, position: 'sticky', top: 100 }}>
+          <Box
+            sx={{
+              background: 'linear-gradient(160deg, #faf7f1 0%, #f1ebe0 100%)',
+              borderRadius: 3,
+              border: '1px solid',
+              borderColor: 'divider',
+              p: { xs: 3, md: 3.5 },
+              position: 'sticky',
+              top: 100,
+            }}
+          >
             <Typography variant="h6" sx={{ textTransform: 'none', fontSize: '1.1rem', mb: 2.5 }}>
               Order Summary
             </Typography>
@@ -405,16 +490,26 @@ export default function CheckoutPage() {
                 </Typography>
               </Box>
             ) : null}
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1.5 }}>
-              <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                Subtotal
-              </Typography>
-              <Typography variant="body2">{formatPrice(subtotal)}</Typography>
-            </Box>
+            <Stack spacing={1.25} sx={{ mb: 2 }}>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                  Total Amount ({items.length} {items.length === 1 ? 'item' : 'items'})
+                </Typography>
+                <Typography variant="body2">{formatPrice(subtotal)}</Typography>
+              </Box>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                  Shipping Charges
+                </Typography>
+                <Typography variant="body2" sx={{ color: 'success.main', fontWeight: 500 }}>
+                  Free
+                </Typography>
+              </Box>
+            </Stack>
             <Divider sx={{ mb: 2 }} />
             <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-              <Typography sx={{ fontWeight: 600 }}>Total</Typography>
-              <Typography sx={{ fontWeight: 600 }}>{formatPrice(subtotal)}</Typography>
+              <Typography sx={{ fontWeight: 700, fontSize: '1.05rem' }}>Payable Amount</Typography>
+              <Typography sx={{ fontWeight: 700, fontSize: '1.05rem' }}>{formatPrice(total)}</Typography>
             </Box>
           </Box>
         </Grid>

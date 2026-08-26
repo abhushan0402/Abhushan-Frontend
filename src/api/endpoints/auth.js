@@ -34,5 +34,10 @@ export const getMe = () =>
 export const updateMe = (payload) =>
   axiosClient.patch('/api/auth/me', payload).then((res) => res.data)
 
+export const changePassword = ({ currentPassword, newPassword }) =>
+  axiosClient
+    .post('/api/auth/change-password', { currentPassword, newPassword })
+    .then((res) => res.data)
+
 export const logout = () =>
   axiosClient.delete('/api/auth/logout').then((res) => res.data)

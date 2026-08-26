@@ -10,6 +10,7 @@ import RatingStars from '../common/RatingStars'
 import { useRequireAuth } from '../../hooks/useRequireAuth'
 import { useAddToWishlist, useRemoveFromWishlist, useIsWishlisted } from '../../hooks/useWishlist'
 import { useAddToCart } from '../../hooks/useCart'
+import { handleImageError } from '../../utils/handleImageError'
 
 export default function ProductCard({ product }) {
   const [hovered, setHovered] = useState(false)
@@ -19,8 +20,11 @@ export default function ProductCard({ product }) {
   const addToCart = useAddToCart()
   const isWishlisted = useIsWishlisted(product._id)
 
+  const inStock = (product.stock ?? 0) > 0
+
   const images = product.images?.length ? product.images : ['/placeholder-product.svg']
-  const secondaryImage = images[1] ?? images[0]
+  const primaryImage = images[0]
+  const secondaryImage = images.length > 1 ? images[1] : null
 
   const handleWishlistToggle = (e) => {
     e.preventDefault()
@@ -37,6 +41,7 @@ export default function ProductCard({ product }) {
   const handleAddToCart = (e) => {
     e.preventDefault()
     e.stopPropagation()
+    if (!inStock) return
     requireAuth(() => {
       addToCart.mutate({ productId: product._id, quantity: 1 })
     })
@@ -64,23 +69,72 @@ export default function ProductCard({ product }) {
             bgcolor: '#f1ebe0',
           }}
         >
+          {/* Both images are always mounted (not swapped via a single src) so
+              the secondary image is already loaded by the time hover starts —
+              a src-swap on one <img> caused a network-fetch flash / "wrong
+              image for a moment" flicker on first hover. This crossfades two
+              stacked, pre-loaded images via opacity instead. */}
           <Box
             component="img"
-            src={hovered ? secondaryImage : images[0]}
+            src={primaryImage}
             alt={product.name}
             loading="lazy"
-            onError={(e) => {
-              e.currentTarget.src = '/placeholder-product.svg'
-            }}
+            onError={handleImageError}
             sx={{
+              position: 'absolute',
+              inset: 0,
               width: '100%',
               height: '100%',
               objectFit: 'cover',
-              transition: 'opacity 0.3s ease',
+              opacity: hovered && secondaryImage ? 0 : 1,
+              transition: 'opacity 0.35s ease',
             }}
           />
+          {secondaryImage ? (
+            <Box
+              component="img"
+              src={secondaryImage}
+              alt=""
+              aria-hidden="true"
+              loading="lazy"
+              onError={handleImageError}
+              sx={{
+                position: 'absolute',
+                inset: 0,
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                opacity: hovered ? 1 : 0,
+                transition: 'opacity 0.35s ease',
+              }}
+            />
+          ) : null}
 
-          {product.isNewArrival ? (
+          {!inStock ? (
+            <Box
+              sx={{
+                position: 'absolute',
+                inset: 0,
+                bgcolor: 'rgba(245,241,232,0.55)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <Box
+                sx={{
+                  bgcolor: '#121212',
+                  color: '#f5f1e8',
+                  fontSize: '0.7rem',
+                  letterSpacing: '0.12em',
+                  px: 1.5,
+                  py: 0.75,
+                }}
+              >
+                OUT OF STOCK
+              </Box>
+            </Box>
+          ) : product.isNewArrival ? (
             <Box
               sx={{
                 position: 'absolute',
@@ -117,39 +171,41 @@ export default function ProductCard({ product }) {
             )}
           </IconButton>
 
-          <Box
-            sx={{
-              position: 'absolute',
-              left: 0,
-              right: 0,
-              bottom: 0,
-              p: 1,
-              opacity: { xs: 1, md: hovered ? 1 : 0 },
-              transform: { xs: 'none', md: hovered ? 'translateY(0)' : 'translateY(8px)' },
-              transition: 'all 0.25s ease',
-            }}
-          >
-            <IconButton
-              onClick={handleAddToCart}
-              aria-label="Add to cart"
-              size="small"
+          {inStock ? (
+            <Box
               sx={{
-                width: '100%',
-                borderRadius: 0,
-                background: 'linear-gradient(135deg, #121212 0%, #383838 100%)',
-                color: '#f5f1e8',
-                '&:hover': {
-                  background: 'linear-gradient(135deg, #1f8075 0%, #196a61 100%)',
-                  color: '#f5f1e8',
-                },
+                position: 'absolute',
+                left: 0,
+                right: 0,
+                bottom: 0,
+                p: 1,
+                opacity: { xs: 1, md: hovered ? 1 : 0 },
+                transform: { xs: 'none', md: hovered ? 'translateY(0)' : 'translateY(8px)' },
+                transition: 'all 0.25s ease',
               }}
             >
-              <ShoppingBagOutlinedIcon fontSize="small" sx={{ mr: 1 }} />
-              <Typography variant="caption" sx={{ letterSpacing: '0.1em' }}>
-                ADD TO BAG
-              </Typography>
-            </IconButton>
-          </Box>
+              <IconButton
+                onClick={handleAddToCart}
+                aria-label="Add to cart"
+                size="small"
+                sx={{
+                  width: '100%',
+                  borderRadius: 0,
+                  background: 'linear-gradient(135deg, #121212 0%, #383838 100%)',
+                  color: '#f5f1e8',
+                  '&:hover': {
+                    background: 'linear-gradient(135deg, #1f8075 0%, #196a61 100%)',
+                    color: '#f5f1e8',
+                  },
+                }}
+              >
+                <ShoppingBagOutlinedIcon fontSize="small" sx={{ mr: 1 }} />
+                <Typography variant="caption" sx={{ letterSpacing: '0.1em' }}>
+                  ADD TO BAG
+                </Typography>
+              </IconButton>
+            </Box>
+          ) : null}
         </Box>
 
         <Box sx={{ pt: 1.5 }}>
@@ -161,7 +217,16 @@ export default function ProductCard({ product }) {
             {product.name}
           </Typography>
           <RatingStars value={product.averageRating} count={product.reviewCount} />
-          <PriceTag price={product.basePrice} sx={{ mt: 0.5 }} />
+          {inStock ? (
+            <PriceTag price={product.basePrice} sx={{ mt: 0.5 }} />
+          ) : (
+            <Typography
+              variant="body2"
+              sx={{ mt: 0.5, fontWeight: 600, color: 'text.secondary' }}
+            >
+              Out of Stock
+            </Typography>
+          )}
         </Box>
       </Box>
     </Box>

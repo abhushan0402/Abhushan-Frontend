@@ -2,6 +2,7 @@ import { Box, Typography, Skeleton } from '@mui/material'
 import { Link as RouterLink } from 'react-router-dom'
 import { useProductTypes } from '../../hooks/useCategories'
 import SectionHeading from '../../components/common/SectionHeading'
+import HorizontalScroller from '../../components/common/HorizontalScroller'
 
 export default function ProductTypeStrip() {
   const { data: productTypes = [], isLoading } = useProductTypes()
@@ -9,19 +10,16 @@ export default function ProductTypeStrip() {
   if (!isLoading && productTypes.length === 0) return null
 
   return (
-    <Box component="section" sx={{ py: { xs: 6, md: 8 } }}>
+    <Box
+      component="section"
+      sx={{
+        py: { xs: 6, md: 8 },
+        background: 'linear-gradient(160deg, #faf7f1 0%, #f1ebe0 60%, #ece3d3 100%)',
+      }}
+    >
       <Box className="av-container">
         <SectionHeading eyebrow="Quick Shop" title="Shop by Type" />
-        <Box
-          sx={{
-            display: 'flex',
-            gap: { xs: 3, md: 4 },
-            overflowX: 'auto',
-            pb: 2,
-            scrollbarWidth: 'none',
-            '&::-webkit-scrollbar': { display: 'none' },
-          }}
-        >
+        <HorizontalScroller gap={{ xs: 3, md: 4 }}>
           {isLoading
             ? Array.from({ length: 8 }).map((_, i) => (
                 <Box key={i} sx={{ textAlign: 'center', flex: '0 0 auto' }}>
@@ -72,7 +70,7 @@ export default function ProductTypeStrip() {
                   </Typography>
                 </Box>
               ))}
-        </Box>
+        </HorizontalScroller>
       </Box>
     </Box>
   )
