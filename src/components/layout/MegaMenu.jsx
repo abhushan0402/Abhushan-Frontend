@@ -3,7 +3,7 @@ import { Link as RouterLink } from 'react-router-dom'
 import { useCategories, useProductTypes } from '../../hooks/useCategories'
 import { handleImageError } from '../../utils/handleImageError'
 
-export default function MegaMenu({ anchorEl, open, onClose }) {
+export default function MegaMenu({ anchorEl, open, onClose, onMouseEnter, onMouseLeave }) {
   const { data: categories = [] } = useCategories()
   const { data: productTypes = [] } = useProductTypes()
 
@@ -20,7 +20,8 @@ export default function MegaMenu({ anchorEl, open, onClose }) {
       {({ TransitionProps }) => (
         <Fade {...TransitionProps} timeout={200}>
           <Paper
-            onMouseLeave={onClose}
+            onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}
             elevation={8}
             sx={{
               background: 'linear-gradient(160deg, #232323 0%, #383838 100%)',
@@ -88,8 +89,20 @@ export default function MegaMenu({ anchorEl, open, onClose }) {
                 >
                   SHOP BY TYPE
                 </Typography>
-                <Grid container spacing={1}>
-                  {productTypes.slice(0, 10).map((type) => (
+                <Grid
+                  container
+                  spacing={1}
+                  sx={{
+                    maxHeight: 260,
+                    overflowY: 'auto',
+                    pr: 1,
+                    '&::-webkit-scrollbar': { width: 6 },
+                    '&::-webkit-scrollbar-thumb': {
+                      backgroundColor: 'rgba(31,128,117,0.4)',
+                    },
+                  }}
+                >
+                  {productTypes.map((type) => (
                     <Grid size={{ xs: 6 }} key={type.productType}>
                       <Typography
                         component={RouterLink}

@@ -38,14 +38,27 @@ export default function Header() {
   const [megaMenuAnchor, setMegaMenuAnchor] = useState(null)
   const closeTimer = useRef(null)
 
-  const handleMenuEnter = (event, link) => {
-    if (!link.megaMenu) return
-    if (closeTimer.current) clearTimeout(closeTimer.current)
-    setMegaMenuAnchor(event.currentTarget)
+  // The dropdown panel renders in a Popper, so it isn't a DOM descendant of
+  // the nav trigger — mouse-leaving the trigger to move toward the panel
+  // has to cross a gap, and mouse events don't bubble across that portal
+  // boundary. Cancel/schedule are shared by both the trigger and the panel
+  // itself so hovering either keeps it open, and only leaving both closes it.
+  const cancelMenuClose = () => {
+    if (closeTimer.current) {
+      clearTimeout(closeTimer.current)
+      closeTimer.current = null
+    }
   }
 
-  const handleMenuLeave = () => {
-    closeTimer.current = setTimeout(() => setMegaMenuAnchor(null), 120)
+  const scheduleMenuClose = () => {
+    cancelMenuClose()
+    closeTimer.current = setTimeout(() => setMegaMenuAnchor(null), 250)
+  }
+
+  const handleMenuEnter = (event, link) => {
+    if (!link.megaMenu) return
+    cancelMenuClose()
+    setMegaMenuAnchor(event.currentTarget)
   }
 
   return (
@@ -70,7 +83,7 @@ export default function Header() {
 
         <Box
           component="nav"
-          onMouseLeave={handleMenuLeave}
+          onMouseLeave={scheduleMenuClose}
           sx={{
             display: { xs: 'none', md: 'flex' },
             alignItems: 'center',
@@ -104,6 +117,8 @@ export default function Header() {
           anchorEl={megaMenuAnchor}
           open={Boolean(megaMenuAnchor)}
           onClose={() => setMegaMenuAnchor(null)}
+          onMouseEnter={cancelMenuClose}
+          onMouseLeave={scheduleMenuClose}
         />
 
         <Box sx={{ flex: 1 }} />

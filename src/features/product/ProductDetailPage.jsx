@@ -78,12 +78,15 @@ export default function ProductDetailPage() {
   }
 
   const inStock = (product.stock ?? 0) > 0
+  const hasPrice = Number(product.basePrice) > 0
+  const canBuyNow = inStock && hasPrice
 
   const handleAddToCart = () => {
     requireAuth(() => addToCart.mutate({ productId: product._id, quantity }))
   }
 
   const handleBuyNow = () => {
+    if (!canBuyNow) return
     requireAuth(() => {
       addToCart.mutate(
         { productId: product._id, quantity },
@@ -214,7 +217,7 @@ export default function ProductDetailPage() {
                 variant="outlined"
                 color="secondary"
                 fullWidth
-                disabled={!inStock || addToCart.isPending}
+                disabled={addToCart.isPending}
                 onClick={handleAddToCart}
               >
                 Add to Bag
@@ -223,10 +226,10 @@ export default function ProductDetailPage() {
                 variant="contained"
                 color="primary"
                 fullWidth
-                disabled={!inStock || addToCart.isPending}
+                disabled={!canBuyNow || addToCart.isPending}
                 onClick={handleBuyNow}
               >
-                Buy Now
+                {canBuyNow ? 'Buy Now' : 'Out of Stock'}
               </Button>
             </Box>
 
