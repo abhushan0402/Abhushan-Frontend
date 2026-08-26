@@ -9,19 +9,19 @@
   --breakpoint-md: 56.25rem; /* 900px, matches MUI */
   --breakpoint-lg: 75rem; /* 1200px, matches MUI */
   --breakpoint-xl: 96rem; /* 1536px, matches MUI */
-  --color-gold: #c9a667;
-  --color-gold-light: #e2c896;
-  --color-gold-dark: #a9814a;
-  --color-brand-black: #0b0b0c;
+  --color-accent: #1f8075;
+  --color-accent-light: #62bfb0;
+  --color-accent-dark: #14544e;
+  --color-brand-black: #121212;
   --color-brand-cream: #f8f5ef;
   --font-display: 'Playfair Display', Georgia, serif;
   --font-body: 'Jost', 'Segoe UI', sans-serif;
 }
 
 :root {
-  --gold: #c9a667;
-  --gold-light: #e2c896;
-  --black: #0b0b0c;
+  --accent: #1f8075;
+  --accent-light: #62bfb0;
+  --black: #121212;
   --cream: #f8f5ef;
 }
 
@@ -52,7 +52,7 @@ img {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--gold);
+  background: var(--accent);
   border-radius: 0;
 }
 

@@ -37,12 +37,26 @@ axiosClient.interceptors.response.use(
       }
     }
 
+    // Prefer the most specific message the backend gives us: field-level
+    // validation errors (e.g. "must have required property 'password'")
+    // are more useful than the generic "Validation error" wrapper text.
+    const data = error?.response?.data
+    const validationDetail =
+      Array.isArray(data?.errors) &&
+      (typeof data.errors[0] === 'string' ? data.errors[0] : data.errors[0]?.message)
     const message =
-      error?.response?.data?.message ||
+      validationDetail ||
+      (typeof data?.message === 'string' && data.message) ||
+      (typeof data?.error === 'string' && data.error) ||
       error?.message ||
       'Something went wrong. Please try again.'
 
-    return Promise.reject({ ...error, message })
+    // Mutate the original AxiosError's message rather than spreading it into
+    // a plain object — spreading a class instance is fragile (it can silently
+    // drop non-enumerable/prototype data other code relies on), while every
+    // consumer here only ever reads `.message`.
+    error.message = message
+    return Promise.reject(error)
   }
 )
 

@@ -30,4 +30,7 @@ export const queryKeys = {
   wishlist: ['wishlist'],
   addresses: ['addresses'],
   me: ['me'],
+  orders: (params) => ['orders', params],
+  order: (id) => ['orders', id],
+  notifications: (params) => ['notifications', params],
 }

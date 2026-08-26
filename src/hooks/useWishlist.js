@@ -9,13 +9,14 @@ function isPopulatedProduct(value) {
   return Boolean(value && typeof value === 'object' && (value.name || value.images))
 }
 
-// The wishlist response shape isn't strictly documented
-// (additionalProperties: true on the API). Normalize every plausible shape:
-// a raw array of full product objects (matches how best-sellers / trending /
-// featured respond), an { items: [...] } wrapper of cart-like refs, or bare
-// productId strings.
+// Confirmed live response shape: GET /api/wishlist/ returns the wishlist
+// document itself, with populated product objects under `productIds`
+// (despite the name, each entry is a full product, not a bare id string) —
+// e.g. { _id, userId, productIds: [{ _id, name, images, ... }], ... }.
+// Also tolerate a couple of other plausible shapes defensively.
 export function normalizeWishlistItems(wishlist) {
-  const rawItems = wishlist?.items ?? wishlist?.products ?? wishlist ?? []
+  const rawItems =
+    wishlist?.productIds ?? wishlist?.items ?? wishlist?.products ?? wishlist ?? []
   if (!Array.isArray(rawItems)) return []
   return rawItems
     .map((item) => {
@@ -59,6 +60,7 @@ export const useWishlistProducts = () => {
       queryFn: () => getProductById(id),
       select: (res) => res.data,
       staleTime: 5 * 60 * 1000,
+      retry: 0,
     })),
   })
 
@@ -67,14 +69,26 @@ export const useWishlistProducts = () => {
     if (fallbackQueries[idx]?.data) fallbackById.set(id, fallbackQueries[idx].data)
   })
 
+  const fallbackLoading = fallbackQueries.some((q) => q.isLoading)
+  const resolvedLoading = isLoading || fallbackLoading
+
   const resolvedItems = items.map((item) => ({
     productId: item.productId,
     product: item.product ?? fallbackById.get(item.productId) ?? null,
   }))
 
+  // A wishlist entry whose product can't be resolved at all (e.g. it was
+  // deleted from the catalog after being wishlisted) would otherwise render
+  // as an empty "ghost" card. Hide those once resolution has actually
+  // finished — while still loading, keep every entry so the loading state
+  // stays stable.
+  const visibleItems = resolvedLoading
+    ? resolvedItems
+    : resolvedItems.filter((item) => item.product)
+
   return {
-    items: resolvedItems,
-    isLoading: isLoading || fallbackQueries.some((q) => q.isLoading),
+    items: visibleItems,
+    isLoading: resolvedLoading,
     isError: isError || fallbackQueries.some((q) => q.isError),
     refetch,
   }

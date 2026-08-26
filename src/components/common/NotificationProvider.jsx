@@ -5,13 +5,14 @@ import { NotificationContext } from './NotificationContext'
 let idCounter = 0
 
 export default function NotificationProvider({ children }) {
-  const [queue, setQueue] = useState([])
-  const [current, setCurrent] = useState(null)
-  const [open, setOpen] = useState(false)
+  const [toast, setToast] = useState({ open: false, message: '', severity: 'success', key: 0 })
 
   const notify = useCallback((message, severity = 'success') => {
-    const item = { key: ++idCounter, message, severity }
-    setQueue((prev) => [...prev, item])
+    // Bump `key` on every call so the Snackbar below remounts even if a
+    // toast is already showing — that resets its auto-hide timer cleanly
+    // instead of extending/reusing a stale one, which is what let old
+    // messages appear to "never go away" when a new one arrived quickly.
+    setToast({ open: true, message, severity, key: ++idCounter })
   }, [])
 
   const value = useMemo(
@@ -25,45 +26,29 @@ export default function NotificationProvider({ children }) {
     [notify]
   )
 
-  // Advance the queue as a render-phase state adjustment (React's
-  // documented pattern for deriving state from other state) rather than
-  // an effect — it avoids an extra render round-trip and the
-  // setState-in-effect cascading-render pitfall.
-  if (!open && queue.length > 0) {
-    setCurrent(queue[0])
-    setQueue(queue.slice(1))
-    setOpen(true)
-  }
-
   const handleClose = (_event, reason) => {
     if (reason === 'clickaway') return
-    setOpen(false)
-  }
-
-  const handleExited = () => {
-    setCurrent(null)
+    setToast((prev) => ({ ...prev, open: false }))
   }
 
   return (
     <NotificationContext.Provider value={value}>
       {children}
       <Snackbar
-        open={open}
-        autoHideDuration={3500}
+        key={toast.key}
+        open={toast.open}
+        autoHideDuration={4000}
         onClose={handleClose}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-        TransitionProps={{ onExited: handleExited }}
       >
-        {current ? (
-          <Alert
-            onClose={handleClose}
-            severity={current.severity}
-            variant="filled"
-            sx={{ width: '100%' }}
-          >
-            {current.message}
-          </Alert>
-        ) : undefined}
+        <Alert
+          onClose={handleClose}
+          severity={toast.severity}
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          {toast.message}
+        </Alert>
       </Snackbar>
     </NotificationContext.Provider>
   )

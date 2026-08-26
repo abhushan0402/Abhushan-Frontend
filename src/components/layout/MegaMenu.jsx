@@ -23,9 +23,9 @@ export default function MegaMenu({ anchorEl, open, onClose }) {
             onMouseLeave={onClose}
             elevation={8}
             sx={{
-              bgcolor: '#111110',
+              background: 'linear-gradient(160deg, #232323 0%, #383838 100%)',
               color: '#f5f1e8',
-              border: '1px solid rgba(201,166,103,0.25)',
+              border: '1px solid rgba(31,128,117,0.25)',
               p: { xs: 3, md: 4 },
             }}
           >
@@ -81,7 +81,7 @@ export default function MegaMenu({ anchorEl, open, onClose }) {
                   ))}
                 </Grid>
               </Grid>
-              <Grid size={{ xs: 12, md: 5 }} sx={{ borderLeft: { md: '1px solid rgba(201,166,103,0.2)' }, pl: { md: 4 } }}>
+              <Grid size={{ xs: 12, md: 5 }} sx={{ borderLeft: { md: '1px solid rgba(31,128,117,0.2)' }, pl: { md: 4 } }}>
                 <Typography
                   variant="subtitle2"
                   sx={{ color: 'primary.main', letterSpacing: '0.2em', mb: 2 }}

@@ -11,7 +11,7 @@ export default function Hero() {
   return (
     <Box
       sx={{
-        bgcolor: '#0b0b0c',
+        background: 'linear-gradient(135deg, #121212 0%, #383838 55%, #232323 100%)',
         color: '#f5f1e8',
         overflow: 'hidden',
         position: 'relative',
@@ -77,8 +77,8 @@ export default function Hero() {
             sx={{
               mt: 5,
               color: '#f5f1e8',
-              borderColor: '#c9a667',
-              '&:hover': { bgcolor: '#c9a667', color: '#0b0b0c', borderColor: '#c9a667' },
+              borderColor: '#1f8075',
+              '&:hover': { bgcolor: '#1f8075', color: '#121212', borderColor: '#1f8075' },
             }}
           >
             Shop Now
@@ -100,7 +100,7 @@ export default function Hero() {
               width: { xs: 280, md: 420 },
               height: { xs: 280, md: 420 },
               borderRadius: '50%',
-              border: '1px solid rgba(201,166,103,0.35)',
+              border: '1px solid rgba(31,128,117,0.35)',
             }}
           />
           <Box
@@ -111,7 +111,7 @@ export default function Hero() {
               top: { xs: 40, md: 60 },
               borderTopLeftRadius: '50% 100%',
               borderTopRightRadius: '50% 100%',
-              bgcolor: '#161513',
+              background: 'linear-gradient(180deg, #383838 0%, #232323 100%)',
             }}
           />
 
@@ -120,7 +120,7 @@ export default function Hero() {
               variant="circular"
               width={220}
               height={220}
-              sx={{ bgcolor: 'rgba(201,166,103,0.15)' }}
+              sx={{ bgcolor: 'rgba(31,128,117,0.15)' }}
             />
           ) : (
             <>
@@ -141,7 +141,7 @@ export default function Hero() {
                     height: { xs: 170, md: 250 },
                     objectFit: 'cover',
                     boxShadow: '0 20px 45px rgba(0,0,0,0.55)',
-                    border: '1px solid rgba(201,166,103,0.3)',
+                    border: '1px solid rgba(31,128,117,0.3)',
                   }}
                 />
               ) : null}
@@ -162,7 +162,7 @@ export default function Hero() {
                     height: { xs: 150, md: 220 },
                     objectFit: 'cover',
                     boxShadow: '0 20px 45px rgba(0,0,0,0.55)',
-                    border: '1px solid rgba(201,166,103,0.3)',
+                    border: '1px solid rgba(31,128,117,0.3)',
                   }}
                 />
               ) : null}
@@ -183,7 +183,7 @@ export default function Hero() {
                     height: { xs: 130, md: 190 },
                     objectFit: 'cover',
                     boxShadow: '0 20px 45px rgba(0,0,0,0.55)',
-                    border: '1px solid rgba(201,166,103,0.3)',
+                    border: '1px solid rgba(31,128,117,0.3)',
                   }}
                 />
               ) : null}

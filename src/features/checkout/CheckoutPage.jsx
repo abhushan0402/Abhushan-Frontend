@@ -13,15 +13,18 @@ import {
   Divider,
   Stack,
   Chip,
+  Alert,
 } from '@mui/material'
 import { Link as RouterLink } from 'react-router-dom'
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded'
 import AddRoundedIcon from '@mui/icons-material/AddRounded'
 import { useAddresses, useAddAddress } from '../../hooks/useAddresses'
 import { useCart, normalizeCartItems, useClearCart } from '../../hooks/useCart'
+import { useCreateOrder } from '../../hooks/useOrders'
+import { useCreateRazorpayOrder, useVerifyPayment } from '../../hooks/usePayments'
 import { formatPrice } from '../../utils/formatCurrency'
+import { loadRazorpayScript } from '../../utils/loadRazorpay'
 import AddressFormDialog from '../account/AddressFormDialog'
-import { placeOrder } from '../../api/endpoints/orders'
 import { useNotify } from '../../components/common/NotificationContext'
 import EmptyState from '../../components/common/EmptyState'
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined'
@@ -29,12 +32,19 @@ import { handleImageError } from '../../utils/handleImageError'
 
 const STEPS = ['Delivery Address', 'Review Order', 'Payment']
 
+function extractOrderId(order) {
+  return order?._id ?? order?.orderId ?? order?.order?._id ?? order?.id ?? null
+}
+
 export default function CheckoutPage() {
   const notify = useNotify()
   const { data: addresses = [] } = useAddresses()
   const { data: cart, isLoading: cartLoading } = useCart()
   const clearCart = useClearCart()
   const addAddress = useAddAddress()
+  const createOrder = useCreateOrder()
+  const createRazorpayOrder = useCreateRazorpayOrder()
+  const verifyPayment = useVerifyPayment()
 
   const [activeStep, setActiveStep] = useState(0)
   const [selectedAddressId, setSelectedAddressId] = useState(
@@ -44,6 +54,9 @@ export default function CheckoutPage() {
   const [addressDialogOpen, setAddressDialogOpen] = useState(false)
   const [placingOrder, setPlacingOrder] = useState(false)
   const [placedOrder, setPlacedOrder] = useState(null)
+  const [createdOrder, setCreatedOrder] = useState(null)
+  const [paymentError, setPaymentError] = useState(null)
+  const [idempotencyKey] = useState(() => crypto.randomUUID())
 
   const items = normalizeCartItems(cart)
   const subtotal = items.reduce((sum, item) => sum + (item.product?.basePrice ?? 0) * item.quantity, 0)
@@ -64,22 +77,32 @@ export default function CheckoutPage() {
   }
 
   if (placedOrder) {
+    const orderId = extractOrderId(placedOrder)
     return (
       <Box className="av-container" sx={{ py: { xs: 8, md: 12 }, textAlign: 'center' }}>
         <CheckCircleRoundedIcon sx={{ fontSize: 64, color: 'success.main', mb: 2 }} />
         <Typography variant="h4" sx={{ mb: 1.5 }}>
           Order Placed!
         </Typography>
-        <Typography sx={{ color: 'text.secondary', mb: 1 }}>
-          Order ID: {placedOrder.data.orderId}
-        </Typography>
+        {orderId ? (
+          <Typography sx={{ color: 'text.secondary', mb: 1 }}>
+            Order ID: {placedOrder.orderNumber ?? orderId}
+          </Typography>
+        ) : null}
         <Typography sx={{ color: 'text.secondary', mb: 4, maxWidth: 480, mx: 'auto' }}>
           Thank you for shopping with Abhushan Vatika. We'll send updates on your order to your
           registered email and mobile number.
         </Typography>
-        <Button component={RouterLink} to="/shop" variant="contained" color="primary">
-          Continue Shopping
-        </Button>
+        <Stack direction="row" spacing={2} justifyContent="center">
+          {orderId ? (
+            <Button component={RouterLink} to={`/account/orders/${orderId}`} variant="outlined" color="secondary">
+              View Order
+            </Button>
+          ) : null}
+          <Button component={RouterLink} to="/shop" variant="contained" color="primary">
+            Continue Shopping
+          </Button>
+        </Stack>
       </Box>
     )
   }
@@ -92,20 +115,105 @@ export default function CheckoutPage() {
     })
   }
 
+  // The order is only ever created once per checkout attempt (same
+  // idempotency key) — retrying payment after a failed/dismissed Razorpay
+  // popup reuses the already-created order instead of creating a duplicate.
+  const ensureOrderCreated = async () => {
+    if (createdOrder) return createdOrder
+    const deliveryAddress = {
+      fullName: selectedAddress.fullName,
+      mobile: selectedAddress.mobile,
+      addressLine1: selectedAddress.addressLine1,
+      ...(selectedAddress.addressLine2 ? { addressLine2: selectedAddress.addressLine2 } : {}),
+      city: selectedAddress.city,
+      state: selectedAddress.state,
+      pincode: selectedAddress.pincode,
+    }
+    const res = await createOrder.mutateAsync({ deliveryAddress, idempotencyKey })
+    const order = res?.data ?? null
+    setCreatedOrder(order)
+    return order
+  }
+
   const handlePlaceOrder = async () => {
+    setPaymentError(null)
     setPlacingOrder(true)
     try {
-      const res = await placeOrder({
-        addressId: selectedAddressId,
-        items: items.map((i) => ({ productId: i.productId, quantity: i.quantity })),
-        paymentMethod,
-        totals: { subtotal, total: subtotal },
+      const order = await ensureOrderCreated()
+      const orderId = extractOrderId(order)
+      if (!orderId) {
+        setPaymentError('Could not place your order. Please try again.')
+        return
+      }
+
+      if (paymentMethod === 'cod') {
+        clearCart.mutate()
+        setPlacedOrder(order)
+        notify.success('Order placed successfully!')
+        return
+      }
+
+      const scriptLoaded = await loadRazorpayScript()
+      if (!scriptLoaded) {
+        setPaymentError(
+          'Could not load the payment gateway. Please check your connection and try again, or choose Cash on Delivery.'
+        )
+        return
+      }
+
+      const rpRes = await createRazorpayOrder.mutateAsync(orderId)
+      const rpData = rpRes?.data ?? {}
+      const razorpayOrderId = rpData.razorpayOrderId ?? rpData.orderId ?? rpData.id
+      const amount = rpData.amount
+      const currency = rpData.currency ?? 'INR'
+      const keyId =
+        rpData.key ?? rpData.keyId ?? rpData.razorpayKeyId ?? import.meta.env.VITE_RAZORPAY_KEY_ID
+
+      if (!razorpayOrderId || !keyId) {
+        setPaymentError('Payment could not be initiated. Please try again or choose Cash on Delivery.')
+        return
+      }
+
+      const razorpay = new window.Razorpay({
+        key: keyId,
+        amount,
+        currency,
+        order_id: razorpayOrderId,
+        name: 'Abhushan Vatika',
+        description: 'Order Payment',
+        prefill: {
+          name: selectedAddress?.fullName,
+          contact: selectedAddress?.mobile,
+        },
+        theme: { color: '#1f8075' },
+        handler: (response) => {
+          verifyPayment.mutate(
+            {
+              razorpayOrderId: response.razorpay_order_id,
+              razorpayPaymentId: response.razorpay_payment_id,
+              razorpaySignature: response.razorpay_signature,
+            },
+            {
+              onSuccess: () => {
+                clearCart.mutate()
+                setPlacedOrder(order)
+                notify.success('Payment successful! Order placed.')
+              },
+              onError: (error) => {
+                setPaymentError(error?.message || 'Payment verification failed. Please contact support.')
+              },
+            }
+          )
+        },
+        modal: {
+          ondismiss: () => {
+            setPaymentError('Payment was not completed. You can try again below.')
+          },
+        },
       })
-      setPlacedOrder(res)
-      clearCart.mutate()
-      notify.success('Order placed successfully!')
-    } catch {
-      notify.error('Could not place your order. Please try again.')
+      razorpay.open()
+    } catch (error) {
+      setPaymentError(error?.message || 'Could not place your order. Please try again.')
     } finally {
       setPlacingOrder(false)
     }
@@ -234,26 +342,34 @@ export default function CheckoutPage() {
 
           {activeStep === 2 ? (
             <Box>
+              {paymentError ? (
+                <Alert severity="error" sx={{ mb: 2 }} onClose={() => setPaymentError(null)}>
+                  {paymentError}
+                </Alert>
+              ) : null}
               <RadioGroup value={paymentMethod} onChange={(e) => setPaymentMethod(e.target.value)}>
                 <FormControlLabel
                   value="cod"
                   control={<Radio />}
                   label="Cash on Delivery"
-                  sx={{ border: '1px solid', borderColor: 'primary.main', p: 1.5, mb: 1.5, ml: 0 }}
+                  sx={{
+                    border: '1px solid',
+                    borderColor: paymentMethod === 'cod' ? 'primary.main' : 'divider',
+                    p: 1.5,
+                    mb: 1.5,
+                    ml: 0,
+                  }}
                 />
                 <FormControlLabel
-                  value="card"
-                  disabled
+                  value="online"
                   control={<Radio />}
-                  label="Credit / Debit Card — Coming Soon"
-                  sx={{ border: '1px solid', borderColor: 'divider', p: 1.5, mb: 1.5, ml: 0 }}
-                />
-                <FormControlLabel
-                  value="upi"
-                  disabled
-                  control={<Radio />}
-                  label="UPI — Coming Soon"
-                  sx={{ border: '1px solid', borderColor: 'divider', p: 1.5, ml: 0 }}
+                  label="Pay Online — Card / UPI / Netbanking (Razorpay)"
+                  sx={{
+                    border: '1px solid',
+                    borderColor: paymentMethod === 'online' ? 'primary.main' : 'divider',
+                    p: 1.5,
+                    ml: 0,
+                  }}
                 />
               </RadioGroup>
               <Box sx={{ display: 'flex', gap: 2, mt: 4 }}>
@@ -267,7 +383,7 @@ export default function CheckoutPage() {
                   disabled={placingOrder}
                   onClick={handlePlaceOrder}
                 >
-                  {placingOrder ? 'Placing Order...' : 'Place Order'}
+                  {placingOrder ? 'Processing...' : 'Place Order'}
                 </Button>
               </Box>
             </Box>

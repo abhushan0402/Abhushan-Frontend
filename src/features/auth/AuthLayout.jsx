@@ -8,7 +8,7 @@ export default function AuthLayout({ title, subtitle, children }) {
       <Grid
         size={{ xs: 12, md: 5 }}
         sx={{
-          bgcolor: '#0b0b0c',
+          background: 'linear-gradient(135deg, #121212 0%, #383838 55%, #232323 100%)',
           color: '#f5f1e8',
           display: { xs: 'none', md: 'flex' },
           flexDirection: 'column',

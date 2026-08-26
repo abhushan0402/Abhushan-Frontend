@@ -86,8 +86,8 @@ export default function ProductCard({ product }) {
                 position: 'absolute',
                 top: 10,
                 left: 10,
-                bgcolor: '#0b0b0c',
-                color: '#c9a667',
+                bgcolor: '#121212',
+                color: '#1f8075',
                 fontSize: '0.65rem',
                 letterSpacing: '0.1em',
                 px: 1,
@@ -111,7 +111,7 @@ export default function ProductCard({ product }) {
             }}
           >
             {isWishlisted ? (
-              <FavoriteRoundedIcon fontSize="small" sx={{ color: '#c9a667' }} />
+              <FavoriteRoundedIcon fontSize="small" sx={{ color: '#1f8075' }} />
             ) : (
               <FavoriteBorderRoundedIcon fontSize="small" />
             )}
@@ -136,9 +136,12 @@ export default function ProductCard({ product }) {
               sx={{
                 width: '100%',
                 borderRadius: 0,
-                bgcolor: '#0b0b0c',
+                background: 'linear-gradient(135deg, #121212 0%, #383838 100%)',
                 color: '#f5f1e8',
-                '&:hover': { bgcolor: '#c9a667', color: '#0b0b0c' },
+                '&:hover': {
+                  background: 'linear-gradient(135deg, #1f8075 0%, #196a61 100%)',
+                  color: '#f5f1e8',
+                },
               }}
             >
               <ShoppingBagOutlinedIcon fontSize="small" sx={{ mr: 1 }} />

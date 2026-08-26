@@ -26,7 +26,15 @@ export default function MobileNav() {
       anchor="left"
       open={open}
       onClose={close}
-      slotProps={{ paper: { sx: { width: 300, bgcolor: '#0b0b0c', color: '#f5f1e8' } } }}
+      slotProps={{
+        paper: {
+          sx: {
+            width: 300,
+            background: 'linear-gradient(160deg, #121212 0%, #383838 55%, #232323 100%)',
+            color: '#f5f1e8',
+          },
+        },
+      }}
     >
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', px: 2.5, py: 2.5 }}>
         <BrandLogo dark size="small" />
@@ -34,7 +42,7 @@ export default function MobileNav() {
           <CloseRoundedIcon />
         </IconButton>
       </Box>
-      <Divider sx={{ borderColor: 'rgba(201,166,103,0.2)' }} />
+      <Divider sx={{ borderColor: 'rgba(31,128,117,0.2)' }} />
       <List sx={{ py: 1 }}>
         {NAV_LINKS.map((link) => (
           <ListItemButton
@@ -53,7 +61,7 @@ export default function MobileNav() {
           </ListItemButton>
         ))}
       </List>
-      <Divider sx={{ borderColor: 'rgba(201,166,103,0.2)' }} />
+      <Divider sx={{ borderColor: 'rgba(31,128,117,0.2)' }} />
       <List sx={{ py: 1 }}>
         {isAuthenticated ? (
           <>

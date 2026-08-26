@@ -1,6 +1,6 @@
 import { useParams, Link as RouterLink } from 'react-router-dom'
-import { Box, Typography, Chip, Stack, Skeleton } from '@mui/material'
-import { useCategories, useSubCategoriesByCategory } from '../../hooks/useCategories'
+import { Box, Typography, Breadcrumbs, Skeleton } from '@mui/material'
+import { useCategories, useSubCategories } from '../../hooks/useCategories'
 import { useProducts } from '../../hooks/useProducts'
 import ProductGrid from '../../components/product/ProductGrid'
 import { ProductGridSkeleton } from '../../components/common/Skeletons'
@@ -9,23 +9,33 @@ import EmptyState from '../../components/common/EmptyState'
 import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined'
 import { handleImageError } from '../../utils/handleImageError'
 
-export default function CategoryPage() {
+export default function SubCategoryPage() {
   const { slug } = useParams()
-  const { data: categories = [], isLoading: categoriesLoading } = useCategories()
-  const category = categories.find((c) => c.slug === slug)
+  const { data: subCategories = [], isLoading: subCategoriesLoading } = useSubCategories()
+  const subCategory = subCategories.find((s) => s.slug === slug)
 
-  const { data: subCategories = [] } = useSubCategoriesByCategory(category?._id)
+  // `categoryId` on a subcategory is populated (a full category object) when
+  // it comes from GET /api/subcategories, but only a bare id string when it
+  // comes from GET /api/categories/:id/subcategories — handle both rather
+  // than assuming one shape, falling back to the already-cached categories
+  // list (shared with the Header/MegaMenu) instead of an extra network call.
+  const { data: categories = [] } = useCategories()
+  const rawCategoryRef = subCategory?.categoryId
+  const parentCategory =
+    rawCategoryRef && typeof rawCategoryRef === 'object'
+      ? rawCategoryRef
+      : categories.find((c) => c._id === rawCategoryRef)
 
   const {
     data,
     isLoading: productsLoading,
     isError,
     refetch,
-  } = useProducts(category ? { categoryId: category._id, limit: 24 } : {})
+  } = useProducts(subCategory ? { subCategoryId: subCategory._id, limit: 24 } : {})
 
   const products = data?.products ?? []
 
-  if (categoriesLoading) {
+  if (subCategoriesLoading) {
     return (
       <Box className="av-container" sx={{ py: 6 }}>
         <Skeleton variant="text" width={280} sx={{ fontSize: '2rem', mb: 3 }} />
@@ -34,10 +44,10 @@ export default function CategoryPage() {
     )
   }
 
-  if (!category) {
+  if (!subCategory) {
     return (
       <EmptyState
-        title="Category not found"
+        title="Collection not found"
         description="This collection may have moved or no longer exists."
         actionLabel="Browse All Jewellery"
         actionTo="/shop"
@@ -57,8 +67,8 @@ export default function CategoryPage() {
       >
         <Box
           component="img"
-          src={category.image}
-          alt={category.name}
+          src={subCategory.image}
+          alt={subCategory.name}
           onError={handleImageError}
           sx={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.55 }}
         />
@@ -78,32 +88,40 @@ export default function CategoryPage() {
             variant="h2"
             sx={{ color: '#f5f1e8', fontSize: { xs: '2rem', md: '2.75rem' } }}
           >
-            {category.name}
+            {subCategory.name}
           </Typography>
-          {category.description ? (
+          {subCategory.description ? (
             <Typography sx={{ color: 'rgba(245,241,232,0.75)', mt: 1, maxWidth: 480 }}>
-              {category.description}
+              {subCategory.description}
             </Typography>
           ) : null}
         </Box>
       </Box>
 
       <Box className="av-container" sx={{ py: { xs: 4, md: 6 } }}>
-        {subCategories.length > 0 ? (
-          <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ mb: 4, rowGap: 1 }}>
-            {subCategories.map((sub) => (
-              <Chip
-                key={sub._id}
-                component={RouterLink}
-                to={`/subcategory/${sub.slug}`}
-                label={sub.name}
-                clickable
-                sx={{ borderRadius: 0 }}
-                variant="outlined"
-              />
-            ))}
-          </Stack>
-        ) : null}
+        <Breadcrumbs sx={{ mb: 4, fontSize: '0.8rem' }}>
+          <Typography
+            component={RouterLink}
+            to="/"
+            variant="caption"
+            sx={{ color: 'text.secondary', textDecoration: 'none' }}
+          >
+            Home
+          </Typography>
+          {parentCategory ? (
+            <Typography
+              component={RouterLink}
+              to={`/category/${parentCategory.slug}`}
+              variant="caption"
+              sx={{ color: 'text.secondary', textDecoration: 'none' }}
+            >
+              {parentCategory.name}
+            </Typography>
+          ) : null}
+          <Typography variant="caption" sx={{ color: 'text.primary' }}>
+            {subCategory.name}
+          </Typography>
+        </Breadcrumbs>
 
         {productsLoading ? (
           <ProductGridSkeleton />

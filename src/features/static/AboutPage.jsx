@@ -9,7 +9,13 @@ export default function AboutPage() {
 
   return (
     <Box>
-      <Box sx={{ bgcolor: '#0b0b0c', color: '#f5f1e8', py: { xs: 7, md: 11 } }}>
+      <Box
+        sx={{
+          background: 'linear-gradient(135deg, #121212 0%, #383838 55%, #232323 100%)',
+          color: '#f5f1e8',
+          py: { xs: 7, md: 11 },
+        }}
+      >
         <Box className="av-container" sx={{ textAlign: 'center' }}>
           <Typography variant="subtitle2" sx={{ color: 'primary.main', letterSpacing: '0.3em', mb: 2 }}>
             OUR STORY

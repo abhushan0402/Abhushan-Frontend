@@ -1,5 +1,5 @@
 import { createTheme } from '@mui/material/styles'
-import { colors, fonts, breakpoints } from './tokens'
+import { colors, gradients, fonts, breakpoints } from './tokens'
 
 const theme = createTheme({
   breakpoints: {
@@ -8,10 +8,10 @@ const theme = createTheme({
   palette: {
     mode: 'light',
     primary: {
-      main: colors.gold,
-      light: colors.goldLight,
-      dark: colors.goldDark,
-      contrastText: colors.black,
+      main: colors.accent,
+      light: colors.accentLight,
+      dark: colors.accentDark,
+      contrastText: colors.ivory,
     },
     secondary: {
       main: colors.black,
@@ -88,7 +88,16 @@ const theme = createTheme({
           borderWidth: 1,
         },
         outlinedPrimary: {
-          borderColor: colors.gold,
+          borderColor: colors.accent,
+        },
+        containedPrimary: {
+          backgroundImage: gradients.accent,
+          '&:hover': {
+            backgroundImage: gradients.accentHover,
+          },
+          '&.Mui-disabled': {
+            backgroundImage: 'none',
+          },
         },
       },
     },
@@ -124,8 +133,8 @@ const theme = createTheme({
           scrollBehavior: 'smooth',
         },
         '::selection': {
-          backgroundColor: colors.gold,
-          color: colors.black,
+          backgroundColor: colors.accent,
+          color: colors.ivory,
         },
       },
     },

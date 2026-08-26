@@ -24,7 +24,7 @@ export default class ErrorBoundary extends Component {
             justifyContent: 'center',
             textAlign: 'center',
             px: 3,
-            bgcolor: '#0b0b0c',
+            background: 'linear-gradient(135deg, #121212 0%, #383838 55%, #232323 100%)',
             color: '#f5f1e8',
           }}
         >
@@ -37,7 +37,7 @@ export default class ErrorBoundary extends Component {
           </Typography>
           <Button
             variant="outlined"
-            sx={{ color: '#f5f1e8', borderColor: '#c9a667' }}
+            sx={{ color: '#f5f1e8', borderColor: '#1f8075' }}
             onClick={() => window.location.reload()}
           >
             Reload Page

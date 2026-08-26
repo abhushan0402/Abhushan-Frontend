@@ -28,8 +28,8 @@ export default function SearchOverlay() {
             top: 0,
             left: 0,
             right: 0,
-            bgcolor: '#0b0b0c',
-            borderBottom: '1px solid rgba(201,166,103,0.3)',
+            background: 'linear-gradient(135deg, #121212 0%, #383838 55%, #232323 100%)',
+            borderBottom: '1px solid rgba(31,128,117,0.3)',
             py: { xs: 3, md: 5 },
           }}
         >
@@ -39,7 +39,7 @@ export default function SearchOverlay() {
             className="av-container"
             sx={{ display: 'flex', alignItems: 'center', gap: 2 }}
           >
-            <SearchRoundedIcon sx={{ color: '#c9a667' }} />
+            <SearchRoundedIcon sx={{ color: '#1f8075' }} />
             <InputBase
               autoFocus
               fullWidth

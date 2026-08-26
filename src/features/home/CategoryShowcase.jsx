@@ -78,7 +78,7 @@ export default function CategoryShowcase() {
                         </Typography>
                         <Typography
                           sx={{
-                            color: '#c9a667',
+                            color: '#1f8075',
                             fontSize: '0.7rem',
                             letterSpacing: '0.15em',
                           }}

@@ -21,6 +21,7 @@ import { NAV_LINKS } from '../../utils/constants'
 import BrandLogo from './BrandLogo'
 import MegaMenu from './MegaMenu'
 import SearchOverlay from './SearchOverlay'
+import NotificationsMenu from './NotificationsMenu'
 
 export default function Header() {
   const openMobileNav = useUIStore((s) => s.openMobileNav)
@@ -52,8 +53,8 @@ export default function Header() {
       position="sticky"
       elevation={0}
       sx={{
-        bgcolor: '#0b0b0c',
-        borderBottom: '1px solid rgba(201,166,103,0.18)',
+        background: 'linear-gradient(135deg, #121212 0%, #383838 55%, #232323 100%)',
+        borderBottom: '1px solid rgba(31,128,117,0.18)',
       }}
     >
       <Toolbar disableGutters sx={{ px: { xs: 2, md: 4 }, py: 1.25, minHeight: { xs: 64, md: 84 } }}>
@@ -91,7 +92,7 @@ export default function Header() {
                 textTransform: 'uppercase',
                 position: 'relative',
                 pb: 0.5,
-                '&:hover': { color: '#c9a667' },
+                '&:hover': { color: '#1f8075' },
               }}
             >
               {link.label}
@@ -111,6 +112,7 @@ export default function Header() {
           <IconButton onClick={openSearch} sx={{ color: '#f5f1e8' }} aria-label="Search">
             <SearchRoundedIcon />
           </IconButton>
+          <NotificationsMenu iconColor="#f5f1e8" />
           <IconButton
             component={RouterLink}
             to={isAuthenticated ? '/account/profile' : '/signin'}
