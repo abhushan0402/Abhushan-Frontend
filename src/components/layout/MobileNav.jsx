@@ -36,7 +36,7 @@ export default function MobileNav() {
         paper: {
           sx: {
             width: 300,
-            background: 'linear-gradient(160deg, #121212 0%, #383838 55%, #232323 100%)',
+            background: 'linear-gradient(160deg, #2BBBAE 0%, #14807A 55%, #0A4D4A 100%)',
             color: '#f5f1e8',
           },
         },
@@ -48,7 +48,7 @@ export default function MobileNav() {
           <CloseRoundedIcon />
         </IconButton>
       </Box>
-      <Divider sx={{ borderColor: 'rgba(31,128,117,0.2)' }} />
+      <Divider sx={{ borderColor: 'rgba(20, 128, 122,0.2)' }} />
       <List sx={{ py: 1 }}>
         {NAV_LINKS.map((link) =>
           link.megaMenu ? (
@@ -111,7 +111,7 @@ export default function MobileNav() {
           )
         )}
       </List>
-      <Divider sx={{ borderColor: 'rgba(31,128,117,0.2)' }} />
+      <Divider sx={{ borderColor: 'rgba(20, 128, 122,0.2)' }} />
       <List sx={{ py: 1 }}>
         {isAuthenticated ? (
           <>

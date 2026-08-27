@@ -30,7 +30,7 @@ const theme = createTheme({
     divider: colors.borderOnLight,
   },
   shape: {
-    borderRadius: 2,
+    borderRadius: 10,
   },
   typography: {
     fontFamily: fonts.body,
@@ -79,7 +79,7 @@ const theme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-          borderRadius: 0,
+          borderRadius: 999,
           paddingInline: '1.75rem',
           paddingBlock: '0.75rem',
           fontSize: '0.75rem',
@@ -92,11 +92,14 @@ const theme = createTheme({
         },
         containedPrimary: {
           backgroundImage: gradients.accent,
+          boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.45), 0 4px 10px rgba(10,77,74,0.35)',
           '&:hover': {
             backgroundImage: gradients.accentHover,
+            boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.55), 0 6px 14px rgba(10,77,74,0.4)',
           },
           '&.Mui-disabled': {
             backgroundImage: 'none',
+            boxShadow: 'none',
           },
         },
       },
@@ -104,7 +107,7 @@ const theme = createTheme({
     MuiChip: {
       styleOverrides: {
         root: {
-          borderRadius: 2,
+          borderRadius: 16,
         },
       },
     },
@@ -123,7 +126,7 @@ const theme = createTheme({
     MuiOutlinedInput: {
       styleOverrides: {
         root: {
-          borderRadius: 2,
+          borderRadius: 10,
         },
       },
     },

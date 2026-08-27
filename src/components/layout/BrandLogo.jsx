@@ -33,7 +33,7 @@ export default function BrandLogo({ dark = true, size = 'medium' }) {
           justifyContent: 'center',
           overflow: 'hidden',
           flexShrink: 0,
-          boxShadow: dark ? '0 0 0 1px rgba(31,128,117,0.35)' : '0 0 0 1px rgba(33,29,23,0.12)',
+          boxShadow: dark ? '0 0 0 1px rgba(20, 128, 122,0.35)' : '0 0 0 1px rgba(33,29,23,0.12)',
         }}
       >
         <Box

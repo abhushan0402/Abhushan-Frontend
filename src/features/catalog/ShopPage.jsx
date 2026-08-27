@@ -138,7 +138,6 @@ export default function ShopPage() {
                     label={`${FILTER_LABELS[key] ?? key}: ${value}`}
                     onDelete={() => setFilters({ ...filters, [key]: undefined })}
                     size="small"
-                    sx={{ borderRadius: 0 }}
                   />
                 ))}
               </Stack>

@@ -24,7 +24,6 @@ export default function ProductCard({ product }) {
 
   const images = product.images?.length ? product.images : ['/placeholder-product.svg']
   const primaryImage = images[0]
-  const secondaryImage = images.length > 1 ? images[1] : null
 
   const handleWishlistToggle = (e) => {
     e.preventDefault()
@@ -52,28 +51,36 @@ export default function ProductCard({ product }) {
       component={motion.div}
       whileHover={{ y: -4 }}
       transition={{ duration: 0.25 }}
-      sx={{ position: 'relative' }}
+      sx={{ position: 'relative', height: '100%', display: 'flex', flexDirection: 'column' }}
     >
       <Box
         component={RouterLink}
         to={`/product/${product._id}`}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
-        sx={{ display: 'block', textDecoration: 'none', color: 'inherit' }}
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          flex: 1,
+          textDecoration: 'none',
+          color: 'inherit',
+        }}
       >
         <Box
           sx={{
             position: 'relative',
-            aspectRatio: '1 / 1',
+            width: '100%',
+            height: 0,
+            pt: '100%',
+            flexShrink: 0,
             overflow: 'hidden',
+            borderRadius: '14px',
             bgcolor: '#f1ebe0',
           }}
         >
-          {/* Both images are always mounted (not swapped via a single src) so
-              the secondary image is already loaded by the time hover starts —
-              a src-swap on one <img> caused a network-fetch flash / "wrong
-              image for a moment" flicker on first hover. This crossfades two
-              stacked, pre-loaded images via opacity instead. */}
+          {/* A single, always-the-same image — only a hover zoom transform,
+              never a src/image swap, so the product photo shown never
+              changes on hover. */}
           <Box
             component="img"
             src={primaryImage}
@@ -86,66 +93,24 @@ export default function ProductCard({ product }) {
               width: '100%',
               height: '100%',
               objectFit: 'cover',
-              opacity: hovered && secondaryImage ? 0 : 1,
-              transition: 'opacity 0.35s ease',
+              transform: hovered ? 'scale(1.06)' : 'scale(1)',
+              transition: 'transform 0.5s ease',
             }}
           />
-          {secondaryImage ? (
-            <Box
-              component="img"
-              src={secondaryImage}
-              alt=""
-              aria-hidden="true"
-              loading="lazy"
-              onError={handleImageError}
-              sx={{
-                position: 'absolute',
-                inset: 0,
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-                opacity: hovered ? 1 : 0,
-                transition: 'opacity 0.35s ease',
-              }}
-            />
-          ) : null}
 
-          {!inStock ? (
-            <Box
-              sx={{
-                position: 'absolute',
-                inset: 0,
-                bgcolor: 'rgba(245,241,232,0.55)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <Box
-                sx={{
-                  bgcolor: '#121212',
-                  color: '#f5f1e8',
-                  fontSize: '0.7rem',
-                  letterSpacing: '0.12em',
-                  px: 1.5,
-                  py: 0.75,
-                }}
-              >
-                OUT OF STOCK
-              </Box>
-            </Box>
-          ) : product.isNewArrival ? (
+          {inStock && product.isNewArrival ? (
             <Box
               sx={{
                 position: 'absolute',
                 top: 10,
                 left: 10,
-                bgcolor: '#121212',
-                color: '#1f8075',
+                bgcolor: '#0E5A55',
+                color: '#f5f1e8',
                 fontSize: '0.65rem',
                 letterSpacing: '0.1em',
                 px: 1,
                 py: 0.5,
+                borderRadius: '6px',
               }}
             >
               NEW
@@ -165,50 +130,14 @@ export default function ProductCard({ product }) {
             }}
           >
             {isWishlisted ? (
-              <FavoriteRoundedIcon fontSize="small" sx={{ color: '#1f8075' }} />
+              <FavoriteRoundedIcon fontSize="small" sx={{ color: '#14807A' }} />
             ) : (
               <FavoriteBorderRoundedIcon fontSize="small" />
             )}
           </IconButton>
-
-          {inStock ? (
-            <Box
-              sx={{
-                position: 'absolute',
-                left: 0,
-                right: 0,
-                bottom: 0,
-                p: 1,
-                opacity: { xs: 1, md: hovered ? 1 : 0 },
-                transform: { xs: 'none', md: hovered ? 'translateY(0)' : 'translateY(8px)' },
-                transition: 'all 0.25s ease',
-              }}
-            >
-              <IconButton
-                onClick={handleAddToCart}
-                aria-label="Add to cart"
-                size="small"
-                sx={{
-                  width: '100%',
-                  borderRadius: 0,
-                  background: 'linear-gradient(135deg, #121212 0%, #383838 100%)',
-                  color: '#f5f1e8',
-                  '&:hover': {
-                    background: 'linear-gradient(135deg, #1f8075 0%, #196a61 100%)',
-                    color: '#f5f1e8',
-                  },
-                }}
-              >
-                <ShoppingBagOutlinedIcon fontSize="small" sx={{ mr: 1 }} />
-                <Typography variant="caption" sx={{ letterSpacing: '0.1em' }}>
-                  ADD TO BAG
-                </Typography>
-              </IconButton>
-            </Box>
-          ) : null}
         </Box>
 
-        <Box sx={{ pt: 1.5 }}>
+        <Box sx={{ pt: 1.5, flexGrow: 1 }}>
           <Typography
             variant="body2"
             sx={{ fontWeight: 500, mb: 0.5 }}
@@ -217,17 +146,49 @@ export default function ProductCard({ product }) {
             {product.name}
           </Typography>
           <RatingStars value={product.averageRating} count={product.reviewCount} />
-          {inStock ? (
-            <PriceTag price={product.basePrice} sx={{ mt: 0.5 }} />
-          ) : (
-            <Typography
-              variant="body2"
-              sx={{ mt: 0.5, fontWeight: 600, color: 'text.secondary' }}
-            >
-              Out of Stock
-            </Typography>
-          )}
+          <PriceTag price={product.basePrice} sx={{ mt: 0.5 }} />
         </Box>
+
+        {inStock ? (
+          <IconButton
+            onClick={handleAddToCart}
+            aria-label="Add to cart"
+            size="small"
+            sx={{
+              mt: 1.25,
+              width: '100%',
+              borderRadius: '999px',
+              background: 'linear-gradient(180deg, #5CE1E6 0%, #2BBBAE 45%, #14807A 100%)',
+              color: '#f5f1e8',
+              '&:hover': {
+                background: 'linear-gradient(180deg, #2BBBAE 0%, #14807A 55%, #0A4D4A 100%)',
+                color: '#f5f1e8',
+              },
+            }}
+          >
+            <ShoppingBagOutlinedIcon fontSize="small" sx={{ mr: 1 }} />
+            <Typography variant="caption" sx={{ letterSpacing: '0.1em' }}>
+              ADD TO BAG
+            </Typography>
+          </IconButton>
+        ) : (
+          <Box
+            sx={{
+              mt: 1.25,
+              width: '100%',
+              textAlign: 'center',
+              border: '1px solid',
+              borderColor: 'divider',
+              borderRadius: '999px',
+              color: 'text.secondary',
+              py: 0.9,
+              fontSize: '0.7rem',
+              letterSpacing: '0.12em',
+            }}
+          >
+            OUT OF STOCK
+          </Box>
+        )}
       </Box>
     </Box>
   )

@@ -138,7 +138,7 @@ export default function ProductDetailPage() {
               background: 'linear-gradient(160deg, #faf7f1 0%, #f1ebe0 100%)',
               border: '1px solid',
               borderColor: 'divider',
-              borderRadius: 3,
+              borderRadius: '16px',
               p: { xs: 2.5, md: 3.5 },
             }}
           >
@@ -191,11 +191,11 @@ export default function ProductDetailPage() {
               size="small"
               color={inStock ? 'success' : 'default'}
               variant="outlined"
-              sx={{ borderRadius: 0, mb: 3 }}
+              sx={{ mb: 3 }}
             />
 
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
-              <Box sx={{ display: 'flex', alignItems: 'center', border: '1px solid', borderColor: 'divider' }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', border: '1px solid', borderColor: 'divider', borderRadius: '10px', overflow: 'hidden' }}>
                 <IconButton
                   size="small"
                   disabled={quantity <= 1}
@@ -210,7 +210,7 @@ export default function ProductDetailPage() {
               </Box>
               <IconButton
                 onClick={handleWishlistToggle}
-                sx={{ border: '1px solid', borderColor: 'divider', borderRadius: 0 }}
+                sx={{ border: '1px solid', borderColor: 'divider', borderRadius: '50%' }}
                 aria-label="Toggle wishlist"
               >
                 {isWishlisted ? (

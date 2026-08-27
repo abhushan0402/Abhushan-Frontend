@@ -53,8 +53,8 @@ export default function SearchOverlay() {
             top: 0,
             left: 0,
             right: 0,
-            background: 'linear-gradient(135deg, #121212 0%, #383838 55%, #232323 100%)',
-            borderBottom: '1px solid rgba(31,128,117,0.3)',
+            background: 'linear-gradient(135deg, #2BBBAE 0%, #14807A 55%, #0A4D4A 100%)',
+            borderBottom: '1px solid rgba(20, 128, 122,0.3)',
             py: { xs: 3, md: 5 },
             maxHeight: '85vh',
             overflowY: 'auto',
@@ -66,7 +66,7 @@ export default function SearchOverlay() {
             className="av-container"
             sx={{ display: 'flex', alignItems: 'center', gap: 2 }}
           >
-            <SearchRoundedIcon sx={{ color: '#1f8075' }} />
+            <SearchRoundedIcon sx={{ color: '#D4AF37' }} />
             <InputBase
               autoFocus
               fullWidth
@@ -80,7 +80,7 @@ export default function SearchOverlay() {
                 '& input::placeholder': { color: 'rgba(245,241,232,0.4)', opacity: 1 },
               }}
             />
-            {isFetching ? <CircularProgress size={20} sx={{ color: '#1f8075' }} /> : null}
+            {isFetching ? <CircularProgress size={20} sx={{ color: '#D4AF37' }} /> : null}
             <IconButton onClick={handleClose} sx={{ color: '#f5f1e8' }} aria-label="Close search">
               <CloseRoundedIcon />
             </IconButton>
@@ -90,7 +90,7 @@ export default function SearchOverlay() {
             <Box className="av-container" sx={{ mt: 3 }}>
               {isLoading ? (
                 <Box sx={{ display: 'flex', justifyContent: 'center', py: 4 }}>
-                  <CircularProgress size={24} sx={{ color: '#1f8075' }} />
+                  <CircularProgress size={24} sx={{ color: '#D4AF37' }} />
                 </Box>
               ) : isError ? (
                 <Typography sx={{ color: 'rgba(245,241,232,0.7)', textAlign: 'center', py: 3 }}>
@@ -121,8 +121,8 @@ export default function SearchOverlay() {
                         p: 1,
                         textDecoration: 'none',
                         color: 'inherit',
-                        border: '1px solid rgba(31,128,117,0.2)',
-                        '&:hover': { borderColor: '#1f8075' },
+                        border: '1px solid rgba(20, 128, 122,0.2)',
+                        '&:hover': { borderColor: '#D4AF37' },
                       }}
                     >
                       <Box
@@ -153,7 +153,7 @@ export default function SearchOverlay() {
                   onClick={() => goToResults(term)}
                   sx={{
                     mt: 2.5,
-                    color: '#1f8075',
+                    color: '#D4AF37',
                     fontSize: '0.8rem',
                     letterSpacing: '0.08em',
                     cursor: 'pointer',

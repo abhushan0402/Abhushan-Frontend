@@ -27,6 +27,7 @@ export default function ProductGallery({ images = [], name }) {
               cursor: 'pointer',
               border: '1px solid',
               borderColor: active === i ? 'primary.main' : 'divider',
+              borderRadius: '10px',
               overflow: 'hidden',
             }}
           >
@@ -49,6 +50,7 @@ export default function ProductGallery({ images = [], name }) {
           aspectRatio: '1 / 1',
           bgcolor: '#f1ebe0',
           overflow: 'hidden',
+          borderRadius: '16px',
           position: 'relative',
         }}
       >

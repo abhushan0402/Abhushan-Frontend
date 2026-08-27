@@ -11,7 +11,7 @@ export default function AboutPage() {
     <Box>
       <Box
         sx={{
-          background: 'linear-gradient(135deg, #121212 0%, #383838 55%, #232323 100%)',
+          background: 'linear-gradient(135deg, #2BBBAE 0%, #14807A 55%, #0A4D4A 100%)',
           color: '#f5f1e8',
           py: { xs: 7, md: 11 },
         }}
@@ -29,7 +29,7 @@ export default function AboutPage() {
       <Box className="av-container" sx={{ py: { xs: 7, md: 10 } }}>
         <Grid container spacing={{ xs: 5, md: 8 }} alignItems="center">
           <Grid size={{ xs: 12, md: 6 }}>
-            <Box sx={{ aspectRatio: '4 / 5', bgcolor: '#f1ebe0', overflow: 'hidden' }}>
+            <Box sx={{ aspectRatio: '4 / 5', bgcolor: '#f1ebe0', overflow: 'hidden', borderRadius: '16px' }}>
               {image ? (
                 <Box
                   component="img"

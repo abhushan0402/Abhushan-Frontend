@@ -24,7 +24,7 @@ export default class ErrorBoundary extends Component {
             justifyContent: 'center',
             textAlign: 'center',
             px: 3,
-            background: 'linear-gradient(135deg, #121212 0%, #383838 55%, #232323 100%)',
+            background: 'linear-gradient(135deg, #2BBBAE 0%, #14807A 55%, #0A4D4A 100%)',
             color: '#f5f1e8',
           }}
         >
@@ -37,7 +37,11 @@ export default class ErrorBoundary extends Component {
           </Typography>
           <Button
             variant="outlined"
-            sx={{ color: '#f5f1e8', borderColor: '#1f8075' }}
+            sx={{
+              color: '#f5f1e8',
+              borderColor: '#D4AF37',
+              '&:hover': { bgcolor: '#D4AF37', color: '#0E5A55', borderColor: '#D4AF37' },
+            }}
             onClick={() => window.location.reload()}
           >
             Reload Page

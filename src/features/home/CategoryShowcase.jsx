@@ -40,6 +40,7 @@ export default function CategoryShowcase() {
                         display: 'block',
                         aspectRatio: '4 / 5',
                         overflow: 'hidden',
+                        borderRadius: '16px',
                         textDecoration: 'none',
                         '&:hover img': { transform: 'scale(1.06)' },
                       }}
@@ -78,7 +79,7 @@ export default function CategoryShowcase() {
                         </Typography>
                         <Typography
                           sx={{
-                            color: '#1f8075',
+                            color: '#D4AF37',
                             fontSize: '0.7rem',
                             letterSpacing: '0.15em',
                           }}

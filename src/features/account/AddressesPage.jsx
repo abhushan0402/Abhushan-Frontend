@@ -68,11 +68,11 @@ export default function AddressesPage() {
         <Grid container spacing={2}>
           {addresses.map((addr) => (
             <Grid key={addr._id} size={{ xs: 12, sm: 6 }}>
-              <Box sx={{ border: '1px solid', borderColor: 'divider', p: 2.5, position: 'relative' }}>
+              <Box sx={{ border: '1px solid', borderColor: 'divider', borderRadius: '12px', p: 2.5, position: 'relative' }}>
                 <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 1 }}>
                   <Typography sx={{ fontWeight: 600 }}>{addr.label}</Typography>
                   {addr.isDefault ? (
-                    <Chip label="Default" size="small" color="primary" sx={{ borderRadius: 0 }} />
+                    <Chip label="Default" size="small" color="primary" />
                   ) : null}
                 </Stack>
                 <Typography variant="body2">{addr.fullName}</Typography>

@@ -7,7 +7,6 @@ import { ProductGridSkeleton } from '../../components/common/Skeletons'
 import ErrorState from '../../components/common/ErrorState'
 import EmptyState from '../../components/common/EmptyState'
 import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined'
-import { handleImageError } from '../../utils/handleImageError'
 
 export default function CategoryPage() {
   const { slug } = useParams()
@@ -47,48 +46,21 @@ export default function CategoryPage() {
 
   return (
     <Box sx={{ minHeight: '70vh' }}>
-      <Box
-        sx={{
-          position: 'relative',
-          height: { xs: 220, md: 320 },
-          background: 'linear-gradient(135deg, #121212 0%, #383838 55%, #232323 100%)',
-          overflow: 'hidden',
-        }}
-      >
-        <Box
-          component="img"
-          src={category.image}
-          alt={category.name}
-          onError={handleImageError}
-          sx={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.55 }}
-        />
-        <Box
-          sx={{
-            position: 'absolute',
-            inset: 0,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            textAlign: 'center',
-            px: 2,
-          }}
+      <Box className="av-container" sx={{ pt: { xs: 4, md: 6 }, pb: { xs: 2, md: 3 }, textAlign: 'center' }}>
+        <Typography
+          variant="h2"
+          sx={{ fontSize: { xs: '2rem', md: '2.75rem' } }}
         >
-          <Typography
-            variant="h2"
-            sx={{ color: '#f5f1e8', fontSize: { xs: '2rem', md: '2.75rem' } }}
-          >
-            {category.name}
+          {category.name}
+        </Typography>
+        {category.description ? (
+          <Typography sx={{ color: 'text.secondary', mt: 1, maxWidth: 480, mx: 'auto' }}>
+            {category.description}
           </Typography>
-          {category.description ? (
-            <Typography sx={{ color: 'rgba(245,241,232,0.75)', mt: 1, maxWidth: 480 }}>
-              {category.description}
-            </Typography>
-          ) : null}
-        </Box>
+        ) : null}
       </Box>
 
-      <Box className="av-container" sx={{ py: { xs: 4, md: 6 } }}>
+      <Box className="av-container" sx={{ pb: { xs: 4, md: 6 } }}>
         {subCategories.length > 0 ? (
           <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ mb: 4, rowGap: 1 }}>
             {subCategories.map((sub) => (
@@ -98,7 +70,6 @@ export default function CategoryPage() {
                 to={`/subcategory/${sub.slug}`}
                 label={sub.name}
                 clickable
-                sx={{ borderRadius: 0 }}
                 variant="outlined"
               />
             ))}

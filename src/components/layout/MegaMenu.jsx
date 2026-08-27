@@ -24,9 +24,9 @@ export default function MegaMenu({ anchorEl, open, onClose, onMouseEnter, onMous
             onMouseLeave={onMouseLeave}
             elevation={8}
             sx={{
-              background: 'linear-gradient(160deg, #232323 0%, #383838 100%)',
-              color: '#f5f1e8',
-              border: '1px solid rgba(31,128,117,0.25)',
+              background: '#ffffff',
+              color: '#211d17',
+              border: '1px solid rgba(33, 29, 23, 0.08)',
               p: { xs: 3, md: 4 },
             }}
           >
@@ -34,7 +34,7 @@ export default function MegaMenu({ anchorEl, open, onClose, onMouseEnter, onMous
               <Grid size={{ xs: 12, md: 7 }}>
                 <Typography
                   variant="subtitle2"
-                  sx={{ color: 'primary.main', letterSpacing: '0.2em', mb: 2 }}
+                  sx={{ color: '#94781F', letterSpacing: '0.2em', mb: 2 }}
                 >
                   SHOP BY CATEGORY
                 </Typography>
@@ -57,7 +57,8 @@ export default function MegaMenu({ anchorEl, open, onClose, onMouseEnter, onMous
                             aspectRatio: '1 / 1',
                             overflow: 'hidden',
                             mb: 1,
-                            bgcolor: 'rgba(255,255,255,0.05)',
+                            borderRadius: 1,
+                            bgcolor: '#f1ebe0',
                           }}
                         >
                           <Box
@@ -74,7 +75,7 @@ export default function MegaMenu({ anchorEl, open, onClose, onMouseEnter, onMous
                             }}
                           />
                         </Box>
-                        <Typography variant="body2" sx={{ letterSpacing: '0.04em' }}>
+                        <Typography variant="body2" sx={{ letterSpacing: '0.04em', color: '#211d17' }}>
                           {cat.name}
                         </Typography>
                       </Box>
@@ -82,10 +83,10 @@ export default function MegaMenu({ anchorEl, open, onClose, onMouseEnter, onMous
                   ))}
                 </Grid>
               </Grid>
-              <Grid size={{ xs: 12, md: 5 }} sx={{ borderLeft: { md: '1px solid rgba(31,128,117,0.2)' }, pl: { md: 4 } }}>
+              <Grid size={{ xs: 12, md: 5 }} sx={{ borderLeft: { md: '1px solid rgba(33, 29, 23, 0.08)' }, pl: { md: 4 } }}>
                 <Typography
                   variant="subtitle2"
-                  sx={{ color: 'primary.main', letterSpacing: '0.2em', mb: 2 }}
+                  sx={{ color: '#94781F', letterSpacing: '0.2em', mb: 2 }}
                 >
                   SHOP BY TYPE
                 </Typography>
@@ -98,7 +99,7 @@ export default function MegaMenu({ anchorEl, open, onClose, onMouseEnter, onMous
                     pr: 1,
                     '&::-webkit-scrollbar': { width: 6 },
                     '&::-webkit-scrollbar-thumb': {
-                      backgroundColor: 'rgba(31,128,117,0.4)',
+                      backgroundColor: 'rgba(20, 128, 122,0.3)',
                     },
                   }}
                 >
@@ -112,10 +113,10 @@ export default function MegaMenu({ anchorEl, open, onClose, onMouseEnter, onMous
                         sx={{
                           display: 'block',
                           py: 0.5,
-                          color: 'rgba(245,241,232,0.85)',
+                          color: '#6f6a5f',
                           textDecoration: 'none',
                           textTransform: 'capitalize',
-                          '&:hover': { color: 'primary.main' },
+                          '&:hover': { color: '#14807A' },
                         }}
                       >
                         {type.name}

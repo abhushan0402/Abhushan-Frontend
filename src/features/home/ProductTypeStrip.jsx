@@ -23,7 +23,7 @@ export default function ProductTypeStrip() {
           {isLoading
             ? Array.from({ length: 8 }).map((_, i) => (
                 <Box key={i} sx={{ textAlign: 'center', flex: '0 0 auto' }}>
-                  <Skeleton variant="circular" width={92} height={92} />
+                  <Skeleton variant="circular" width={132} height={132} />
                 </Box>
               ))
             : productTypes.map((type) => (
@@ -35,13 +35,13 @@ export default function ProductTypeStrip() {
                     textAlign: 'center',
                     flex: '0 0 auto',
                     textDecoration: 'none',
-                    width: 96,
+                    width: 136,
                   }}
                 >
                   <Box
                     sx={{
-                      width: 92,
-                      height: 92,
+                      width: 132,
+                      height: 132,
                       borderRadius: '50%',
                       overflow: 'hidden',
                       border: '1px solid',

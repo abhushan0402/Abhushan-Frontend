@@ -100,7 +100,7 @@ export default function OrdersPage() {
                       label={status}
                       size="small"
                       color={ORDER_STATUS_COLORS[status] ?? 'default'}
-                      sx={{ borderRadius: 0, textTransform: 'capitalize' }}
+                      sx={{ textTransform: 'capitalize' }}
                     />
                   </Stack>
                   <Typography variant="body2" sx={{ color: 'text.secondary' }}>

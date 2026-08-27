@@ -23,6 +23,7 @@ export default function CraftsmanshipBanner() {
                 aspectRatio: '4 / 5',
                 bgcolor: '#e9e2d3',
                 overflow: 'hidden',
+                borderRadius: '16px',
               }}
             >
               {image ? (

@@ -66,8 +66,8 @@ export default function Header() {
       position="sticky"
       elevation={0}
       sx={{
-        background: 'linear-gradient(135deg, #121212 0%, #383838 55%, #232323 100%)',
-        borderBottom: '1px solid rgba(31,128,117,0.18)',
+        background: 'linear-gradient(135deg, #2BBBAE 0%, #14807A 55%, #0A4D4A 100%)',
+        borderBottom: '1px solid rgba(20, 128, 122,0.18)',
       }}
     >
       <Toolbar disableGutters sx={{ px: { xs: 2, md: 4 }, py: 1.25, minHeight: { xs: 64, md: 84 } }}>
@@ -105,7 +105,7 @@ export default function Header() {
                 textTransform: 'uppercase',
                 position: 'relative',
                 pb: 0.5,
-                '&:hover': { color: '#1f8075' },
+                '&:hover': { color: '#D4AF37' },
               }}
             >
               {link.label}

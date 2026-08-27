@@ -32,8 +32,9 @@ export default function VideoSection() {
             aspectRatio: '16 / 9',
             maxWidth: 960,
             mx: 'auto',
-            bgcolor: '#121212',
+            bgcolor: '#0E5A55',
             overflow: 'hidden',
+            borderRadius: '16px',
           }}
         >
           {playing ? (
@@ -74,7 +75,7 @@ export default function VideoSection() {
                     '&:hover': { bgcolor: '#fff' },
                   }}
                 >
-                  <PlayArrowRoundedIcon sx={{ fontSize: 40, color: '#121212' }} />
+                  <PlayArrowRoundedIcon sx={{ fontSize: 40, color: '#0E5A55' }} />
                 </IconButton>
               </Box>
             </>

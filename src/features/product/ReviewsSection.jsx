@@ -131,7 +131,7 @@ export default function ReviewsSection({ productId }) {
         <Stack divider={<Divider />} spacing={2.5}>
           {reviews.map((review) => (
             <Box key={review._id} sx={{ display: 'flex', gap: 2 }}>
-              <Avatar sx={{ bgcolor: '#1f8075', color: '#121212', width: 40, height: 40 }}>
+              <Avatar sx={{ bgcolor: '#14807A', color: '#f5f1e8', width: 40, height: 40 }}>
                 {initials(review.userName ?? review.user?.firstName ?? 'A')}
               </Avatar>
               <Box>

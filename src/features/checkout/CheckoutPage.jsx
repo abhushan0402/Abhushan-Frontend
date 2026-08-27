@@ -55,7 +55,7 @@ function PaymentBadge({ label, bg, color = '#fff' }) {
         fontSize: '0.7rem',
         fontWeight: 600,
         letterSpacing: '0.02em',
-        borderRadius: 0.5,
+        borderRadius: '6px',
       }}
     >
       {label}
@@ -237,7 +237,7 @@ export default function CheckoutPage() {
           name: selectedAddress?.fullName,
           contact: selectedAddress?.mobile,
         },
-        theme: { color: '#1f8075' },
+        theme: { color: '#14807A' },
         handler: (response) => {
           verifyPayment.mutate(
             {
@@ -283,7 +283,7 @@ export default function CheckoutPage() {
           to={activeStep === 0 ? '/cart' : undefined}
           onClick={activeStep === 0 ? undefined : handleTopBack}
           aria-label="Back"
-          sx={{ border: '1px solid', borderColor: 'divider', borderRadius: 0 }}
+          sx={{ border: '1px solid', borderColor: 'divider', borderRadius: '50%' }}
         >
           <ArrowBackRoundedIcon fontSize="small" />
         </IconButton>
@@ -336,7 +336,7 @@ export default function CheckoutPage() {
                             <Stack direction="row" spacing={1} alignItems="center">
                               <Typography sx={{ fontWeight: 600 }}>{addr.label}</Typography>
                               {addr.isDefault ? (
-                                <Chip label="Default" size="small" sx={{ borderRadius: 0 }} />
+                                <Chip label="Default" size="small" />
                               ) : null}
                             </Stack>
                             <Typography variant="body2">{addr.fullName}, {addr.mobile}</Typography>
@@ -469,7 +469,7 @@ export default function CheckoutPage() {
           <Box
             sx={{
               background: 'linear-gradient(160deg, #faf7f1 0%, #f1ebe0 100%)',
-              borderRadius: 3,
+              borderRadius: '16px',
               border: '1px solid',
               borderColor: 'divider',
               p: { xs: 3, md: 3.5 },

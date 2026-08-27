@@ -9,19 +9,19 @@
   --breakpoint-md: 56.25rem; /* 900px, matches MUI */
   --breakpoint-lg: 75rem; /* 1200px, matches MUI */
   --breakpoint-xl: 96rem; /* 1536px, matches MUI */
-  --color-accent: #1f8075;
-  --color-accent-light: #62bfb0;
-  --color-accent-dark: #14544e;
-  --color-brand-black: #121212;
+  --color-accent: #2BBBAE;
+  --color-accent-light: #5DD0C4;
+  --color-accent-dark: #14807A;
+  --color-brand-black: #0E5A55;
   --color-brand-cream: #f8f5ef;
   --font-display: 'Playfair Display', Georgia, serif;
-  --font-body: 'Jost', 'Segoe UI', sans-serif;
+  --font-body: 'Poppins', 'Segoe UI', sans-serif;
 }
 
 :root {
-  --accent: #1f8075;
-  --accent-light: #62bfb0;
-  --black: #121212;
+  --accent: #2BBBAE;
+  --accent-light: #5DD0C4;
+  --black: #0E5A55;
   --cream: #f8f5ef;
 }
 
@@ -40,7 +40,7 @@ body {
      and never competes with foreground text/product-image contrast. */
   background-color: var(--cream);
   background-image:
-    radial-gradient(circle at 15% 0%, rgba(31, 128, 117, 0.06), transparent 45%),
+    radial-gradient(circle at 15% 0%, rgba(20, 128, 122, 0.06), transparent 45%),
     radial-gradient(circle at 85% 15%, rgba(201, 180, 92, 0.07), transparent 40%);
   background-attachment: fixed;
 }

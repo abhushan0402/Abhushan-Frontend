@@ -1,51 +1,49 @@
-// Brand palette — built from three tonal ramps the user supplied as a
-// swatch image (no hex labels were visible on that image, so these are a
-// careful visual approximation; happy to swap in exact values if provided):
-//   neutral/charcoal ramp -> dark surfaces (Header/Hero/Footer/marketing)
-//   teal ramp             -> primary brand accent (buttons, links, highlights)
-//   gold/khaki ramp        -> secondary metallic accent (ratings, badges) —
-//                             a classic pairing with deep teal, and fitting
-//                             for a jewelry brand
-// Each ramp runs lightest -> darkest:
-//   neutral: #ededed #d6d6d6 #bfbfbf #a3a3a3 #878787 #6b6b6b #525252 #383838 #232323 #121212
-//   teal:    #dff3ef #b8e3db #8fd2c5 #62bfb0 #1f8075(base) #196a61 #14544e #0f3f3b #0a2a27 #051815
-//   gold:    #fbf3d0 #f0e4a8 #e0cf7e #c9b45c #a08b3f(base) #7d6c2f #5c4f22 #3e3517 #241e0d #120f06
+// Brand palette — teal-forward 3D UI scheme, per the user's supplied hex
+// codes: TealPrimary #2BBBAE, TealDark #14807A, TealLight/Highlight #5CE1E6
+// (glossy light reflection), TealDeepShadow #0A4D4A (depth/shadow/background
+// contrast), GoldAccent #D4AF37 (jewelry highlight elements). Dark surfaces
+// (Header/Hero/Footer/marketing) are built off the teal ramp — no black used
+// anywhere as a primary color. Gradients use the highlight/dark/deep-shadow
+// stops together to read as raised, glossy 3D surfaces rather than flat fills.
 
 export const colors = {
-  black: '#121212', // neutral ramp, darkest stop
-  blackSoft: '#232323', // neutral ramp
-  blackElevated: '#383838', // neutral ramp
-  accent: '#1f8075', // teal ramp base — primary brand accent
-  accentLight: '#62bfb0', // teal ramp, lighter tint
-  accentDark: '#14544e', // teal ramp, darker shade
-  gold: '#c9b45c', // gold/khaki ramp — secondary metallic accent
-  goldLight: '#e0cf7e',
-  goldDark: '#7d6c2f',
+  black: '#0E5A55', // deep teal — darkest surface stop (replaces charcoal/black)
+  blackSoft: '#14807A', // TealDark — mid surface stop
+  blackElevated: '#2BBBAE', // TealPrimary — lightest "sheen" stop
+  accent: '#2BBBAE', // TealPrimary — primary brand accent
+  accentLight: '#5DD0C4', // lighter tint, derived from TealPrimary
+  accentDark: '#14807A', // TealDark
+  accentHighlight: '#5CE1E6', // Teal Light — glossy light reflection / highlight edge
+  accentDeepShadow: '#0A4D4A', // Teal Deep Shadow — 3D depth, shadow, background contrast
+  gold: '#D4AF37', // Gold Accent — buttons and jewelry highlight elements
+  goldLight: '#E6C86E',
+  goldDark: '#94781F',
   cream: '#f8f5ef',
   creamDeep: '#f1ebe0',
   ivory: '#f5f1e8',
   textOnDark: '#f5f1e8',
-  textOnDarkMuted: '#9b968d',
+  textOnDarkMuted: '#9CA3AF', // TextHint
   textOnLight: '#211d17',
   textOnLightMuted: '#6f6a5f',
-  border: 'rgba(31, 128, 117, 0.28)',
+  border: 'rgba(20, 128, 122, 0.28)',
   borderOnLight: 'rgba(33, 29, 23, 0.12)',
-  success: '#5c8a5c',
+  success: '#22C55E', // ColorSuccess
   error: '#b3453f',
 }
 
 export const gradients = {
-  // Neutral charcoal sweep used for the hero and other large dark marketing
-  // moments — no black, just the neutral ramp's darker stops.
-  dark: 'linear-gradient(135deg, #121212 0%, #2b2b2b 55%, #1a1a1a 100%)',
-  // Teal accent gradient used for primary buttons and highlight banners
-  accent: 'linear-gradient(135deg, #1f8075 0%, #196a61 55%, #14544e 100%)',
-  accentHover: 'linear-gradient(135deg, #62bfb0 0%, #1f8075 55%, #196a61 100%)',
+  // Primary -> Dark -> Deep Shadow sweep used for the hero and other large
+  // dark marketing moments — reads as a raised 3D surface with real depth.
+  dark: 'linear-gradient(135deg, #2BBBAE 0%, #14807A 55%, #0A4D4A 100%)',
+  // Glossy 3D button gradient: light reflection at the top, deepening toward
+  // the bottom, like a raised/glossy surface rather than a flat fill.
+  accent: 'linear-gradient(180deg, #5CE1E6 0%, #2BBBAE 45%, #14807A 100%)',
+  accentHover: 'linear-gradient(180deg, #8CF0F3 0%, #5CE1E6 45%, #2BBBAE 100%)',
 }
 
 export const fonts = {
   display: '"Playfair Display", "Georgia", serif',
-  body: '"Jost", "Segoe UI", sans-serif',
+  body: '"Poppins", "Segoe UI", sans-serif',
 }
 
 // Aligned with MUI default breakpoints so Tailwind screens can match 1:1.

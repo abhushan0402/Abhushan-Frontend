@@ -58,7 +58,7 @@ export default function OrderDetailPage() {
         <Chip
           label={status}
           color={ORDER_STATUS_COLORS[status] ?? 'default'}
-          sx={{ borderRadius: 0, textTransform: 'capitalize' }}
+          sx={{ textTransform: 'capitalize' }}
         />
       </Stack>
       <Typography sx={{ color: 'text.secondary', mb: 5 }}>Placed on {getOrderDate(order)}</Typography>
