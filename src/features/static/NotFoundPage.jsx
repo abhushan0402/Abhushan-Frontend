@@ -14,7 +14,7 @@ export default function NotFoundPage() {
       }}
     >
       <Typography
-        sx={{ fontFamily: 'Playfair Display, serif', fontSize: { xs: '4rem', md: '6rem' }, color: 'primary.main' }}
+        sx={{ fontFamily: 'Lora, serif', fontSize: { xs: '4rem', md: '6rem' }, color: 'primary.main' }}
       >
         404
       </Typography>

@@ -42,8 +42,8 @@ export const gradients = {
 }
 
 export const fonts = {
-  display: '"Playfair Display", "Georgia", serif',
-  body: '"Poppins", "Segoe UI", sans-serif',
+  display: '"Lora", "Georgia", serif',
+  body: '"DM Sans", "Segoe UI", sans-serif',
 }
 
 // Aligned with MUI default breakpoints so Tailwind screens can match 1:1.

@@ -3,6 +3,10 @@ import { useAuthStore } from '../store/authStore'
 
 const axiosClient = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
+  // Without a timeout, a slow/overloaded backend leaves requests hanging
+  // indefinitely — the UI just spins forever instead of surfacing an
+  // ErrorState the user can retry from.
+  timeout: 20000,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -48,6 +52,9 @@ axiosClient.interceptors.response.use(
       validationDetail ||
       (typeof data?.message === 'string' && data.message) ||
       (typeof data?.error === 'string' && data.error) ||
+      (error?.code === 'ECONNABORTED' &&
+        'The server is taking longer than usual to respond. Please try again.') ||
+      (!error?.response && 'Network error. Please check your connection and try again.') ||
       error?.message ||
       'Something went wrong. Please try again.'
 

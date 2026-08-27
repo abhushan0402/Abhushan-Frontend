@@ -76,7 +76,7 @@ export default function SearchOverlay() {
               sx={{
                 color: '#f5f1e8',
                 fontSize: { xs: '1.1rem', md: '1.5rem' },
-                fontFamily: 'Playfair Display, serif',
+                fontFamily: 'Lora, serif',
                 '& input::placeholder': { color: 'rgba(245,241,232,0.4)', opacity: 1 },
               }}
             />

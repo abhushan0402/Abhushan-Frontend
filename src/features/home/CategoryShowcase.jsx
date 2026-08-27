@@ -70,7 +70,7 @@ export default function CategoryShowcase() {
                         <Typography
                           sx={{
                             color: '#fff',
-                            fontFamily: 'Playfair Display, serif',
+                            fontFamily: 'Lora, serif',
                             fontSize: '1.4rem',
                             mb: 0.5,
                           }}

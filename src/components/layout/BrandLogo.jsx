@@ -46,9 +46,10 @@ export default function BrandLogo({ dark = true, size = 'medium' }) {
       <Box sx={{ lineHeight: 1 }}>
         <Typography
           sx={{
-            fontFamily: 'Playfair Display, serif',
+            fontFamily: 'Lora, serif',
+            fontWeight: 600,
             fontSize: size === 'large' ? '1.5rem' : '1.15rem',
-            letterSpacing: '0.04em',
+            letterSpacing: '0.02em',
             color,
             lineHeight: 1.1,
           }}

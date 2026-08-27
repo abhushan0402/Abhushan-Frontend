@@ -8,7 +8,7 @@ export default function Hero() {
         component="img"
         src="/Hero.png"
         alt="Abhushan Vatika — Crafted to Shine, Made to Treasure"
-        sx={{ width: '100%', height: '400px',objectPosition: 'center' }}
+        sx={{ width: '100%', height: '400px'}}
       />
       {/* The "Explore Collection" call-to-action is baked into the banner
           image itself — this invisible link sits over that button's

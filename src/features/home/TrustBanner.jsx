@@ -13,8 +13,8 @@ export default function TrustBanner() {
       component="section"
       sx={{
         py: { xs: 6, md: 8 },
-        background: 'linear-gradient(135deg, #2BBBAE 0%, #14807A 55%, #0A4D4A 100%)',
-        color: '#f5f1e8',
+        background: '#f8f5ef',
+        color: '#211d17',
       }}
     >
       <Box className="av-container">
@@ -25,10 +25,10 @@ export default function TrustBanner() {
               <Grid key={badge.title} size={{ xs: 6, md: 3 }}>
                 <Box sx={{ textAlign: 'center', px: 1 }}>
                   <Icon sx={{ color: '#D4AF37', fontSize: 32, mb: 1.5 }} />
-                  <Typography sx={{ fontSize: '0.85rem', fontWeight: 500, mb: 0.5 }}>
+                  <Typography sx={{ fontSize: '0.85rem', fontWeight: 500, mb: 0.5, color: '#211d17' }}>
                     {badge.title}
                   </Typography>
-                  <Typography sx={{ fontSize: '0.75rem', color: 'rgba(245,241,232,0.6)' }}>
+                  <Typography sx={{ fontSize: '0.75rem', color: '#6f6a5f' }}>
                     {badge.desc}
                   </Typography>
                 </Box>

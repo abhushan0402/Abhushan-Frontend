@@ -62,24 +62,40 @@ export default function Header() {
   }
 
   return (
-    <AppBar
-      position="sticky"
-      elevation={0}
-      sx={{
-        background: 'linear-gradient(135deg, #2BBBAE 0%, #14807A 55%, #0A4D4A 100%)',
-        borderBottom: '1px solid rgba(20, 128, 122,0.18)',
-      }}
-    >
+    <>
+      <Box
+        sx={{
+          background: '#2BBBAE',
+          color: '#f5f1e8',
+          textAlign: 'center',
+          fontFamily: '"DM Sans", "Segoe UI", sans-serif',
+          fontSize: '0.72rem',
+          fontWeight: 500,
+          letterSpacing: '0.08em',
+          py: 0.6,
+          px: 2,
+        }}
+      >
+        BIS Hallmarked &nbsp;•&nbsp; Free Insured Shipping &nbsp;•&nbsp; Lifetime Exchange
+      </Box>
+      <AppBar
+        position="sticky"
+        elevation={0}
+        sx={{
+          background: '#ffffff',
+          borderBottom: '1px solid rgba(33, 29, 23, 0.08)',
+        }}
+      >
       <Toolbar disableGutters sx={{ px: { xs: 2, md: 4 }, py: 1.25, minHeight: { xs: 64, md: 84 } }}>
         <IconButton
           onClick={openMobileNav}
-          sx={{ color: '#f5f1e8', display: { xs: 'inline-flex', md: 'none' }, mr: 1 }}
+          sx={{ color: '#211d17', display: { xs: 'inline-flex', md: 'none' }, mr: 1 }}
           aria-label="Open menu"
         >
           <MenuRoundedIcon />
         </IconButton>
 
-        <BrandLogo dark size="medium" />
+        <BrandLogo dark={false} size="medium" />
 
         <Box
           component="nav"
@@ -98,14 +114,16 @@ export default function Header() {
               to={link.to}
               onMouseEnter={(e) => handleMenuEnter(e, link)}
               sx={{
-                color: '#f5f1e8',
+                color: '#211d17',
                 textDecoration: 'none',
+                fontFamily: '"DM Sans", "Segoe UI", sans-serif',
                 fontSize: '0.8rem',
-                letterSpacing: '0.12em',
+                fontWeight: 600,
+                letterSpacing: '0.1em',
                 textTransform: 'uppercase',
                 position: 'relative',
                 pb: 0.5,
-                '&:hover': { color: '#D4AF37' },
+                '&:hover': { color: '#14807A' },
               }}
             >
               {link.label}
@@ -124,28 +142,28 @@ export default function Header() {
         <Box sx={{ flex: 1 }} />
 
         <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 0.5, md: 1 } }}>
-          <IconButton onClick={openSearch} sx={{ color: '#f5f1e8' }} aria-label="Search">
+          <IconButton onClick={openSearch} sx={{ color: '#211d17' }} aria-label="Search">
             <SearchRoundedIcon />
           </IconButton>
-          <NotificationsMenu iconColor="#f5f1e8" />
+          <NotificationsMenu iconColor="#211d17" />
           <IconButton
             component={RouterLink}
             to={isAuthenticated ? '/account/profile' : '/signin'}
-            sx={{ color: '#f5f1e8', display: { xs: 'none', sm: 'inline-flex' } }}
+            sx={{ color: '#211d17', display: { xs: 'none', sm: 'inline-flex' } }}
             aria-label="Account"
           >
             <PersonOutlineRoundedIcon />
           </IconButton>
           <IconButton
             onClick={() => navigate('/wishlist')}
-            sx={{ color: '#f5f1e8' }}
+            sx={{ color: '#211d17' }}
             aria-label="Wishlist"
           >
             <Badge badgeContent={wishlistCount} color="primary" max={99}>
               <FavoriteBorderRoundedIcon />
             </Badge>
           </IconButton>
-          <IconButton onClick={openCartDrawer} sx={{ color: '#f5f1e8' }} aria-label="Cart">
+          <IconButton onClick={openCartDrawer} sx={{ color: '#211d17' }} aria-label="Cart">
             <Badge badgeContent={cartCount} color="primary" max={99}>
               <ShoppingBagOutlinedIcon />
             </Badge>
@@ -153,6 +171,7 @@ export default function Header() {
         </Box>
       </Toolbar>
       <SearchOverlay />
-    </AppBar>
+      </AppBar>
+    </>
   )
 }
