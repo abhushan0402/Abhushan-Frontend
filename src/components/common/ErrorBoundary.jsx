@@ -24,7 +24,7 @@ export default class ErrorBoundary extends Component {
             justifyContent: 'center',
             textAlign: 'center',
             px: 3,
-            background: 'linear-gradient(135deg, #2BBBAE 0%, #14807A 55%, #0A4D4A 100%)',
+            background: 'linear-gradient(135deg, #9C4FB0 0%, #701888 55%, #2e0a3f 100%)',
             color: '#f5f1e8',
           }}
         >
@@ -39,8 +39,8 @@ export default class ErrorBoundary extends Component {
             variant="outlined"
             sx={{
               color: '#f5f1e8',
-              borderColor: '#D4AF37',
-              '&:hover': { bgcolor: '#D4AF37', color: '#0E5A55', borderColor: '#D4AF37' },
+              borderColor: '#facc15',
+              '&:hover': { bgcolor: '#facc15', color: '#2e0a3f', borderColor: '#facc15' },
             }}
             onClick={() => window.location.reload()}
           >

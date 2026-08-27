@@ -17,7 +17,7 @@ function FooterColumn({ title, links }) {
     <Box>
       <Typography
         variant="subtitle2"
-        sx={{ color: '#D4AF37', letterSpacing: '0.15em', mb: 2, fontSize: '0.75rem' }}
+        sx={{ color: '#facc15', letterSpacing: '0.15em', mb: 2, fontSize: '0.75rem' }}
       >
         {title}
       </Typography>
@@ -47,7 +47,7 @@ export default function Footer() {
     <Box
       component="footer"
       sx={{
-        background: 'linear-gradient(135deg, #2BBBAE 0%, #14807A 55%, #0A4D4A 100%)',
+        background: 'linear-gradient(135deg, #7a1c53 0%, #1b1338 100%)',
         color: '#f5f1e8',
         pt: { xs: 6, md: 9 },
         pb: 3,
@@ -74,9 +74,9 @@ export default function Footer() {
                   size="small"
                   sx={{
                     color: '#f5f1e8',
-                    border: '1px solid rgba(20, 128, 122,0.3)',
+                    border: '1px solid rgba(112, 24, 136,0.3)',
                     borderRadius: '50%',
-                    '&:hover': { color: '#D4AF37', borderColor: '#D4AF37' },
+                    '&:hover': { color: '#facc15', borderColor: '#facc15' },
                     '&.Mui-disabled': { color: 'rgba(245,241,232,0.35)' },
                   }}
                 >
@@ -96,7 +96,7 @@ export default function Footer() {
           </Grid>
         </Grid>
 
-        <Divider sx={{ borderColor: 'rgba(20, 128, 122,0.18)', my: { xs: 4, md: 5 } }} />
+        <Divider sx={{ borderColor: 'rgba(112, 24, 136,0.18)', my: { xs: 4, md: 5 } }} />
 
         <Box
           sx={{

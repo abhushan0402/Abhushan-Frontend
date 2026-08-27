@@ -1,10 +1,11 @@
-import { Box, Typography, Chip, Skeleton, Stack, Divider } from '@mui/material'
+import { Box, Typography, Chip, Stack, Divider } from '@mui/material'
 import { Link as RouterLink } from 'react-router-dom'
 import ReceiptLongOutlinedIcon from '@mui/icons-material/ReceiptLongOutlined'
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded'
 import { useOrders } from '../../hooks/useOrders'
 import EmptyState from '../../components/common/EmptyState'
 import ErrorState from '../../components/common/ErrorState'
+import { OrdersListSkeleton } from '../../components/common/PageSkeleton'
 import { formatPrice } from '../../utils/formatCurrency'
 import { handleImageError } from '../../utils/handleImageError'
 import {
@@ -26,11 +27,7 @@ export default function OrdersPage() {
         <Typography variant="h6" sx={{ textTransform: 'none', fontSize: '1.1rem', mb: 3 }}>
           My Orders
         </Typography>
-        <Stack spacing={2}>
-          {Array.from({ length: 3 }).map((_, i) => (
-            <Skeleton key={i} variant="rectangular" height={100} />
-          ))}
-        </Stack>
+        <OrdersListSkeleton />
       </Box>
     )
   }

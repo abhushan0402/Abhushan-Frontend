@@ -15,7 +15,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useProductReviews, useCreateReview } from '../../hooks/useReviews'
 import { useIsAuthenticated } from '../../hooks/useAuth'
 import { reviewSchema } from '../../utils/validators'
-import { TextBlockSkeleton } from '../../components/common/Skeletons'
+import { TextBlockSkeleton } from '../../components/common/PageSkeleton'
 import RateReviewOutlinedIcon from '@mui/icons-material/RateReviewOutlined'
 
 function initials(name = '') {
@@ -131,7 +131,7 @@ export default function ReviewsSection({ productId }) {
         <Stack divider={<Divider />} spacing={2.5}>
           {reviews.map((review) => (
             <Box key={review._id} sx={{ display: 'flex', gap: 2 }}>
-              <Avatar sx={{ bgcolor: '#14807A', color: '#f5f1e8', width: 40, height: 40 }}>
+              <Avatar sx={{ bgcolor: '#701888', color: '#f5f1e8', width: 40, height: 40 }}>
                 {initials(review.userName ?? review.user?.firstName ?? 'A')}
               </Avatar>
               <Box>

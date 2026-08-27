@@ -1,9 +1,9 @@
 import { useParams, Link as RouterLink } from 'react-router-dom'
-import { Box, Typography, Breadcrumbs, Skeleton } from '@mui/material'
+import { Box, Typography, Breadcrumbs } from '@mui/material'
 import { useCategories, useSubCategories } from '../../hooks/useCategories'
 import { useProducts } from '../../hooks/useProducts'
 import ProductGrid from '../../components/product/ProductGrid'
-import { ProductGridSkeleton } from '../../components/common/Skeletons'
+import { ProductGridSkeleton, CategoryListingPageSkeleton } from '../../components/common/PageSkeleton'
 import ErrorState from '../../components/common/ErrorState'
 import EmptyState from '../../components/common/EmptyState'
 import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined'
@@ -35,12 +35,7 @@ export default function SubCategoryPage() {
   const products = data?.products ?? []
 
   if (subCategoriesLoading) {
-    return (
-      <Box className="av-container" sx={{ py: 6 }}>
-        <Skeleton variant="text" width={280} sx={{ fontSize: '2rem', mb: 3 }} />
-        <ProductGridSkeleton />
-      </Box>
-    )
+    return <CategoryListingPageSkeleton />
   }
 
   if (!subCategory) {

@@ -1,4 +1,4 @@
-import { Box, Typography, Skeleton, Grid2 as Grid } from '@mui/material'
+import { Box, Typography, Grid2 as Grid } from '@mui/material'
 import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import { useIsAuthenticated } from '../../hooks/useAuth'
@@ -6,6 +6,7 @@ import { useWishlistProducts } from '../../hooks/useWishlist'
 import WishlistItemCard from './WishlistItemCard'
 import EmptyState from '../../components/common/EmptyState'
 import ErrorState from '../../components/common/ErrorState'
+import { WishlistGridSkeleton } from '../../components/common/PageSkeleton'
 
 export default function WishlistPage() {
   const isAuthenticated = useIsAuthenticated()
@@ -32,13 +33,7 @@ export default function WishlistPage() {
       </Typography>
 
       {isLoading ? (
-        <Grid container spacing={3}>
-          {Array.from({ length: 4 }).map((_, i) => (
-            <Grid key={i} size={{ xs: 6, sm: 4, md: 3 }}>
-              <Skeleton variant="rectangular" sx={{ aspectRatio: '1 / 1' }} />
-            </Grid>
-          ))}
-        </Grid>
+        <WishlistGridSkeleton />
       ) : isError ? (
         <ErrorState
           title="Could not load your wishlist"

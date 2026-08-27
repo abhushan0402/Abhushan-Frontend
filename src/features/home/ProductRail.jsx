@@ -2,7 +2,7 @@ import { Box } from '@mui/material'
 import SectionHeading from '../../components/common/SectionHeading'
 import ScrollCarousel from '../../components/product/ScrollCarousel'
 import ErrorState from '../../components/common/ErrorState'
-import { ProductGridSkeleton } from '../../components/common/Skeletons'
+import { ProductGridSkeleton } from '../../components/common/PageSkeleton'
 
 export default function ProductRail({
   eyebrow,
@@ -13,6 +13,7 @@ export default function ProductRail({
   isError,
   refetch,
   autoScroll = false,
+  viewAllHref,
 }) {
   if (!isLoading && !isError && (!products || products.length === 0)) {
     return null
@@ -21,7 +22,12 @@ export default function ProductRail({
   return (
     <Box component="section" sx={{ py: { xs: 6, md: 9 } }}>
       <Box className="av-container">
-        <SectionHeading eyebrow={eyebrow} title={title} subtitle={subtitle} />
+        <SectionHeading
+          eyebrow={eyebrow}
+          title={title}
+          subtitle={subtitle}
+          viewAllHref={viewAllHref}
+        />
         {isLoading ? (
           <ProductGridSkeleton count={4} />
         ) : isError ? (

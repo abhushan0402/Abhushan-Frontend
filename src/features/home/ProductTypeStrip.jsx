@@ -1,8 +1,9 @@
-import { Box, Typography, Skeleton } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { Link as RouterLink } from 'react-router-dom'
 import { useProductTypes } from '../../hooks/useCategories'
 import SectionHeading from '../../components/common/SectionHeading'
 import HorizontalScroller from '../../components/common/HorizontalScroller'
+import { ProductTypeStripSkeleton } from '../../components/common/PageSkeleton'
 
 export default function ProductTypeStrip() {
   const { data: productTypes = [], isLoading } = useProductTypes()
@@ -21,11 +22,7 @@ export default function ProductTypeStrip() {
         <SectionHeading eyebrow="Quick Shop" title="Shop by Type" />
         <HorizontalScroller gap={{ xs: 3, md: 4 }}>
           {isLoading
-            ? Array.from({ length: 8 }).map((_, i) => (
-                <Box key={i} sx={{ textAlign: 'center', flex: '0 0 auto' }}>
-                  <Skeleton variant="circular" width={132} height={132} />
-                </Box>
-              ))
+            ? <ProductTypeStripSkeleton />
             : productTypes.map((type) => (
                 <Box
                   key={type.productType}

@@ -1,8 +1,9 @@
 import { useParams, Link as RouterLink } from 'react-router-dom'
-import { Box, Typography, Chip, Skeleton, Stack, Divider, Grid2 as Grid, Button } from '@mui/material'
+import { Box, Typography, Chip, Stack, Divider, Grid2 as Grid, Button } from '@mui/material'
 import ChevronLeftRoundedIcon from '@mui/icons-material/ChevronLeftRounded'
 import { useOrder } from '../../hooks/useOrders'
 import ErrorState from '../../components/common/ErrorState'
+import { OrderDetailPageSkeleton } from '../../components/common/PageSkeleton'
 import { formatPrice } from '../../utils/formatCurrency'
 import { handleImageError } from '../../utils/handleImageError'
 import {
@@ -19,12 +20,7 @@ export default function OrderDetailPage() {
   const { data: order, isLoading, isError, refetch } = useOrder(id)
 
   if (isLoading) {
-    return (
-      <Box className="av-container" sx={{ py: 6 }}>
-        <Skeleton variant="text" width={220} sx={{ fontSize: '2rem', mb: 3 }} />
-        <Skeleton variant="rectangular" height={200} />
-      </Box>
-    )
+    return <OrderDetailPageSkeleton />
   }
 
   if (isError || !order) {

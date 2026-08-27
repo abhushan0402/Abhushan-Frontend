@@ -1,4 +1,4 @@
-import { createTheme } from '@mui/material/styles'
+import { createTheme, alpha } from '@mui/material/styles'
 import { colors, fonts, breakpoints } from './tokens'
 
 const theme = createTheme({
@@ -91,10 +91,10 @@ const theme = createTheme({
           borderColor: colors.accent,
         },
         containedPrimary: {
-          backgroundColor: '#106D68',
+          backgroundColor: '#701888',
           boxShadow: 'none',
           '&:hover': {
-            backgroundColor: '#0D5753',
+            backgroundColor: '#4F1164',
             boxShadow: 'none',
           },
           '&.Mui-disabled': {
@@ -127,6 +127,13 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           borderRadius: 10,
+        },
+      },
+    },
+    MuiSkeleton: {
+      styleOverrides: {
+        root: {
+          backgroundColor: alpha(colors.accent, 0.11),
         },
       },
     },

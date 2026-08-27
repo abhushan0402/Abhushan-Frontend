@@ -237,7 +237,7 @@ export default function CheckoutPage() {
           name: selectedAddress?.fullName,
           contact: selectedAddress?.mobile,
         },
-        theme: { color: '#14807A' },
+        theme: { color: '#701888' },
         handler: (response) => {
           verifyPayment.mutate(
             {

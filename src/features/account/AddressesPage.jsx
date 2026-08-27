@@ -13,7 +13,7 @@ import {
 } from '../../hooks/useAddresses'
 import AddressFormDialog from './AddressFormDialog'
 import EmptyState from '../../components/common/EmptyState'
-import { ProductGridSkeleton } from '../../components/common/Skeletons'
+import { ProductGridSkeleton } from '../../components/common/PageSkeleton'
 
 export default function AddressesPage() {
   const { data: addresses = [], isLoading } = useAddresses()

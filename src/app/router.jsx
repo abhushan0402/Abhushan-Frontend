@@ -3,9 +3,9 @@ import { createBrowserRouter } from 'react-router-dom'
 import { lazy, Suspense } from 'react'
 import RootLayout from '../components/layout/RootLayout'
 import ProtectedRoute from '../components/common/ProtectedRoute'
-import PageLoader from '../components/common/PageLoader'
+import { RouteFallbackSkeleton } from '../components/common/PageSkeleton'
+import HomePage from '../features/home/HomePage'
 
-const HomePage = lazy(() => import('../features/home/HomePage'))
 const ShopPage = lazy(() => import('../features/catalog/ShopPage'))
 const CategoryPage = lazy(() => import('../features/catalog/CategoryPage'))
 const SubCategoryPage = lazy(() => import('../features/catalog/SubCategoryPage'))
@@ -31,7 +31,7 @@ const TermsPage = lazy(() => import('../features/static/TermsPage'))
 const NotFoundPage = lazy(() => import('../features/static/NotFoundPage'))
 
 function withSuspense(element) {
-  return <Suspense fallback={<PageLoader />}>{element}</Suspense>
+  return <Suspense fallback={<RouteFallbackSkeleton />}>{element}</Suspense>
 }
 
 export const router = createBrowserRouter([
@@ -39,7 +39,7 @@ export const router = createBrowserRouter([
     path: '/',
     element: <RootLayout />,
     children: [
-      { index: true, element: withSuspense(<HomePage />) },
+      { index: true, element: <HomePage /> },
       { path: 'shop', element: withSuspense(<ShopPage />) },
       { path: 'category/:slug', element: withSuspense(<CategoryPage />) },
       { path: 'subcategory/:slug', element: withSuspense(<SubCategoryPage />) },

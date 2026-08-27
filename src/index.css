@@ -9,19 +9,19 @@
   --breakpoint-md: 56.25rem; /* 900px, matches MUI */
   --breakpoint-lg: 75rem; /* 1200px, matches MUI */
   --breakpoint-xl: 96rem; /* 1536px, matches MUI */
-  --color-accent: #2BBBAE;
-  --color-accent-light: #5DD0C4;
-  --color-accent-dark: #14807A;
-  --color-brand-black: #0E5A55;
+  --color-accent: #701888;
+  --color-accent-light: #9C4FB0;
+  --color-accent-dark: #4F1164;
+  --color-brand-black: #2e0a3f;
   --color-brand-cream: #f8f5ef;
   --font-display: 'Lora', Georgia, serif;
   --font-body: 'DM Sans', 'Segoe UI', sans-serif;
 }
 
 :root {
-  --accent: #2BBBAE;
-  --accent-light: #5DD0C4;
-  --black: #0E5A55;
+  --accent: #701888;
+  --accent-light: #9C4FB0;
+  --black: #2e0a3f;
   --cream: #f8f5ef;
 }
 
@@ -40,8 +40,8 @@ body {
      and never competes with foreground text/product-image contrast. */
   background-color: var(--cream);
   background-image:
-    radial-gradient(circle at 15% 0%, rgba(20, 128, 122, 0.06), transparent 45%),
-    radial-gradient(circle at 85% 15%, rgba(201, 180, 92, 0.07), transparent 40%);
+    radial-gradient(circle at 15% 0%, rgba(112, 24, 136, 0.06), transparent 45%),
+    radial-gradient(circle at 85% 15%, rgba(250, 204, 21, 0.07), transparent 40%);
   background-attachment: fixed;
 }
 

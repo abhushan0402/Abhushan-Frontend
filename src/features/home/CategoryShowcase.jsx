@@ -1,9 +1,10 @@
-import { Box, Grid2 as Grid, Typography, Skeleton } from '@mui/material'
+import { Box, Grid2 as Grid, Typography } from '@mui/material'
 import { Link as RouterLink } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { useCategories } from '../../hooks/useCategories'
 import SectionHeading from '../../components/common/SectionHeading'
 import { handleImageError } from '../../utils/handleImageError'
+import { CategoryShowcaseSkeleton } from '../../components/common/PageSkeleton'
 
 export default function CategoryShowcase() {
   const { data: categories = [], isLoading } = useCategories()
@@ -18,11 +19,7 @@ export default function CategoryShowcase() {
         />
         <Grid container spacing={{ xs: 2, md: 4 }}>
           {isLoading
-            ? Array.from({ length: 3 }).map((_, i) => (
-                <Grid key={i} size={{ xs: 12, sm: 4 }}>
-                  <Skeleton variant="rectangular" sx={{ aspectRatio: '4 / 5', width: '100%' }} />
-                </Grid>
-              ))
+            ? <CategoryShowcaseSkeleton />
             : categories.map((cat, i) => (
                 <Grid key={cat._id} size={{ xs: 12, sm: 4 }}>
                   <Box
@@ -79,7 +76,7 @@ export default function CategoryShowcase() {
                         </Typography>
                         <Typography
                           sx={{
-                            color: '#D4AF37',
+                            color: '#facc15',
                             fontSize: '0.7rem',
                             letterSpacing: '0.15em',
                           }}

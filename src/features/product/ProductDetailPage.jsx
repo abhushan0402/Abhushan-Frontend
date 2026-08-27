@@ -11,7 +11,6 @@ import {
   Chip,
   Tabs,
   Tab,
-  Skeleton,
 } from '@mui/material'
 import AddRoundedIcon from '@mui/icons-material/AddRounded'
 import RemoveRoundedIcon from '@mui/icons-material/RemoveRounded'
@@ -26,6 +25,7 @@ import PriceTag from '../../components/common/PriceTag'
 import RatingStars from '../../components/common/RatingStars'
 import ProductGrid from '../../components/product/ProductGrid'
 import ErrorState from '../../components/common/ErrorState'
+import { ProductDetailPageSkeleton } from '../../components/common/PageSkeleton'
 import { formatWeight } from '../../utils/formatCurrency'
 import { useRequireAuth } from '../../hooks/useRequireAuth'
 import { useAddToCart } from '../../hooks/useCart'
@@ -51,20 +51,7 @@ export default function ProductDetailPage() {
   const relatedProducts = (relatedData?.products ?? []).filter((p) => p._id !== productId)
 
   if (isLoading) {
-    return (
-      <Box className="av-container" sx={{ py: 6 }}>
-        <Grid container spacing={5}>
-          <Grid size={{ xs: 12, md: 6 }}>
-            <Skeleton variant="rectangular" sx={{ aspectRatio: '1 / 1', width: '100%' }} />
-          </Grid>
-          <Grid size={{ xs: 12, md: 6 }}>
-            <Skeleton variant="text" width="60%" sx={{ fontSize: '2rem' }} />
-            <Skeleton variant="text" width="40%" />
-            <Skeleton variant="text" width="30%" sx={{ fontSize: '1.5rem', mt: 2 }} />
-          </Grid>
-        </Grid>
-      </Box>
-    )
+    return <ProductDetailPageSkeleton />
   }
 
   if (isError || !product) {
@@ -82,6 +69,7 @@ export default function ProductDetailPage() {
   const canBuyNow = inStock && hasPrice
 
   const handleAddToCart = () => {
+    if (!hasPrice) return
     requireAuth(() => addToCart.mutate({ productId: product._id, quantity }))
   }
 
@@ -233,10 +221,10 @@ export default function ProductDetailPage() {
                 variant="outlined"
                 color="secondary"
                 fullWidth
-                disabled={addToCart.isPending}
+                disabled={!hasPrice || addToCart.isPending}
                 onClick={handleAddToCart}
               >
-                Add to Bag
+                {hasPrice ? 'Add to Bag' : 'Price on Request'}
               </Button>
               <Button
                 variant="contained"
@@ -245,7 +233,7 @@ export default function ProductDetailPage() {
                 disabled={!canBuyNow || addToCart.isPending}
                 onClick={handleBuyNow}
               >
-                {canBuyNow ? 'Buy Now' : 'Out of Stock'}
+                {!inStock ? 'Out of Stock' : !hasPrice ? 'Price on Request' : 'Buy Now'}
               </Button>
             </Box>
 

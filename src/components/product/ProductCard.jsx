@@ -21,6 +21,7 @@ export default function ProductCard({ product }) {
   const isWishlisted = useIsWishlisted(product._id)
 
   const inStock = (product.stock ?? 0) > 0
+  const hasPrice = Number(product.basePrice) > 0
 
   const images = product.images?.length ? product.images : ['/placeholder-product.svg']
   const primaryImage = images[0]
@@ -40,7 +41,7 @@ export default function ProductCard({ product }) {
   const handleAddToCart = (e) => {
     e.preventDefault()
     e.stopPropagation()
-    if (!inStock) return
+    if (!inStock || !hasPrice) return
     requireAuth(() => {
       addToCart.mutate({ productId: product._id, quantity: 1 })
     })
@@ -103,7 +104,7 @@ export default function ProductCard({ product }) {
                 position: 'absolute',
                 top: 10,
                 left: 10,
-                bgcolor: '#0E5A55',
+                bgcolor: '#db2173',
                 color: '#f5f1e8',
                 fontSize: '0.65rem',
                 letterSpacing: '0.1em',
@@ -129,7 +130,7 @@ export default function ProductCard({ product }) {
             }}
           >
             {isWishlisted ? (
-              <FavoriteRoundedIcon fontSize="small" sx={{ color: '#14807A' }} />
+              <FavoriteRoundedIcon fontSize="small" sx={{ color: '#db2173' }} />
             ) : (
               <FavoriteBorderRoundedIcon fontSize="small" />
             )}
@@ -148,7 +149,7 @@ export default function ProductCard({ product }) {
           <PriceTag price={product.basePrice} sx={{ mt: 0.5 }} />
         </Box>
 
-        {inStock ? (
+        {inStock && hasPrice ? (
           <IconButton
             onClick={handleAddToCart}
             aria-label="Add to cart"
@@ -157,10 +158,10 @@ export default function ProductCard({ product }) {
               mt: 1.25,
               width: '100%',
               borderRadius: '999px',
-              backgroundColor: '#0B524F',
+              backgroundColor: '#701888',
               color: '#f5f1e8',
               '&:hover': {
-                backgroundColor: '#083f3d',
+                backgroundColor: '#4F1164',
                 color: '#f5f1e8',
               },
             }}
@@ -186,7 +187,7 @@ export default function ProductCard({ product }) {
               letterSpacing: '0.12em',
             }}
           >
-            OUT OF STOCK
+            {!inStock ? 'OUT OF STOCK' : 'PRICE ON REQUEST'}
           </Box>
         )}
       </Box>

@@ -32,6 +32,7 @@ export default function HomePage() {
         isLoading={bestSellers.isLoading}
         isError={bestSellers.isError}
         refetch={bestSellers.refetch}
+        viewAllHref="/shop?isBestSeller=true"
       />
       <ProductTypeStrip />
       <ProductRail
@@ -43,6 +44,7 @@ export default function HomePage() {
         isError={trending.isError}
         refetch={trending.refetch}
         autoScroll
+        viewAllHref="/shop?isTrending=true"
       />
       <CraftsmanshipBanner />
       <VideoSection />
@@ -54,6 +56,7 @@ export default function HomePage() {
         isLoading={newArrivals.isLoading}
         isError={newArrivals.isError}
         refetch={newArrivals.refetch}
+        viewAllHref="/shop?isNewArrival=true"
       />
       <ProductRail
         eyebrow="Curated For You"
@@ -62,6 +65,7 @@ export default function HomePage() {
         isLoading={featured.isLoading}
         isError={featured.isError}
         refetch={featured.refetch}
+        viewAllHref="/shop?isFeatured=true"
       />
       <TrustBanner />
     </>

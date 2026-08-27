@@ -6,7 +6,6 @@ import {
   Divider,
   Button,
   Stack,
-  Skeleton,
 } from '@mui/material'
 import { Link as RouterLink } from 'react-router-dom'
 import AddRoundedIcon from '@mui/icons-material/AddRounded'
@@ -26,6 +25,7 @@ import { formatPrice } from '../../utils/formatCurrency'
 import EmptyState from '../../components/common/EmptyState'
 import PriceTag from '../../components/common/PriceTag'
 import { handleImageError } from '../../utils/handleImageError'
+import { CartPageSkeleton } from '../../components/common/PageSkeleton'
 
 export default function CartPage() {
   const isAuthenticated = useIsAuthenticated()
@@ -52,13 +52,7 @@ export default function CartPage() {
   const subtotal = items.reduce((sum, item) => sum + (item.product?.basePrice ?? 0) * item.quantity, 0)
 
   if (isLoading) {
-    return (
-      <Box className="av-container" sx={{ py: 6 }}>
-        <Skeleton variant="text" width={220} sx={{ fontSize: '2rem', mb: 3 }} />
-        <Skeleton variant="rectangular" height={120} sx={{ mb: 2 }} />
-        <Skeleton variant="rectangular" height={120} />
-      </Box>
-    )
+    return <CartPageSkeleton />
   }
 
   if (items.length === 0) {

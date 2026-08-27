@@ -24,7 +24,7 @@ export default function RatingStars({
         size={size}
         icon={<StarRoundedIcon fontSize="inherit" />}
         emptyIcon={<StarRoundedIcon fontSize="inherit" style={{ opacity: 0.25 }} />}
-        sx={{ color: '#D4AF37' }}
+        sx={{ color: '#facc15' }}
       />
       {showCount ? (
         <Typography variant="caption" sx={{ color: 'text.secondary' }}>

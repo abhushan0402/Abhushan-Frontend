@@ -11,13 +11,13 @@ export default function AboutPage() {
     <Box>
       <Box
         sx={{
-          background: 'linear-gradient(135deg, #2BBBAE 0%, #14807A 55%, #0A4D4A 100%)',
+          background: 'linear-gradient(135deg, #9C4FB0 0%, #701888 55%, #2e0a3f 100%)',
           color: '#f5f1e8',
           py: { xs: 7, md: 11 },
         }}
       >
         <Box className="av-container" sx={{ textAlign: 'center' }}>
-          <Typography variant="subtitle2" sx={{ color: 'primary.main', letterSpacing: '0.3em', mb: 2 }}>
+          <Typography variant="subtitle2" sx={{ color: '#facc15', letterSpacing: '0.3em', mb: 2 }}>
             OUR STORY
           </Typography>
           <Typography variant="h2" sx={{ fontSize: { xs: '2rem', md: '3rem' }, maxWidth: 720, mx: 'auto' }}>

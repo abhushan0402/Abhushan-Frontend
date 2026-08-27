@@ -6,6 +6,7 @@ import {
   IconButton,
   Badge,
   Typography,
+  Avatar,
 } from '@mui/material'
 import { Link as RouterLink, useNavigate } from 'react-router-dom'
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded'
@@ -14,7 +15,7 @@ import PersonOutlineRoundedIcon from '@mui/icons-material/PersonOutlineRounded'
 import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded'
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined'
 import { useUIStore } from '../../store/uiStore'
-import { useIsAuthenticated } from '../../hooks/useAuth'
+import { useIsAuthenticated, useCurrentUser, useMe } from '../../hooks/useAuth'
 import { useCart, normalizeCartItems } from '../../hooks/useCart'
 import { useWishlist, normalizeWishlistItems } from '../../hooks/useWishlist'
 import { NAV_LINKS } from '../../utils/constants'
@@ -29,6 +30,9 @@ export default function Header() {
   const openSearch = useUIStore((s) => s.openSearch)
   const isAuthenticated = useIsAuthenticated()
   const navigate = useNavigate()
+  useMe()
+  const currentUser = useCurrentUser()
+  const firstNameInitial = currentUser?.firstName?.trim()?.[0]?.toUpperCase()
 
   const { data: cart } = useCart()
   const { data: wishlist } = useWishlist()
@@ -65,7 +69,7 @@ export default function Header() {
     <>
       <Box
         sx={{
-          background: '#2BBBAE',
+          background: '#701888',
           color: '#f5f1e8',
           textAlign: 'center',
           fontFamily: '"DM Sans", "Segoe UI", sans-serif',
@@ -123,7 +127,7 @@ export default function Header() {
                 textTransform: 'uppercase',
                 position: 'relative',
                 pb: 0.5,
-                '&:hover': { color: '#14807A' },
+                '&:hover': { color: '#db2173' },
               }}
             >
               {link.label}
@@ -149,10 +153,25 @@ export default function Header() {
           <IconButton
             component={RouterLink}
             to={isAuthenticated ? '/account/profile' : '/signin'}
-            sx={{ color: '#211d17', display: { xs: 'none', sm: 'inline-flex' } }}
+            sx={{ color: '#211d17', display: { xs: 'none', sm: 'inline-flex' }, p: 0.4 }}
             aria-label="Account"
           >
-            <PersonOutlineRoundedIcon />
+            {isAuthenticated && firstNameInitial ? (
+              <Avatar
+                sx={{
+                  width: 30,
+                  height: 30,
+                  fontSize: '0.8rem',
+                  fontWeight: 700,
+                  bgcolor: 'primary.main',
+                  color: 'primary.contrastText',
+                }}
+              >
+                {firstNameInitial}
+              </Avatar>
+            ) : (
+              <PersonOutlineRoundedIcon />
+            )}
           </IconButton>
           <IconButton
             onClick={() => navigate('/wishlist')}

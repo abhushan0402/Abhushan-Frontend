@@ -15,7 +15,7 @@ import EditRoundedIcon from '@mui/icons-material/EditRounded'
 import { useMe, useUpdateProfile } from '../../hooks/useAuth'
 import { profileSchema } from '../../utils/validators'
 import { useNotify } from '../../components/common/NotificationContext'
-import { TextBlockSkeleton } from '../../components/common/Skeletons'
+import { TextBlockSkeleton } from '../../components/common/PageSkeleton'
 
 function initials(user) {
   return `${user?.firstName?.[0] ?? ''}${user?.lastName?.[0] ?? ''}`.toUpperCase() || 'A'

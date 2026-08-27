@@ -106,8 +106,8 @@ export default function NotificationsMenu({ iconColor = '#f5f1e8' }) {
                     alignItems: 'flex-start',
                     p: 2,
                     cursor: 'pointer',
-                    bgcolor: read ? 'transparent' : 'rgba(20, 128, 122,0.06)',
-                    '&:hover': { bgcolor: 'rgba(20, 128, 122,0.1)' },
+                    bgcolor: read ? 'transparent' : 'rgba(112, 24, 136,0.06)',
+                    '&:hover': { bgcolor: 'rgba(112, 24, 136,0.1)' },
                   }}
                 >
                   <Box sx={{ flex: 1, minWidth: 0 }}>

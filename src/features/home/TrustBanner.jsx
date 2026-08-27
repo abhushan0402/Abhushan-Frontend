@@ -24,7 +24,7 @@ export default function TrustBanner() {
             return (
               <Grid key={badge.title} size={{ xs: 6, md: 3 }}>
                 <Box sx={{ textAlign: 'center', px: 1 }}>
-                  <Icon sx={{ color: '#D4AF37', fontSize: 32, mb: 1.5 }} />
+                  <Icon sx={{ color: '#701888', fontSize: 32, mb: 1.5 }} />
                   <Typography sx={{ fontSize: '0.85rem', fontWeight: 500, mb: 0.5, color: '#211d17' }}>
                     {badge.title}
                   </Typography>
