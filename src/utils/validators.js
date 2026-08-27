@@ -81,7 +81,7 @@ export const profileSchema = z.object({
   mobile: mobileSchema.optional().or(z.literal('')),
   dateOfBirth: z.string().optional().or(z.literal('')),
   gender: z.enum(['male', 'female', 'other']).optional(),
-  profileImage: z.string().url('Enter a valid image URL').optional().or(z.literal('')),
+  profileImage: z.string().optional().or(z.literal('')),
 })
 
 export const changePasswordSchema = z

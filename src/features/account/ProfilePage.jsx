@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
@@ -9,7 +9,9 @@ import {
   MenuItem,
   Typography,
   Avatar,
+  IconButton,
 } from '@mui/material'
+import EditRoundedIcon from '@mui/icons-material/EditRounded'
 import { useMe, useUpdateProfile } from '../../hooks/useAuth'
 import { profileSchema } from '../../utils/validators'
 import { useNotify } from '../../components/common/NotificationContext'
@@ -29,6 +31,7 @@ export default function ProfilePage() {
     handleSubmit,
     reset,
     watch,
+    setValue,
     formState: { errors, isDirty },
   } = useForm({
     resolver: zodResolver(profileSchema),
@@ -43,6 +46,26 @@ export default function ProfilePage() {
   })
 
   const previewImage = watch('profileImage')
+  const fileInputRef = useRef(null)
+
+  const handlePickImage = () => fileInputRef.current?.click()
+
+  const handleImageChange = (e) => {
+    const file = e.target.files?.[0]
+    e.target.value = ''
+    if (!file) return
+    if (!file.type.startsWith('image/')) {
+      notify.error('Please choose an image file')
+      return
+    }
+    if (file.size > 2 * 1024 * 1024) {
+      notify.error('Image must be smaller than 2MB')
+      return
+    }
+    const reader = new FileReader()
+    reader.onload = () => setValue('profileImage', reader.result, { shouldDirty: true })
+    reader.readAsDataURL(file)
+  }
 
   useEffect(() => {
     if (user) {
@@ -78,36 +101,44 @@ export default function ProfilePage() {
       </Typography>
 
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2.5, mb: 3.5 }}>
-        <Avatar
-          src={previewImage || undefined}
-          sx={{ width: 72, height: 72, bgcolor: 'primary.main', color: '#fff', fontSize: '1.5rem' }}
-        >
-          {initials(user)}
-        </Avatar>
-        <Typography variant="body2" sx={{ color: 'text.secondary', maxWidth: 320 }}>
-          Paste a link to an image below to use it as your profile picture.
-        </Typography>
+        <Box sx={{ position: 'relative', width: 72, height: 72 }}>
+          <Avatar
+            src={previewImage || undefined}
+            sx={{ width: 72, height: 72, bgcolor: 'primary.main', color: '#fff', fontSize: '1.5rem' }}
+          >
+            {initials(user)}
+          </Avatar>
+          <IconButton
+            onClick={handlePickImage}
+            aria-label="Edit profile photo"
+            size="small"
+            sx={{
+              position: 'absolute',
+              top: -4,
+              right: -4,
+              width: 26,
+              height: 26,
+              bgcolor: '#fff',
+              border: '1px solid',
+              borderColor: 'divider',
+              boxShadow: 1,
+              '&:hover': { bgcolor: '#fff' },
+            }}
+          >
+            <EditRoundedIcon sx={{ fontSize: 14 }} />
+          </IconButton>
+        </Box>
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/*"
+          hidden
+          onChange={handleImageChange}
+        />
       </Box>
 
       <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate>
         <Grid container spacing={2}>
-          <Grid size={12}>
-            <Controller
-              name="profileImage"
-              control={control}
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  fullWidth
-                  label="Profile Image URL"
-                  placeholder="https://..."
-                  sx={{ bgcolor: '#fff' }}
-                  error={Boolean(errors.profileImage)}
-                  helperText={errors.profileImage?.message}
-                />
-              )}
-            />
-          </Grid>
           <Grid size={{ xs: 12, sm: 6 }}>
             <Controller
               name="firstName"

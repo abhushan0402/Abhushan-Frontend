@@ -70,8 +70,7 @@ export default function ProductCard({ product }) {
           sx={{
             position: 'relative',
             width: '100%',
-            height: 0,
-            pt: '100%',
+            height: '250px',
             flexShrink: 0,
             overflow: 'hidden',
             borderRadius: '14px',
@@ -158,10 +157,10 @@ export default function ProductCard({ product }) {
               mt: 1.25,
               width: '100%',
               borderRadius: '999px',
-              background: 'linear-gradient(180deg, #5CE1E6 0%, #2BBBAE 45%, #14807A 100%)',
+              backgroundColor: '#0B524F',
               color: '#f5f1e8',
               '&:hover': {
-                background: 'linear-gradient(180deg, #2BBBAE 0%, #14807A 55%, #0A4D4A 100%)',
+                backgroundColor: '#083f3d',
                 color: '#f5f1e8',
               },
             }}
@@ -180,6 +179,7 @@ export default function ProductCard({ product }) {
               border: '1px solid',
               borderColor: 'divider',
               borderRadius: '999px',
+              bgcolor: '#e8e8e8',
               color: 'text.secondary',
               py: 0.9,
               fontSize: '0.7rem',

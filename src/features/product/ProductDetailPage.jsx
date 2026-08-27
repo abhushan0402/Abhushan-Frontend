@@ -128,7 +128,14 @@ export default function ProductDetailPage() {
         </Breadcrumbs>
 
         <Grid container spacing={{ xs: 4, md: 7 }}>
-          <Grid size={{ xs: 12, md: 6 }}>
+          <Grid
+            size={{ xs: 12, md: 6 }}
+            sx={{
+              alignSelf: 'flex-start',
+              position: { md: 'sticky' },
+              top: { md: 104 },
+            }}
+          >
             <ProductGallery images={product.images} name={product.name} />
           </Grid>
 

@@ -1,5 +1,5 @@
 import { createTheme } from '@mui/material/styles'
-import { colors, gradients, fonts, breakpoints } from './tokens'
+import { colors, fonts, breakpoints } from './tokens'
 
 const theme = createTheme({
   breakpoints: {
@@ -91,11 +91,11 @@ const theme = createTheme({
           borderColor: colors.accent,
         },
         containedPrimary: {
-          backgroundImage: gradients.accent,
-          boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.45), 0 4px 10px rgba(10,77,74,0.35)',
+          backgroundColor: '#106D68',
+          boxShadow: 'none',
           '&:hover': {
-            backgroundImage: gradients.accentHover,
-            boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.55), 0 6px 14px rgba(10,77,74,0.4)',
+            backgroundColor: '#0D5753',
+            boxShadow: 'none',
           },
           '&.Mui-disabled': {
             backgroundImage: 'none',
