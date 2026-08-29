@@ -12,6 +12,7 @@ import {
   getOrderTotal,
   getOrderStatus,
   getOrderDate,
+  getItemProduct,
   ORDER_STATUS_COLORS,
 } from '../../utils/orderHelpers'
 
@@ -66,13 +67,13 @@ export default function OrderDetailPage() {
           </Typography>
           <Stack divider={<Divider />} spacing={0}>
             {items.map((item, i) => {
-              const product = item.product ?? item
+              const product = getItemProduct(item)
               return (
                 <Box key={product._id ?? i} sx={{ display: 'flex', gap: 2, py: 2 }}>
                   <Box
                     component="img"
                     src={product.images?.[0] ?? '/placeholder-product.svg'}
-                    alt={product.name}
+                    alt={product.name ?? 'Product'}
                     onError={handleImageError}
                     sx={{ width: 72, height: 72, objectFit: 'cover', bgcolor: '#f1ebe0' }}
                   />

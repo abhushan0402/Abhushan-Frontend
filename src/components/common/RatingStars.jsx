@@ -6,8 +6,10 @@ export default function RatingStars({
   count,
   size = 'small',
   showCount = true,
+  hideEmpty = false,
 }) {
   if (!value && !count) {
+    if (hideEmpty) return null
     return (
       <Typography variant="caption" sx={{ color: 'text.secondary' }}>
         No reviews yet

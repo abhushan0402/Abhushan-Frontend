@@ -67,7 +67,4 @@ export const SOCIAL_LINKS = {
   whatsapp: 'https://wa.me/918233899188',
 }
 
-// Same situation as SOCIAL_LINKS above — no confirmed shop email exists yet,
-// left blank rather than invented. The footer only renders this row once
-// it's filled in.
-export const SHOP_EMAIL = ''
+export const SHOP_EMAIL = 'abhushanvatika0402@gmail.com'

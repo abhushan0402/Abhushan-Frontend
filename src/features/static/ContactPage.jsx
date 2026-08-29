@@ -49,16 +49,21 @@ export default function ContactPage() {
             <Box>
               <Typography sx={{ fontWeight: 600, mb: 0.5 }}>Visit Us</Typography>
               <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                Abhushan Vatika, Jewellers Lane, India
+                Near Ram Mandir Chowk, Sunel, Rajasthan 326513
               </Typography>
             </Box>
           </Box>
           <Box sx={{ display: 'flex', gap: 2, mb: 3 }}>
             <PhoneOutlinedIcon sx={{ color: 'primary.main' }} />
             <Box>
-              <Typography sx={{ fontWeight: 600, mb: 0.5 }}>Call Us</Typography>
-              <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                +91 00000 00000
+              <Typography sx={{ fontWeight: 600, mb: 0.5 }}>Call / WhatsApp Us</Typography>
+              <Typography
+                component="a"
+                href="tel:+917838099020"
+                variant="body2"
+                sx={{ color: 'text.secondary', textDecoration: 'none', '&:hover': { color: 'primary.main' } }}
+              >
+                +91 78380 99020
               </Typography>
             </Box>
           </Box>
@@ -66,8 +71,13 @@ export default function ContactPage() {
             <MailOutlineRoundedIcon sx={{ color: 'primary.main' }} />
             <Box>
               <Typography sx={{ fontWeight: 600, mb: 0.5 }}>Email Us</Typography>
-              <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                care@abhushanvatika.com
+              <Typography
+                component="a"
+                href="mailto:abhushanvatika0402@gmail.com"
+                variant="body2"
+                sx={{ color: 'text.secondary', textDecoration: 'none', '&:hover': { color: 'primary.main' } }}
+              >
+                abhushanvatika0402@gmail.com
               </Typography>
             </Box>
           </Box>

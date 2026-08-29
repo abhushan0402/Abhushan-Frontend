@@ -2,7 +2,7 @@ import { Box } from '@mui/material'
 import HorizontalScroller from '../common/HorizontalScroller'
 import ProductCard from './ProductCard'
 
-const CARD_WIDTH = { xs: 190, sm: 230, md: 260 }
+const CARD_WIDTH = { xs: 250, sm: 300, md: 340 }
 
 export default function ScrollCarousel({ products = [], autoScroll = false }) {
   if (!products.length) return null

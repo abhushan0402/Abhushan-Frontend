@@ -11,6 +11,7 @@ import { useRequireAuth } from '../../hooks/useRequireAuth'
 import { useAddToWishlist, useRemoveFromWishlist, useIsWishlisted } from '../../hooks/useWishlist'
 import { useAddToCart } from '../../hooks/useCart'
 import { handleImageError } from '../../utils/handleImageError'
+import { formatWeight } from '../../utils/formatCurrency'
 
 export default function ProductCard({ product }) {
   const [hovered, setHovered] = useState(false)
@@ -21,6 +22,7 @@ export default function ProductCard({ product }) {
   const isWishlisted = useIsWishlisted(product._id)
 
   const inStock = (product.stock ?? 0) > 0
+  const hasWeight = product.weight !== undefined && product.weight !== null
 
   const images = product.images?.length ? product.images : ['/placeholder-product.svg']
   const primaryImage = images[0]
@@ -155,8 +157,18 @@ export default function ProductCard({ product }) {
           >
             {product.name}
           </Typography>
-          <RatingStars value={product.averageRating} count={product.reviewCount} />
+          <RatingStars
+            value={product.averageRating}
+            count={product.reviewCount}
+            showCount={false}
+            hideEmpty
+          />
           <PriceTag price={product.basePrice} sx={{ mt: 0.5 }} />
+          {hasWeight ? (
+            <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mt: 0.25 }}>
+              {formatWeight(product.weight)}
+            </Typography>
+          ) : null}
         </Box>
 
         {inStock ? (

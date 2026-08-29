@@ -14,6 +14,7 @@ import {
   getOrderTotal,
   getOrderStatus,
   getOrderDate,
+  getItemProduct,
   ORDER_STATUS_COLORS,
 } from '../../utils/orderHelpers'
 
@@ -62,7 +63,7 @@ export default function OrdersPage() {
           {orders.map((order) => {
             const id = getOrderId(order)
             const items = getOrderItems(order)
-            const previewImage = items[0]?.product?.images?.[0] ?? items[0]?.images?.[0]
+            const previewImage = items[0] ? getItemProduct(items[0]).images?.[0] : undefined
             const status = getOrderStatus(order)
             return (
               <Box

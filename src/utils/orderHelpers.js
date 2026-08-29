@@ -9,6 +9,16 @@ export function getOrderItems(order) {
   return order?.items ?? order?.products ?? order?.orderItems ?? []
 }
 
+// Mirrors the same populated-object-vs-bare-id ambiguity normalizeCartItems
+// already works around for cart items (orders are created from the cart, so
+// order items carry the product under the same `productId` field).
+export function getItemProduct(item) {
+  if (typeof item?.productId === 'object' && item.productId !== null) {
+    return item.productId
+  }
+  return item?.product ?? {}
+}
+
 export function getOrderTotal(order) {
   return order?.totalAmount ?? order?.total ?? order?.amount ?? 0
 }
