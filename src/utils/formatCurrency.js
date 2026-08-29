@@ -6,7 +6,7 @@ const inrFormatter = new Intl.NumberFormat('en-IN', {
 
 export function formatPrice(value) {
   if (value === undefined || value === null || Number(value) <= 0) {
-    return 'Price on Request'
+    return 'Best Price on Order'
   }
   return inrFormatter.format(Number(value))
 }

@@ -99,7 +99,8 @@ export default function ShopPage() {
                   alignItems: 'center',
                   border: '1px solid',
                   borderColor: 'divider',
-                  px: 1.5,
+                  borderRadius: '999px',
+                  px: 2,
                   flex: { xs: '1 1 100%', sm: '0 1 280px' },
                 }}
               >

@@ -21,7 +21,6 @@ export default function ProductCard({ product }) {
   const isWishlisted = useIsWishlisted(product._id)
 
   const inStock = (product.stock ?? 0) > 0
-  const hasPrice = Number(product.basePrice) > 0
 
   const images = product.images?.length ? product.images : ['/placeholder-product.svg']
   const primaryImage = images[0]
@@ -41,7 +40,7 @@ export default function ProductCard({ product }) {
   const handleAddToCart = (e) => {
     e.preventDefault()
     e.stopPropagation()
-    if (!inStock || !hasPrice) return
+    if (!inStock) return
     requireAuth(() => {
       addToCart.mutate({ productId: product._id, quantity: 1 })
     })
@@ -52,7 +51,17 @@ export default function ProductCard({ product }) {
       component={motion.div}
       whileHover={{ y: -4 }}
       transition={{ duration: 0.25 }}
-      sx={{ position: 'relative', height: '100%', display: 'flex', flexDirection: 'column' }}
+      sx={{
+        position: 'relative',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        border: '1px solid',
+        borderColor: 'divider',
+        borderRadius: '16px',
+        p: 1.25,
+        bgcolor: '#fff',
+      }}
     >
       <Box
         component={RouterLink}
@@ -121,6 +130,7 @@ export default function ProductCard({ product }) {
             onClick={handleWishlistToggle}
             aria-label="Toggle wishlist"
             size="small"
+            disableRipple
             sx={{
               position: 'absolute',
               top: 8,
@@ -149,15 +159,16 @@ export default function ProductCard({ product }) {
           <PriceTag price={product.basePrice} sx={{ mt: 0.5 }} />
         </Box>
 
-        {inStock && hasPrice ? (
+        {inStock ? (
           <IconButton
             onClick={handleAddToCart}
             aria-label="Add to cart"
-            size="small"
+            disableRipple
             sx={{
               mt: 1.25,
               width: '100%',
               borderRadius: '999px',
+              py: 1.15,
               backgroundColor: '#701888',
               color: '#f5f1e8',
               '&:hover': {
@@ -167,7 +178,7 @@ export default function ProductCard({ product }) {
             }}
           >
             <ShoppingBagOutlinedIcon fontSize="small" sx={{ mr: 1 }} />
-            <Typography variant="caption" sx={{ letterSpacing: '0.1em' }}>
+            <Typography variant="caption" sx={{ letterSpacing: '0.1em', fontSize: '0.8rem' }}>
               ADD TO BAG
             </Typography>
           </IconButton>
@@ -182,12 +193,12 @@ export default function ProductCard({ product }) {
               borderRadius: '999px',
               bgcolor: '#e8e8e8',
               color: 'text.secondary',
-              py: 0.9,
+              py: 1.15,
               fontSize: '0.7rem',
               letterSpacing: '0.12em',
             }}
           >
-            {!inStock ? 'OUT OF STOCK' : 'PRICE ON REQUEST'}
+            OUT OF STOCK
           </Box>
         )}
       </Box>

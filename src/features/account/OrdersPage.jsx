@@ -76,6 +76,7 @@ export default function OrdersPage() {
                   p: 2.5,
                   border: '1px solid',
                   borderColor: 'divider',
+                  borderRadius: '14px',
                   textDecoration: 'none',
                   color: 'inherit',
                   '&:hover': { borderColor: 'primary.main' },

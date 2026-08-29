@@ -2,14 +2,15 @@ import { Box, Grid2 as Grid, Typography, Stack, IconButton, Divider } from '@mui
 import { Link as RouterLink } from 'react-router-dom'
 import InstagramIcon from '@mui/icons-material/Instagram'
 import FacebookIcon from '@mui/icons-material/Facebook'
-import YouTubeIcon from '@mui/icons-material/YouTube'
+import WhatsAppIcon from '@mui/icons-material/WhatsApp'
+import MailOutlineRoundedIcon from '@mui/icons-material/MailOutlineRounded'
 import BrandLogo from './BrandLogo'
-import { FOOTER_LINKS, SOCIAL_LINKS } from '../../utils/constants'
+import { FOOTER_LINKS, SOCIAL_LINKS, SHOP_EMAIL } from '../../utils/constants'
 
 const SOCIAL_ICONS = [
   { Icon: InstagramIcon, href: SOCIAL_LINKS.instagram, label: 'Instagram' },
   { Icon: FacebookIcon, href: SOCIAL_LINKS.facebook, label: 'Facebook' },
-  { Icon: YouTubeIcon, href: SOCIAL_LINKS.youtube, label: 'YouTube' },
+  { Icon: WhatsAppIcon, href: SOCIAL_LINKS.whatsapp, label: 'WhatsApp' },
 ]
 
 function FooterColumn({ title, links }) {
@@ -61,6 +62,25 @@ export default function Footer() {
               Masterpieces of unparalleled artistry — each creation demands hundreds of
               hours of expert craftsmanship to perfect.
             </Typography>
+            {SHOP_EMAIL ? (
+              <Typography
+                component="a"
+                href={`mailto:${SHOP_EMAIL}`}
+                variant="body2"
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 0.75,
+                  mt: 2,
+                  color: 'rgba(245,241,232,0.72)',
+                  textDecoration: 'none',
+                  '&:hover': { color: '#f5f1e8' },
+                }}
+              >
+                <MailOutlineRoundedIcon fontSize="small" />
+                {SHOP_EMAIL}
+              </Typography>
+            ) : null}
             <Stack direction="row" spacing={1} sx={{ mt: 3 }}>
               {SOCIAL_ICONS.map(({ Icon, href, label }) => (
                 <IconButton

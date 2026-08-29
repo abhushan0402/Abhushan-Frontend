@@ -198,7 +198,13 @@ export default function ProfilePage() {
                   type="date"
                   label="Date of Birth"
                   slotProps={{ inputLabel: { shrink: true } }}
-                  sx={{ bgcolor: '#fff' }}
+                  sx={{
+                    bgcolor: '#fff',
+                    '& input[type="date"]': {
+                      minWidth: 0,
+                      paddingRight: '4px',
+                    },
+                  }}
                 />
               )}
             />

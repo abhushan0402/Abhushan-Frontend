@@ -65,16 +65,14 @@ export default function ProductDetailPage() {
   }
 
   const inStock = (product.stock ?? 0) > 0
-  const hasPrice = Number(product.basePrice) > 0
-  const canBuyNow = inStock && hasPrice
+  const hasWeight = product.weight !== undefined && product.weight !== null
 
   const handleAddToCart = () => {
-    if (!hasPrice) return
     requireAuth(() => addToCart.mutate({ productId: product._id, quantity }))
   }
 
   const handleBuyNow = () => {
-    if (!canBuyNow) return
+    if (!inStock) return
     requireAuth(() => {
       addToCart.mutate(
         { productId: product._id, quantity },
@@ -155,7 +153,7 @@ export default function ProductDetailPage() {
             <Divider sx={{ my: 3 }} />
 
             <Grid container spacing={2} sx={{ mb: 3 }}>
-              <Grid size={4}>
+              <Grid size={hasWeight ? 4 : 6}>
                 <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block' }}>
                   Metal
                 </Typography>
@@ -163,7 +161,7 @@ export default function ProductDetailPage() {
                   {product.metalType}
                 </Typography>
               </Grid>
-              <Grid size={4}>
+              <Grid size={hasWeight ? 4 : 6}>
                 <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block' }}>
                   Purity
                 </Typography>
@@ -171,14 +169,16 @@ export default function ProductDetailPage() {
                   {product.purity && product.purity !== '0' ? product.purity : '—'}
                 </Typography>
               </Grid>
-              <Grid size={4}>
-                <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block' }}>
-                  Weight
-                </Typography>
-                <Typography variant="body2" sx={{ fontWeight: 500 }}>
-                  {formatWeight(product.weight)}
-                </Typography>
-              </Grid>
+              {hasWeight ? (
+                <Grid size={4}>
+                  <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block' }}>
+                    Weight
+                  </Typography>
+                  <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                    {formatWeight(product.weight)}
+                  </Typography>
+                </Grid>
+              ) : null}
             </Grid>
 
             <Chip
@@ -205,6 +205,7 @@ export default function ProductDetailPage() {
               </Box>
               <IconButton
                 onClick={handleWishlistToggle}
+                disableRipple
                 sx={{ border: '1px solid', borderColor: 'divider', borderRadius: '50%' }}
                 aria-label="Toggle wishlist"
               >
@@ -220,20 +221,24 @@ export default function ProductDetailPage() {
               <Button
                 variant="outlined"
                 color="secondary"
+                size="large"
                 fullWidth
-                disabled={!hasPrice || addToCart.isPending}
+                disabled={addToCart.isPending}
                 onClick={handleAddToCart}
+                sx={{ py: 1.5 }}
               >
-                {hasPrice ? 'Add to Bag' : 'Price on Request'}
+                Add to Bag
               </Button>
               <Button
                 variant="contained"
                 color="primary"
+                size="large"
                 fullWidth
-                disabled={!canBuyNow || addToCart.isPending}
+                disabled={!inStock || addToCart.isPending}
                 onClick={handleBuyNow}
+                sx={{ py: 1.5 }}
               >
-                {!inStock ? 'Out of Stock' : !hasPrice ? 'Price on Request' : 'Buy Now'}
+                {inStock ? 'Buy Now' : 'Out of Stock'}
               </Button>
             </Box>
 

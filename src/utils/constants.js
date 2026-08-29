@@ -61,12 +61,13 @@ export const TRUST_BADGES = [
 
 export const BRAND_NAME = 'Abhushan Vatika'
 
-// No real social/app URLs exist anywhere in this project yet — these are
-// intentionally left blank rather than invented. The icons are wired as
-// real anchor tags (target=_blank) so they'll work the instant a real URL
-// is filled in here; until then they're visually present but inert.
 export const SOCIAL_LINKS = {
-  instagram: '',
-  facebook: '',
-  youtube: '',
+  instagram: 'https://www.instagram.com/abhushanvatika_?igsi=eWc2anp6ZzJ2eHZ',
+  facebook: 'https://www.facebook.com/share/1GV95E74ff/',
+  whatsapp: 'https://wa.me/918233899188',
 }
+
+// Same situation as SOCIAL_LINKS above — no confirmed shop email exists yet,
+// left blank rather than invented. The footer only renders this row once
+// it's filled in.
+export const SHOP_EMAIL = ''

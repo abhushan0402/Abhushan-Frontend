@@ -21,7 +21,15 @@ export default function WishlistItemCard({ productId, product }) {
   }
 
   return (
-    <Box sx={{ position: 'relative' }}>
+    <Box
+      sx={{
+        position: 'relative',
+        border: '1px solid',
+        borderColor: 'divider',
+        borderRadius: '16px',
+        p: 1.25,
+      }}
+    >
       <IconButton
         onClick={() => removeFromWishlist.mutate(productId)}
         disabled={removeFromWishlist.isPending}
