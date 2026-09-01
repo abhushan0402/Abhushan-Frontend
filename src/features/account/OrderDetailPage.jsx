@@ -148,34 +148,26 @@ export default function OrderDetailPage() {
       <Box
         component={RouterLink}
         to="/shop?isNewArrival=true"
+        aria-label="Explore the new collection"
         sx={{
           display: 'block',
           mt: { xs: 6, md: 8 },
-          p: { xs: 3.5, md: 5 },
           borderRadius: '18px',
-          textAlign: 'center',
-          textDecoration: 'none',
-          background: 'linear-gradient(135deg, #9C4FB0 0%, #701888 55%, #2e0a3f 100%)',
+          overflow: 'hidden',
+          boxShadow: '0 8px 30px rgba(46,10,63,0.18)',
+          transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+          '&:hover': {
+            transform: 'translateY(-3px)',
+            boxShadow: '0 14px 38px rgba(46,10,63,0.26)',
+          },
         }}
       >
-        <Typography
-          variant="caption"
-          sx={{ color: '#facc15', letterSpacing: '0.2em', display: 'block', mb: 1 }}
-        >
-          JUST IN
-        </Typography>
-        <Typography
-          variant="h4"
-          sx={{ color: '#f5f1e8', fontSize: { xs: '1.4rem', md: '1.75rem' }, mb: 1 }}
-        >
-          Explore the New Collection
-        </Typography>
-        <Typography sx={{ color: 'rgba(245,241,232,0.75)', mb: 2.5, maxWidth: 480, mx: 'auto' }}>
-          Fresh gold, silver, and 925 imported designs, handcrafted to be worn for a lifetime.
-        </Typography>
-        <Button variant="contained" color="primary" sx={{ pointerEvents: 'none' }}>
-          Shop New Arrivals
-        </Button>
+        <Box
+          component="img"
+          src="/Hero2.PNG"
+          alt="Abhushan Vatika — Fine Jewelry, Crafted with Passion"
+          sx={{ width: '100%', height: 'auto', display: 'block' }}
+        />
       </Box>
     </Box>
   )

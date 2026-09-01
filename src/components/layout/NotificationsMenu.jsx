@@ -12,6 +12,10 @@ import {
 } from '@mui/material'
 import NotificationsNoneRoundedIcon from '@mui/icons-material/NotificationsNoneRounded'
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded'
+import ReceiptLongOutlinedIcon from '@mui/icons-material/ReceiptLongOutlined'
+import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined'
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
+import CreditCardOutlinedIcon from '@mui/icons-material/CreditCardOutlined'
 import {
   useNotifications,
   isNotificationRead,
@@ -20,6 +24,15 @@ import {
   useDeleteNotification,
 } from '../../hooks/useNotifications'
 import { useIsAuthenticated } from '../../hooks/useAuth'
+
+// Matches the `type` enum the API documents for a notification: order, promo,
+// system, payment. Falls back to the generic bell for anything unrecognized.
+const TYPE_ICONS = {
+  order: ReceiptLongOutlinedIcon,
+  promo: LocalOfferOutlinedIcon,
+  system: InfoOutlinedIcon,
+  payment: CreditCardOutlinedIcon,
+}
 
 function timeAgo(dateString) {
   if (!dateString) return ''
@@ -96,6 +109,7 @@ export default function NotificationsMenu({ iconColor = '#f5f1e8' }) {
           <Stack divider={<Divider />} sx={{ maxHeight: 380, overflowY: 'auto' }}>
             {notifications.map((notification) => {
               const read = isNotificationRead(notification)
+              const TypeIcon = TYPE_ICONS[notification.type] ?? NotificationsNoneRoundedIcon
               return (
                 <Box
                   key={notification._id}
@@ -110,6 +124,10 @@ export default function NotificationsMenu({ iconColor = '#f5f1e8' }) {
                     '&:hover': { bgcolor: 'rgba(112, 24, 136,0.1)' },
                   }}
                 >
+                  <TypeIcon
+                    fontSize="small"
+                    sx={{ color: 'primary.main', mt: 0.25, flexShrink: 0 }}
+                  />
                   <Box sx={{ flex: 1, minWidth: 0 }}>
                     <Typography variant="body2" sx={{ fontWeight: read ? 500 : 700 }}>
                       {notification.title}

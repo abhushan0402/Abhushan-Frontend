@@ -40,24 +40,26 @@ export default function ProductTypeStrip() {
                       width: 132,
                       height: 132,
                       borderRadius: '50%',
-                      overflow: 'hidden',
-                      border: '1px solid',
-                      borderColor: 'divider',
+                      p: '6px',
+                      border: '2px solid transparent',
+                      background:
+                        'linear-gradient(#fff, #fff) padding-box, ' +
+                        'conic-gradient(from -95deg, transparent 0%, #db2173 12%, #F472B6 26%, #db2173 40%, transparent 53%, transparent 100%) border-box',
                       mb: 1,
-                      transition: 'border-color 0.2s ease',
-                      '&:hover': { borderColor: 'primary.main' },
                     }}
                   >
-                    <Box
-                      component="img"
-                      src={type.image}
-                      alt={type.name}
-                      loading="lazy"
-                      onError={(e) => {
-                        e.currentTarget.src = '/placeholder-product.svg'
-                      }}
-                      sx={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                    />
+                    <Box sx={{ width: '100%', height: '100%', borderRadius: '50%', overflow: 'hidden' }}>
+                      <Box
+                        component="img"
+                        src={type.image}
+                        alt={type.name}
+                        loading="lazy"
+                        onError={(e) => {
+                          e.currentTarget.src = '/placeholder-product.svg'
+                        }}
+                        sx={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                      />
+                    </Box>
                   </Box>
                   <Typography
                     variant="caption"
