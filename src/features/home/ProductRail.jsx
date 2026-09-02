@@ -1,4 +1,6 @@
-import { Box } from '@mui/material'
+import { Box, Button } from '@mui/material'
+import { Link as RouterLink } from 'react-router-dom'
+import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded'
 import SectionHeading from '../../components/common/SectionHeading'
 import ScrollCarousel from '../../components/product/ScrollCarousel'
 import ErrorState from '../../components/common/ErrorState'
@@ -22,12 +24,7 @@ export default function ProductRail({
   return (
     <Box component="section" sx={{ py: { xs: 6, md: 9 } }}>
       <Box className="av-container">
-        <SectionHeading
-          eyebrow={eyebrow}
-          title={title}
-          subtitle={subtitle}
-          viewAllHref={viewAllHref}
-        />
+        <SectionHeading eyebrow={eyebrow} title={title} subtitle={subtitle} />
         {isLoading ? (
           <ProductGridSkeleton count={4} />
         ) : isError ? (
@@ -39,6 +36,20 @@ export default function ProductRail({
         ) : (
           <ScrollCarousel products={products} autoScroll={autoScroll} />
         )}
+        {viewAllHref && !isLoading && !isError ? (
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: { xs: 3, md: 4 } }}>
+            <Button
+              component={RouterLink}
+              to={viewAllHref}
+              variant="outlined"
+              color="primary"
+              size="small"
+              endIcon={<ArrowForwardRoundedIcon fontSize="small" />}
+            >
+              View All
+            </Button>
+          </Box>
+        ) : null}
       </Box>
     </Box>
   )

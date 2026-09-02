@@ -95,7 +95,7 @@ export default function ProfilePage() {
   if (isLoading) return <TextBlockSkeleton lines={6} />
 
   return (
-    <Box sx={{ bgcolor: '#faf7f1', p: { xs: 3, md: 4 } }}>
+    <Box sx={{ bgcolor: '#fff', border: '1px solid', borderColor: 'divider', borderRadius: '14px', p: { xs: 3, md: 4 } }}>
       <Typography variant="h6" sx={{ textTransform: 'none', fontSize: '1.1rem', mb: 3 }}>
         Personal Information
       </Typography>

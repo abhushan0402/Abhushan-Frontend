@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Box } from '@mui/material'
 import { motion, AnimatePresence } from 'framer-motion'
+import ImageMagnifier from '../common/ImageMagnifier'
 
 export default function ProductGallery({ images = [], name }) {
   const [active, setActive] = useState(0)
@@ -49,7 +50,6 @@ export default function ProductGallery({ images = [], name }) {
           flex: 1,
           aspectRatio: '1 / 1',
           bgcolor: '#f1ebe0',
-          overflow: 'hidden',
           borderRadius: '16px',
           position: 'relative',
         }}
@@ -57,24 +57,22 @@ export default function ProductGallery({ images = [], name }) {
         <AnimatePresence mode="wait">
           <Box
             key={active}
-            component={motion.img}
+            component={motion.div}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
-            src={list[active]}
-            alt={name}
-            onError={(e) => {
-              e.currentTarget.src = '/placeholder-product.svg'
-            }}
-            sx={{
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              position: 'absolute',
-              inset: 0,
-            }}
-          />
+            sx={{ position: 'absolute', inset: 0 }}
+          >
+            <ImageMagnifier
+              src={list[active]}
+              alt={name}
+              borderRadius="16px"
+              onError={(e) => {
+                e.currentTarget.src = '/placeholder-product.svg'
+              }}
+            />
+          </Box>
         </AnimatePresence>
       </Box>
     </Box>

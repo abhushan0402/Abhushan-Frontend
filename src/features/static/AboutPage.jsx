@@ -1,12 +1,7 @@
 import { Box, Typography, Grid2 as Grid } from '@mui/material'
 import TrustBanner from '../home/TrustBanner'
-import { useBestSellers } from '../../hooks/useProducts'
-import { handleImageError, pickWorkingImage } from '../../utils/handleImageError'
 
 export default function AboutPage() {
-  const { data: products = [] } = useBestSellers({ limit: 8 })
-  const image = pickWorkingImage(products)
-
   return (
     <Box>
       <Box
@@ -29,16 +24,24 @@ export default function AboutPage() {
       <Box className="av-container" sx={{ py: { xs: 7, md: 10 } }}>
         <Grid container spacing={{ xs: 5, md: 8 }} alignItems="center">
           <Grid size={{ xs: 12, md: 6 }}>
-            <Box sx={{ aspectRatio: '4 / 5', bgcolor: '#f1ebe0', overflow: 'hidden', borderRadius: '16px' }}>
-              {image ? (
-                <Box
-                  component="img"
-                  src={image}
-                  alt="Craftsmanship"
-                  onError={handleImageError}
-                  sx={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                />
-              ) : null}
+            <Box
+              sx={{
+                aspectRatio: '4 / 5',
+                background: 'linear-gradient(160deg, #faf7f1 0%, #f1ebe0 100%)',
+                overflow: 'hidden',
+                borderRadius: '16px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                p: 6,
+              }}
+            >
+              <Box
+                component="img"
+                src="/logo.png"
+                alt="Abhushan Vatika"
+                sx={{ width: '65%', height: 'auto', objectFit: 'contain' }}
+              />
             </Box>
           </Grid>
           <Grid size={{ xs: 12, md: 6 }}>

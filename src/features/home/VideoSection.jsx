@@ -34,8 +34,8 @@ export default function VideoSection() {
         <Box
           sx={{
             position: 'relative',
-            aspectRatio: '16 / 9',
-            maxWidth: 960,
+            aspectRatio: '9 / 16',
+            maxWidth: 420,
             mx: 'auto',
             bgcolor: '#2e0a3f',
             overflow: 'hidden',

@@ -47,7 +47,7 @@ export default function AccountLayout() {
 
       <Grid container spacing={5}>
         <Grid size={{ xs: 12, md: 3 }}>
-          <List sx={{ bgcolor: '#faf7f1', p: 1 }}>
+          <List sx={{ bgcolor: '#fff', border: '1px solid', borderColor: 'divider', borderRadius: '14px', p: 1 }}>
             {NAV_ITEMS.map((item) => (
               <ListItemButton
                 key={item.to}
@@ -55,7 +55,7 @@ export default function AccountLayout() {
                 to={item.to}
                 sx={{
                   '&.active': {
-                    bgcolor: '#fff',
+                    bgcolor: 'rgba(112, 24, 136,0.06)',
                     borderLeft: '2px solid',
                     borderColor: 'primary.main',
                   },
@@ -77,7 +77,7 @@ export default function AccountLayout() {
                 to={item.to}
                 sx={{
                   '&.active': {
-                    bgcolor: '#fff',
+                    bgcolor: 'rgba(112, 24, 136,0.06)',
                     borderLeft: '2px solid',
                     borderColor: 'primary.main',
                   },

@@ -33,7 +33,7 @@ export default function ChangePasswordPage() {
   }
 
   return (
-    <Box sx={{ bgcolor: '#faf7f1', p: { xs: 3, md: 4 }, maxWidth: 480 }}>
+    <Box sx={{ bgcolor: '#fff', border: '1px solid', borderColor: 'divider', borderRadius: '14px', p: { xs: 3, md: 4 }, maxWidth: 480 }}>
       <Typography variant="h6" sx={{ textTransform: 'none', fontSize: '1.1rem', mb: 3 }}>
         Update Password
       </Typography>
@@ -48,7 +48,7 @@ export default function ChangePasswordPage() {
               type="password"
               label="Current Password"
               margin="normal"
-              sx={{ bgcolor: '#fff' }}
+              sx={{ '& .MuiOutlinedInput-root': { bgcolor: '#fff' } }}
               error={Boolean(errors.currentPassword)}
               helperText={errors.currentPassword?.message}
             />
@@ -64,7 +64,7 @@ export default function ChangePasswordPage() {
               type="password"
               label="New Password"
               margin="normal"
-              sx={{ bgcolor: '#fff' }}
+              sx={{ '& .MuiOutlinedInput-root': { bgcolor: '#fff' } }}
               error={Boolean(errors.newPassword)}
               helperText={errors.newPassword?.message}
             />
@@ -80,7 +80,7 @@ export default function ChangePasswordPage() {
               type="password"
               label="Confirm New Password"
               margin="normal"
-              sx={{ bgcolor: '#fff' }}
+              sx={{ '& .MuiOutlinedInput-root': { bgcolor: '#fff' } }}
               error={Boolean(errors.confirmNewPassword)}
               helperText={errors.confirmNewPassword?.message}
             />
