@@ -50,7 +50,7 @@ export function PageTitleSkeleton({ width = 220 }) {
 // skeleton content instead of a spinner, no matter which route is loading.
 export function RouteFallbackSkeleton() {
   return (
-    <Box className="av-container" sx={{ py: 6 }}>
+    <Box className="av-container" sx={{ py: { xs: 4, md: 7 } }}>
       <PageTitleSkeleton width={240} />
       <ProductGridSkeleton />
     </Box>
@@ -72,10 +72,10 @@ export function CategoryListingPageSkeleton() {
 // CartPage
 export function CartPageSkeleton() {
   return (
-    <Box className="av-container" sx={{ py: 6 }}>
+    <Box className="av-container" sx={{ py: { xs: 4, md: 7 } }}>
       <PageTitleSkeleton width={220} />
-      <Skeleton variant="rectangular" height={120} sx={{ mb: 2 }} />
-      <Skeleton variant="rectangular" height={120} />
+      <Skeleton variant="rectangular" height={120} sx={{ mb: 2, borderRadius: '10px' }} />
+      <Skeleton variant="rectangular" height={120} sx={{ borderRadius: '10px' }} />
     </Box>
   )
 }
@@ -83,9 +83,9 @@ export function CartPageSkeleton() {
 // OrderDetailPage
 export function OrderDetailPageSkeleton() {
   return (
-    <Box className="av-container" sx={{ py: 6 }}>
+    <Box className="av-container" sx={{ py: { xs: 4, md: 7 } }}>
       <PageTitleSkeleton width={220} />
-      <Skeleton variant="rectangular" height={200} />
+      <Skeleton variant="rectangular" height={200} sx={{ borderRadius: '10px' }} />
     </Box>
   )
 }
@@ -118,7 +118,7 @@ export function WishlistGridSkeleton({ count = 4 }) {
 // ProductDetailPage
 export function ProductDetailPageSkeleton() {
   return (
-    <Box className="av-container" sx={{ py: 6 }}>
+    <Box className="av-container" sx={{ py: { xs: 3, md: 6 } }}>
       <Grid container spacing={5}>
         <Grid size={{ xs: 12, md: 6 }}>
           <Skeleton variant="rectangular" sx={{ aspectRatio: '1 / 1', width: '100%' }} />
@@ -140,7 +140,7 @@ export function ProductTypeStripSkeleton({ count = 8 }) {
     <>
       {Array.from({ length: count }).map((_, i) => (
         <Box key={i} sx={{ textAlign: 'center', flex: '0 0 auto' }}>
-          <Skeleton variant="circular" width={132} height={132} />
+          <Skeleton variant="circular" sx={{ width: { xs: 164, md: 192 }, height: { xs: 164, md: 192 } }} />
         </Box>
       ))}
     </>

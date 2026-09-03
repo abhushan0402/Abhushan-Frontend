@@ -3,7 +3,7 @@ import { Link as RouterLink } from 'react-router-dom'
 import { BRAND_NAME } from '../../utils/constants'
 
 export default function BrandLogo({ dark = true, size = 'medium' }) {
-  const color = dark ? '#f5f1e8' : '#173B2C'
+  const color = dark ? '#f5f1e8' : '#211d17'
   const badgeSize = size === 'large' ? 46 : size === 'small' ? 32 : 38
 
   return (

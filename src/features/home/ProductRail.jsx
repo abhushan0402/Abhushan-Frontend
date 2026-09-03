@@ -16,13 +16,14 @@ export default function ProductRail({
   refetch,
   autoScroll = false,
   viewAllHref,
+  bgcolor = '#fff',
 }) {
   if (!isLoading && !isError && (!products || products.length === 0)) {
     return null
   }
 
   return (
-    <Box component="section" sx={{ py: { xs: 6, md: 9 } }}>
+    <Box component="section" sx={{ py: { xs: 6, md: 9 }, bgcolor }}>
       <Box className="av-container">
         <SectionHeading eyebrow={eyebrow} title={title} subtitle={subtitle} />
         {isLoading ? (
@@ -34,7 +35,7 @@ export default function ProductRail({
             onRetry={refetch}
           />
         ) : (
-          <ScrollCarousel products={products} autoScroll={autoScroll} />
+          <ScrollCarousel products={products} autoScroll={autoScroll} fadeColor={bgcolor} />
         )}
         {viewAllHref && !isLoading && !isError ? (
           <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: { xs: 3, md: 4 } }}>

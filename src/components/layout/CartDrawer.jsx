@@ -78,7 +78,7 @@ export default function CartDrawer() {
                     src={item.product?.images?.[0] ?? '/placeholder-product.svg'}
                     alt={item.product?.name}
                     onError={handleImageError}
-                    sx={{ width: 80, height: 80, objectFit: 'cover', bgcolor: 'grey.100', flexShrink: 0 }}
+                    sx={{ width: 80, height: 80, objectFit: 'cover', bgcolor: '#f1ebe0', flexShrink: 0 }}
                   />
                   <Box sx={{ flex: 1, minWidth: 0 }}>
                     <Typography variant="body2" sx={{ fontWeight: 500, mb: 0.5 }} noWrap>

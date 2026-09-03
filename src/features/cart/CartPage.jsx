@@ -99,7 +99,13 @@ export default function CartPage() {
                     src={item.product?.images?.[0] ?? '/placeholder-product.svg'}
                     alt={item.product?.name}
                     onError={handleImageError}
-                    sx={{ width: 120, height: 120, objectFit: 'cover', bgcolor: '#f1ebe0' }}
+                    sx={{
+                      width: { xs: 84, sm: 120 },
+                      height: { xs: 84, sm: 120 },
+                      objectFit: 'cover',
+                      bgcolor: '#f1ebe0',
+                      borderRadius: '10px',
+                    }}
                   />
                 </Box>
                 <Box sx={{ flex: 1 }}>

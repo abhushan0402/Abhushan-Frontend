@@ -55,19 +55,32 @@ export default function SectionHeading({
         }}
       >
         {eyebrow ? (
-          <Typography
-            variant="subtitle2"
+          <Box
             sx={{
-              color: 'primary.main',
-              letterSpacing: '0.25em',
-              textTransform: 'uppercase',
-              fontWeight: 600,
-              fontSize: '0.7rem',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 1,
+              justifyContent: align === 'center' ? 'center' : 'flex-start',
               mb: 1.5,
             }}
           >
-            {eyebrow}
-          </Typography>
+            <Box sx={{ width: 22, height: '1.5px', bgcolor: dark ? '#facc15' : 'primary.main', opacity: 0.7 }} />
+            <Typography
+              variant="subtitle2"
+              sx={{
+                color: dark ? '#facc15' : 'primary.main',
+                letterSpacing: '0.25em',
+                textTransform: 'uppercase',
+                fontWeight: 600,
+                fontSize: '0.7rem',
+              }}
+            >
+              {eyebrow}
+            </Typography>
+            {align === 'center' ? (
+              <Box sx={{ width: 22, height: '1.5px', bgcolor: dark ? '#facc15' : 'primary.main', opacity: 0.7 }} />
+            ) : null}
+          </Box>
         ) : null}
         <Typography
           variant="h3"

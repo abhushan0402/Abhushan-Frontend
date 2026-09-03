@@ -26,7 +26,7 @@ export default function OrderDetailPage() {
 
   if (isError || !order) {
     return (
-      <Box className="av-container" sx={{ py: 6 }}>
+      <Box className="av-container" sx={{ py: { xs: 4, md: 7 } }}>
         <ErrorState title="Could not load this order" onRetry={refetch} />
       </Box>
     )

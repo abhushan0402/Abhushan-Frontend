@@ -82,7 +82,7 @@ export default function ProductCard({ product }) {
           sx={{
             position: 'relative',
             width: '100%',
-            height: '250px',
+            aspectRatio: '1 / 1',
             flexShrink: 0,
             overflow: 'hidden',
             borderRadius: '14px',

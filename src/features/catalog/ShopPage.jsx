@@ -64,7 +64,7 @@ export default function ShopPage() {
         </Box>
       </Box>
 
-      <Box className="av-container" sx={{ py: { xs: 3, md: 5 } }}>
+      <Box className="av-container" sx={{ py: { xs: 4, md: 7 } }}>
         <Grid container spacing={4}>
           <Grid size={{ xs: 0, md: 3 }} sx={{ display: { xs: 'none', md: 'block' } }}>
             <ProductFilters filters={filters} onChange={setFilters} onClear={clearFilters} />

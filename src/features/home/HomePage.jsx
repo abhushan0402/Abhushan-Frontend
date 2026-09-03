@@ -4,6 +4,7 @@ import ProductRail from './ProductRail'
 import ProductTypeStrip from './ProductTypeStrip'
 import CraftsmanshipBanner from './CraftsmanshipBanner'
 import VideoSection from './VideoSection'
+import HeritageBanner from './HeritageBanner'
 import TrustBanner from './TrustBanner'
 import {
   useBestSellers,
@@ -55,6 +56,7 @@ export default function HomePage() {
         isError={newArrivals.isError}
         refetch={newArrivals.refetch}
         viewAllHref="/shop?isNewArrival=true"
+        bgcolor="#faf7f1"
       />
       <ProductRail
         eyebrow="Curated For You"
@@ -65,6 +67,7 @@ export default function HomePage() {
         refetch={featured.refetch}
         viewAllHref="/shop?isFeatured=true"
       />
+      <HeritageBanner />
       <TrustBanner />
     </>
   )

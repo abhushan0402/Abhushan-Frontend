@@ -2,28 +2,19 @@ import { Box, Grid2 as Grid, Typography } from '@mui/material'
 import { Link as RouterLink } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { useCategories } from '../../hooks/useCategories'
-import { useNewArrivals, useBestSellers, useTrendingProducts } from '../../hooks/useProducts'
 import SectionHeading from '../../components/common/SectionHeading'
-import { handleImageError, pickWorkingImage } from '../../utils/handleImageError'
+import { handleImageError } from '../../utils/handleImageError'
 import { CategoryShowcaseSkeleton } from '../../components/common/PageSkeleton'
 
 export default function CategoryShowcase() {
   const { data: categories = [], isLoading } = useCategories()
-  const { data: newArrivals = [] } = useNewArrivals({ limit: 8 })
-  const { data: bestSellers = [] } = useBestSellers({ limit: 8 })
-  const { data: trending = [] } = useTrendingProducts({ limit: 8 })
 
-  const tiles = [
-    ...categories.map((cat) => ({
-      key: cat._id,
-      name: cat.name,
-      image: cat.image,
-      to: `/category/${cat.slug}`,
-    })),
-    { key: 'new-arrivals', name: 'New Arrivals', image: pickWorkingImage(newArrivals), to: '/shop?isNewArrival=true' },
-    { key: 'best-selling', name: 'Best Selling', image: pickWorkingImage(bestSellers), to: '/shop?isBestSeller=true' },
-    { key: 'trending', name: 'Trending', image: pickWorkingImage(trending), to: '/shop?isTrending=true' },
-  ]
+  const tiles = categories.map((cat) => ({
+    key: cat._id,
+    name: cat.name,
+    image: cat.image,
+    to: `/category/${cat.slug}`,
+  }))
 
   return (
     <Box component="section" sx={{ py: { xs: 7, md: 10 }, bgcolor: '#faf7f1' }}>
@@ -35,7 +26,7 @@ export default function CategoryShowcase() {
         />
         <Grid container spacing={{ xs: 2, md: 4 }}>
           {isLoading
-            ? <CategoryShowcaseSkeleton count={6} />
+            ? <CategoryShowcaseSkeleton count={3} />
             : tiles.map((tile, i) => (
                 <Grid key={tile.key} size={{ xs: 12, sm: 4 }}>
                   <Box
@@ -43,7 +34,15 @@ export default function CategoryShowcase() {
                     initial={{ opacity: 0, y: 24 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.3 }}
+                    whileHover={{ y: -6 }}
                     transition={{ duration: 0.5, delay: (i % 3) * 0.1 }}
+                    className="av-category-tile"
+                    sx={{
+                      borderRadius: '18px',
+                      boxShadow: '0 4px 16px rgba(33,29,23,0.08)',
+                      transition: 'box-shadow 0.3s ease',
+                      '&:hover': { boxShadow: '0 16px 32px rgba(33,29,23,0.18)' },
+                    }}
                   >
                     <Box
                       component={RouterLink}
@@ -53,10 +52,13 @@ export default function CategoryShowcase() {
                         display: 'block',
                         aspectRatio: '4 / 5',
                         overflow: 'hidden',
-                        borderRadius: '16px',
+                        borderRadius: '18px',
                         textDecoration: 'none',
                         bgcolor: '#f1ebe0',
-                        '&:hover img': { transform: 'scale(1.06)' },
+                        '.av-category-tile:hover &': {
+                          '& img': { transform: 'scale(1.08)' },
+                          '& .av-shop-now-arrow': { transform: 'translateX(4px)' },
+                        },
                       }}
                     >
                       <Box
@@ -77,7 +79,7 @@ export default function CategoryShowcase() {
                           position: 'absolute',
                           inset: 0,
                           background:
-                            'linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.65) 100%)',
+                            'linear-gradient(180deg, rgba(0,0,0,0) 35%, rgba(0,0,0,0.7) 100%)',
                         }}
                       />
                       <Box sx={{ position: 'absolute', left: 0, right: 0, bottom: 0, p: 3 }}>
@@ -85,7 +87,7 @@ export default function CategoryShowcase() {
                           sx={{
                             color: '#fff',
                             fontFamily: 'Lora, serif',
-                            fontSize: '1.4rem',
+                            fontSize: { xs: '1.25rem', md: '1.5rem' },
                             mb: 0.5,
                           }}
                         >
@@ -95,10 +97,17 @@ export default function CategoryShowcase() {
                           sx={{
                             color: '#facc15',
                             fontSize: '0.7rem',
+                            fontWeight: 600,
                             letterSpacing: '0.15em',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: 0.5,
                           }}
                         >
-                          SHOP NOW →
+                          SHOP NOW
+                          <Box component="span" className="av-shop-now-arrow" sx={{ display: 'inline-block', transition: 'transform 0.25s ease' }}>
+                            →
+                          </Box>
                         </Typography>
                       </Box>
                     </Box>

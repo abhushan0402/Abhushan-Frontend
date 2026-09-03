@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { Box } from '@mui/material'
+import { motion } from 'framer-motion'
 import SectionHeading from '../../components/common/SectionHeading'
 
 export default function VideoSection() {
@@ -24,7 +25,7 @@ export default function VideoSection() {
   }, [])
 
   return (
-    <Box component="section" sx={{ py: { xs: 6, md: 9 }, bgcolor: '#faf7f1' }}>
+    <Box component="section" sx={{ py: { xs: 6, md: 9 }, bgcolor: '#fff' }}>
       <Box className="av-container">
         <SectionHeading
           eyebrow="Behind the Craft"
@@ -32,14 +33,21 @@ export default function VideoSection() {
           subtitle="A glimpse into the artistry behind every Abhushan Vatika piece."
         />
         <Box
+          component={motion.div}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.7 }}
           sx={{
             position: 'relative',
             aspectRatio: '9 / 16',
-            maxWidth: 420,
+            maxWidth: { xs: '100%', sm: 520, md: 640 },
             mx: 'auto',
             bgcolor: '#2e0a3f',
             overflow: 'hidden',
-            borderRadius: '16px',
+            borderRadius: '20px',
+            boxShadow: '0 24px 48px rgba(46,10,63,0.22)',
+            border: '1px solid rgba(112,24,136,0.15)',
           }}
         >
           <Box

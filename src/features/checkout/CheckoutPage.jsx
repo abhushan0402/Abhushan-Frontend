@@ -52,7 +52,7 @@ function PaymentBadge({ label, bg, color = '#fff' }) {
         py: 0.5,
         bgcolor: bg,
         color,
-        fontSize: '0.7rem',
+        fontSize: '0.75rem',
         fontWeight: 600,
         letterSpacing: '0.02em',
         borderRadius: '6px',
@@ -276,7 +276,7 @@ export default function CheckoutPage() {
   }
 
   return (
-    <Box className="av-container" sx={{ py: { xs: 3, md: 5 } }}>
+    <Box className="av-container" sx={{ py: { xs: 4, md: 7 } }}>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
         <IconButton
           component={activeStep === 0 ? RouterLink : 'button'}

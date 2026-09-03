@@ -17,6 +17,7 @@ export default function HorizontalScroller({
   snap = false,
   autoScroll = false,
   autoScrollIntervalMs = 3200,
+  fadeColor = '#fff',
 }) {
   const trackRef = useRef(null)
   const [canScrollLeft, setCanScrollLeft] = useState(false)
@@ -85,6 +86,37 @@ export default function HorizontalScroller({
       </Box>
 
       {canScrollLeft ? (
+        <Box
+          aria-hidden
+          sx={{
+            display: { xs: 'none', md: 'block' },
+            position: 'absolute',
+            left: 0,
+            top: 0,
+            bottom: 8,
+            width: 56,
+            background: `linear-gradient(90deg, ${fadeColor} 0%, transparent 100%)`,
+            pointerEvents: 'none',
+          }}
+        />
+      ) : null}
+      {canScrollRight ? (
+        <Box
+          aria-hidden
+          sx={{
+            display: { xs: 'none', md: 'block' },
+            position: 'absolute',
+            right: 0,
+            top: 0,
+            bottom: 8,
+            width: 56,
+            background: `linear-gradient(270deg, ${fadeColor} 0%, transparent 100%)`,
+            pointerEvents: 'none',
+          }}
+        />
+      ) : null}
+
+      {canScrollLeft ? (
         <IconButton
           onClick={() => scrollBy(-1)}
           aria-label="Scroll left"
@@ -94,8 +126,11 @@ export default function HorizontalScroller({
             left: -20,
             top: '35%',
             bgcolor: '#fff',
-            boxShadow: 2,
-            '&:hover': { bgcolor: '#fff' },
+            border: '1px solid',
+            borderColor: 'divider',
+            boxShadow: '0 8px 20px rgba(33,29,23,0.15)',
+            transition: 'transform 0.2s ease, background-color 0.2s ease',
+            '&:hover': { bgcolor: 'primary.main', color: '#fff', transform: 'scale(1.08)' },
           }}
         >
           <ChevronLeftRoundedIcon />
@@ -111,8 +146,11 @@ export default function HorizontalScroller({
             right: -20,
             top: '35%',
             bgcolor: '#fff',
-            boxShadow: 2,
-            '&:hover': { bgcolor: '#fff' },
+            border: '1px solid',
+            borderColor: 'divider',
+            boxShadow: '0 8px 20px rgba(33,29,23,0.15)',
+            transition: 'transform 0.2s ease, background-color 0.2s ease',
+            '&:hover': { bgcolor: 'primary.main', color: '#fff', transform: 'scale(1.08)' },
           }}
         >
           <ChevronRightRoundedIcon />

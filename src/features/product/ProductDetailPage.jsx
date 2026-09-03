@@ -12,6 +12,7 @@ import {
   Tabs,
   Tab,
 } from '@mui/material'
+import { motion, AnimatePresence } from 'framer-motion'
 import AddRoundedIcon from '@mui/icons-material/AddRounded'
 import RemoveRoundedIcon from '@mui/icons-material/RemoveRounded'
 import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded'
@@ -31,6 +32,9 @@ import { useRequireAuth } from '../../hooks/useRequireAuth'
 import { useAddToCart } from '../../hooks/useCart'
 import { useAddToWishlist, useRemoveFromWishlist, useIsWishlisted } from '../../hooks/useWishlist'
 import ReviewsSection from './ReviewsSection'
+
+const MotionButton = motion(Button)
+const MotionIconButton = motion(IconButton)
 
 export default function ProductDetailPage() {
   const { productId } = useParams()
@@ -128,7 +132,7 @@ export default function ProductDetailPage() {
           <Grid size={{ xs: 12, md: 6 }}>
           <Box
             sx={{
-              background: 'linear-gradient(160deg, #faf7f1 0%, #f1ebe0 100%)',
+              background: 'linear-gradient(160deg, #d7f2f1 0%, #f1ebe0 100%)',
               border: '1px solid',
               borderColor: 'divider',
               borderRadius: '16px',
@@ -136,7 +140,7 @@ export default function ProductDetailPage() {
             }}
           >
             {product.subCategoryId?.name ? (
-              <Typography variant="caption" sx={{ color: 'primary.dark', letterSpacing: '0.15em' }}>
+              <Typography variant="caption" sx={{ color: 'primary.main', letterSpacing: '0.15em' }}>
                 {product.subCategoryId.name.toUpperCase()}
               </Typography>
             ) : null}
@@ -191,34 +195,63 @@ export default function ProductDetailPage() {
 
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
               <Box sx={{ display: 'flex', alignItems: 'center', border: '1px solid', borderColor: 'divider', borderRadius: '10px', overflow: 'hidden' }}>
-                <IconButton
+                <MotionIconButton
                   size="small"
                   disabled={quantity <= 1}
                   onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+                  whileTap={{ scale: 0.85 }}
+                  transition={{ duration: 0.15 }}
                 >
                   <RemoveRoundedIcon fontSize="small" />
-                </IconButton>
+                </MotionIconButton>
                 <Typography sx={{ px: 2 }}>{quantity}</Typography>
-                <IconButton size="small" onClick={() => setQuantity((q) => q + 1)}>
+                <MotionIconButton
+                  size="small"
+                  onClick={() => setQuantity((q) => q + 1)}
+                  whileTap={{ scale: 0.85 }}
+                  transition={{ duration: 0.15 }}
+                >
                   <AddRoundedIcon fontSize="small" />
-                </IconButton>
+                </MotionIconButton>
               </Box>
-              <IconButton
+              <MotionIconButton
                 onClick={handleWishlistToggle}
                 disableRipple
                 sx={{ border: '1px solid', borderColor: 'divider', borderRadius: '50%' }}
                 aria-label="Toggle wishlist"
+                whileTap={{ scale: 0.8 }}
+                transition={{ duration: 0.15 }}
               >
-                {isWishlisted ? (
-                  <FavoriteRoundedIcon sx={{ color: 'primary.main' }} />
-                ) : (
-                  <FavoriteBorderRoundedIcon />
-                )}
-              </IconButton>
+                <AnimatePresence mode="wait" initial={false}>
+                  {isWishlisted ? (
+                    <motion.span
+                      key="filled"
+                      initial={{ scale: 0.4, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      exit={{ scale: 0.4, opacity: 0 }}
+                      transition={{ duration: 0.2 }}
+                      style={{ display: 'flex' }}
+                    >
+                      <FavoriteRoundedIcon sx={{ color: 'primary.main' }} />
+                    </motion.span>
+                  ) : (
+                    <motion.span
+                      key="outline"
+                      initial={{ scale: 0.4, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      exit={{ scale: 0.4, opacity: 0 }}
+                      transition={{ duration: 0.2 }}
+                      style={{ display: 'flex' }}
+                    >
+                      <FavoriteBorderRoundedIcon />
+                    </motion.span>
+                  )}
+                </AnimatePresence>
+              </MotionIconButton>
             </Box>
 
             <Box sx={{ display: 'flex', gap: 2, mb: 4 }}>
-              <Button
+              <MotionButton
                 variant="outlined"
                 color="secondary"
                 size="large"
@@ -226,10 +259,13 @@ export default function ProductDetailPage() {
                 disabled={addToCart.isPending}
                 onClick={handleAddToCart}
                 sx={{ py: 1.5 }}
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                transition={{ duration: 0.15 }}
               >
                 Add to Bag
-              </Button>
-              <Button
+              </MotionButton>
+              <MotionButton
                 variant="contained"
                 color="primary"
                 size="large"
@@ -237,9 +273,12 @@ export default function ProductDetailPage() {
                 disabled={!inStock || addToCart.isPending}
                 onClick={handleBuyNow}
                 sx={{ py: 1.5 }}
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                transition={{ duration: 0.15 }}
               >
                 {inStock ? 'Buy Now' : 'Out of Stock'}
-              </Button>
+              </MotionButton>
             </Box>
 
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
@@ -277,10 +316,19 @@ export default function ProductDetailPage() {
           </Tabs>
 
           {tab === 0 ? (
-            <Typography sx={{ color: 'text.secondary', maxWidth: 720, lineHeight: 1.8 }}>
-              {product.description ||
-                `Handcrafted with care, this ${product.metalType} ${product.productType} showcases the artistry Abhushan Vatika is known for — a timeless addition to your jewellery collection.`}
-            </Typography>
+            <Box
+              sx={{
+                bgcolor: '#bbe0da',
+                border: '1px solid #ecdfc8',
+                borderRadius: '16px',
+                p: { xs: 3, md: 4 },
+              }}
+            >
+              <Typography sx={{ color: 'text.secondary', maxWidth: 720, lineHeight: 1.8 }}>
+                {product.description ||
+                  `Handcrafted with care, this ${product.metalType} ${product.productType} showcases the artistry Abhushan Vatika is known for — a timeless addition to your jewellery collection.`}
+              </Typography>
+            </Box>
           ) : (
             <ReviewsSection productId={product._id} />
           )}
