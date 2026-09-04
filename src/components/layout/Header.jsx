@@ -80,7 +80,7 @@ export default function Header() {
           px: 2,
         }}
       >
-        BIS Hallmarked &nbsp;•&nbsp; Free Insured Shipping &nbsp;•&nbsp; Lifetime Exchange
+        BIS Hallmarked &nbsp;•&nbsp; Free Insured Shipping
       </Box>
       <AppBar
         position="sticky"

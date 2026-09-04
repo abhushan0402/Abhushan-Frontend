@@ -19,7 +19,6 @@ import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded'
 import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded'
 import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined'
 import VerifiedOutlinedIcon from '@mui/icons-material/VerifiedOutlined'
-import AutorenewOutlinedIcon from '@mui/icons-material/AutorenewOutlined'
 import { useProduct, useProducts } from '../../hooks/useProducts'
 import ProductGallery from '../../components/product/ProductGallery'
 import PriceTag from '../../components/common/PriceTag'
@@ -153,6 +152,11 @@ export default function ProductDetailPage() {
             <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mt: 0.5 }}>
               Inclusive of all taxes. Making charges may vary.
             </Typography>
+            {product.sku ? (
+              <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mt: 0.5 }}>
+                SKU: {product.sku}
+              </Typography>
+            ) : null}
 
             <Divider sx={{ my: 3 }} />
 
@@ -292,12 +296,6 @@ export default function ProductDetailPage() {
                 <LocalShippingOutlinedIcon fontSize="small" sx={{ color: 'primary.main' }} />
                 <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                   Free, fully insured shipping
-                </Typography>
-              </Box>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-                <AutorenewOutlinedIcon fontSize="small" sx={{ color: 'primary.main' }} />
-                <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                  Lifetime exchange policy
                 </Typography>
               </Box>
             </Box>

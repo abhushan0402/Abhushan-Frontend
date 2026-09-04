@@ -2,11 +2,10 @@ import { Box, Grid2 as Grid, Typography } from '@mui/material'
 import { motion } from 'framer-motion'
 import VerifiedRoundedIcon from '@mui/icons-material/VerifiedRounded'
 import LocalShippingRoundedIcon from '@mui/icons-material/LocalShippingRounded'
-import AutorenewRoundedIcon from '@mui/icons-material/AutorenewRounded'
 import DiamondRoundedIcon from '@mui/icons-material/DiamondRounded'
 import { TRUST_BADGES } from '../../utils/constants'
 
-const icons = [VerifiedRoundedIcon, LocalShippingRoundedIcon, AutorenewRoundedIcon, DiamondRoundedIcon]
+const icons = [VerifiedRoundedIcon, LocalShippingRoundedIcon, DiamondRoundedIcon]
 
 export default function TrustBanner() {
   return (

@@ -55,7 +55,6 @@ export const FOOTER_LINKS = {
 export const TRUST_BADGES = [
   { title: 'BIS Hallmarked', desc: 'Certified purity on every piece' },
   { title: 'Free Insured Shipping', desc: 'Delivered safely, fully insured' },
-  { title: 'Lifetime Exchange', desc: 'Exchange anytime at fair value' },
   { title: 'Handcrafted Artistry', desc: 'Hundreds of hours per creation' },
 ]
 

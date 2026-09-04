@@ -169,6 +169,11 @@ export default function ProductCard({ product }) {
               {formatWeight(product.weight)}
             </Typography>
           ) : null}
+          {product.sku ? (
+            <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mt: 0.25 }}>
+              SKU: {product.sku}
+            </Typography>
+          ) : null}
         </Box>
 
         {inStock ? (
