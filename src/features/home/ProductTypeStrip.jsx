@@ -21,7 +21,7 @@ export default function ProductTypeStrip() {
     >
       <Box className="av-container">
         <SectionHeading eyebrow="Quick Shop" title="Shop by Type" />
-        <HorizontalScroller gap={{ xs: 3, md: 4 }} fadeColor="#f1ebe0">
+        <HorizontalScroller gap={{ xs: 3, md: 4 }}>
           {isLoading
             ? <ProductTypeStripSkeleton />
             : productTypes.map((type, i) => (

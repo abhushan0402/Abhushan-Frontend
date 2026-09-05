@@ -17,7 +17,6 @@ export default function HorizontalScroller({
   snap = false,
   autoScroll = false,
   autoScrollIntervalMs = 3200,
-  fadeColor = '#fff',
 }) {
   const trackRef = useRef(null)
   const [canScrollLeft, setCanScrollLeft] = useState(false)
@@ -84,37 +83,6 @@ export default function HorizontalScroller({
       >
         {children}
       </Box>
-
-      {canScrollLeft ? (
-        <Box
-          aria-hidden
-          sx={{
-            display: { xs: 'none', md: 'block' },
-            position: 'absolute',
-            left: 0,
-            top: 0,
-            bottom: 8,
-            width: 56,
-            background: `linear-gradient(90deg, ${fadeColor} 0%, transparent 100%)`,
-            pointerEvents: 'none',
-          }}
-        />
-      ) : null}
-      {canScrollRight ? (
-        <Box
-          aria-hidden
-          sx={{
-            display: { xs: 'none', md: 'block' },
-            position: 'absolute',
-            right: 0,
-            top: 0,
-            bottom: 8,
-            width: 56,
-            background: `linear-gradient(270deg, ${fadeColor} 0%, transparent 100%)`,
-            pointerEvents: 'none',
-          }}
-        />
-      ) : null}
 
       {canScrollLeft ? (
         <IconButton

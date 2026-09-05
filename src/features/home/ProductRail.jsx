@@ -35,7 +35,7 @@ export default function ProductRail({
             onRetry={refetch}
           />
         ) : (
-          <ScrollCarousel products={products} autoScroll={autoScroll} fadeColor={bgcolor} />
+          <ScrollCarousel products={products} autoScroll={autoScroll} />
         )}
         {viewAllHref && !isLoading && !isError ? (
           <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: { xs: 3, md: 4 } }}>

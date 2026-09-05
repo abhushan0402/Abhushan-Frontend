@@ -9,23 +9,24 @@ export default function Hero() {
       sx={{
         position: 'relative',
         width: '100%',
-        aspectRatio: '3 / 1',
-        overflow: 'hidden',
+        minHeight: { xs: 240, sm: 360, md: 480 },
       }}
     >
-      <Box
-        component="img"
-        src="/Hero.png"
-        alt="Abhushan Vatika — Crafted to Shine, Made to Treasure"
-        sx={{
-          position: 'absolute',
-          inset: 0,
-          width: '100%',
-          height: '100%',
-          objectFit: 'cover',
-          objectPosition: 'center bottom',
-        }}
-      />
+      <Box sx={{ position: 'absolute', inset: 0, overflow: 'hidden' }}>
+        <Box
+          component="img"
+          src="/Hero.png"
+          alt="Abhushan Vatika — Crafted to Shine, Made to Treasure"
+          sx={{
+            position: 'absolute',
+            inset: 0,
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            objectPosition: 'center bottom',
+          }}
+        />
+      </Box>
 
       <Box
         component={motion.div}

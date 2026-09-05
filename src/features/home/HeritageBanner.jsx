@@ -27,7 +27,7 @@ export default function HeritageBanner() {
             display: 'block',
             position: 'relative',
             width: '100%',
-            aspectRatio: { xs: '3 / 1.4', sm: '4 / 1', md: '6.56 / 1' },
+            aspectRatio: { xs: '4.5 / 1', sm: '5.5 / 1', md: '6.56 / 1' },
           }}
         >
           <Box
