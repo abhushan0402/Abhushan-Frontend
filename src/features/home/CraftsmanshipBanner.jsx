@@ -89,7 +89,7 @@ export default function CraftsmanshipBanner() {
               <Typography sx={{ color: 'text.secondary', maxWidth: 460, mb: 4 }}>
                 From the first sketch to the final polish, our artisans pour
                 hundreds of hours into every creation — hand-selecting metals,
-                setting stones with precision, and finishing each piece to a
+                setting stones with precision, and finishing, each piece to a
                 mirror shine. It's a tradition of craftsmanship passed down
                 through generations.
               </Typography>
