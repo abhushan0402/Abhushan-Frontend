@@ -22,7 +22,7 @@ export default function ProductCard({ product }) {
   const isWishlisted = useIsWishlisted(product._id)
 
   const inStock = (product.stock ?? 0) > 0
-  const hasWeight = product.weight !== undefined && product.weight !== null
+  const hasWeight = Number(product.weight) > 0
 
   const images = product.images?.length ? product.images : ['/placeholder-product.svg']
   const primaryImage = images[0]

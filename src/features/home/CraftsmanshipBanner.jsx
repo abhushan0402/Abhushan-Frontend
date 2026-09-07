@@ -2,15 +2,10 @@ import { Box, Typography, Button, Grid2 as Grid } from '@mui/material'
 import { Link as RouterLink } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import DiamondRoundedIcon from '@mui/icons-material/DiamondRounded'
-import { useTrendingProducts } from '../../hooks/useProducts'
-import { handleImageError, pickWorkingImage } from '../../utils/handleImageError'
 
 const MotionButton = motion(Button)
 
 export default function CraftsmanshipBanner() {
-  const { data: products = [] } = useTrendingProducts({ limit: 8 })
-  const image = pickWorkingImage(products)
-
   return (
     <Box component="section" sx={{ bgcolor: '#faf7f1', py: { xs: 7, md: 10 } }}>
       <Box className="av-container">
@@ -26,23 +21,20 @@ export default function CraftsmanshipBanner() {
             >
               <Box
                 sx={{
-                  aspectRatio: '4 / 5',
+                  aspectRatio: '1536 / 893',
                   bgcolor: '#e9e2d3',
                   overflow: 'hidden',
                   borderRadius: '16px',
                   boxShadow: '0 20px 40px rgba(46,10,63,0.14)',
                 }}
               >
-                {image ? (
-                  <Box
-                    component="img"
-                    src={image}
-                    alt="Craftsmanship"
-                    loading="lazy"
-                    onError={handleImageError}
-                    sx={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                  />
-                ) : null}
+                <Box
+                  component="img"
+                  src="/Abhushan-family.png"
+                  alt="Abhushan Vatika — A Legacy of 30+ Years. Tradition, Trust, Timeless Beauty."
+                  loading="lazy"
+                  sx={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                />
               </Box>
               <Box
                 sx={{
