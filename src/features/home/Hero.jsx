@@ -35,7 +35,7 @@ export default function Hero() {
         transition={{ duration: 0.7, ease: 'easeOut' }}
         sx={{
           position: 'absolute',
-          top: { xs: '8%', sm: '10%', md: '12%' },
+          top: { xs: '14%', sm: '16%', md: '16%' },
           left: { xs: '5%', md: '6%' },
           width: { xs: '90%', sm: '62%', md: '46%' },
         }}
@@ -59,7 +59,7 @@ export default function Hero() {
           sx={{
             fontSize: { xs: '1.15rem', sm: '1.65rem', md: '2.35rem' },
             lineHeight: 1.15,
-            mb: { xs: 0.5, md: 1.25 },
+            mb: { xs: 0.75, md: 1.5 },
           }}
         >
           Welcome to {BRAND_NAME}
@@ -82,7 +82,7 @@ export default function Hero() {
           variant="contained"
           color="primary"
           size="medium"
-          sx={{ mt: { xs: 1.5, sm: 2.5 } }}
+          sx={{ mt: { xs: 3, sm: 4 } }}
         >
           Explore Collection
         </Button>

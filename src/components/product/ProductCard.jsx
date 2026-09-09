@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Box, Typography, IconButton } from '@mui/material'
 import { Link as RouterLink } from 'react-router-dom'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded'
 import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded'
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined'
@@ -12,6 +12,8 @@ import { useAddToWishlist, useRemoveFromWishlist, useIsWishlisted } from '../../
 import { useAddToCart } from '../../hooks/useCart'
 import { handleImageError } from '../../utils/handleImageError'
 import { formatWeight } from '../../utils/formatCurrency'
+
+const MotionIconButton = motion(IconButton)
 
 export default function ProductCard({ product }) {
   const [hovered, setHovered] = useState(false)
@@ -128,11 +130,13 @@ export default function ProductCard({ product }) {
             </Box>
           ) : null}
 
-          <IconButton
+          <MotionIconButton
             onClick={handleWishlistToggle}
             aria-label="Toggle wishlist"
             size="small"
             disableRipple
+            whileTap={{ scale: 0.8 }}
+            transition={{ duration: 0.15 }}
             sx={{
               position: 'absolute',
               top: 8,
@@ -141,12 +145,32 @@ export default function ProductCard({ product }) {
               '&:hover': { bgcolor: '#fff' },
             }}
           >
-            {isWishlisted ? (
-              <FavoriteRoundedIcon fontSize="small" sx={{ color: '#db2173' }} />
-            ) : (
-              <FavoriteBorderRoundedIcon fontSize="small" />
-            )}
-          </IconButton>
+            <AnimatePresence mode="wait" initial={false}>
+              {isWishlisted ? (
+                <motion.span
+                  key="filled"
+                  initial={{ scale: 0.4, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0.4, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  style={{ display: 'flex' }}
+                >
+                  <FavoriteRoundedIcon fontSize="small" sx={{ color: '#db2173' }} />
+                </motion.span>
+              ) : (
+                <motion.span
+                  key="outline"
+                  initial={{ scale: 0.4, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0.4, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  style={{ display: 'flex' }}
+                >
+                  <FavoriteBorderRoundedIcon fontSize="small" />
+                </motion.span>
+              )}
+            </AnimatePresence>
+          </MotionIconButton>
         </Box>
 
         <Box sx={{ pt: 1.5, flexGrow: 1 }}>
@@ -177,10 +201,13 @@ export default function ProductCard({ product }) {
         </Box>
 
         {inStock ? (
-          <IconButton
+          <MotionIconButton
             onClick={handleAddToCart}
             aria-label="Add to cart"
             disableRipple
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.96 }}
+            transition={{ duration: 0.15 }}
             sx={{
               mt: 1.25,
               width: '100%',
@@ -198,7 +225,7 @@ export default function ProductCard({ product }) {
             <Typography variant="caption" sx={{ letterSpacing: '0.1em', fontSize: '0.8rem' }}>
               ADD TO BAG
             </Typography>
-          </IconButton>
+          </MotionIconButton>
         ) : (
           <Box
             sx={{

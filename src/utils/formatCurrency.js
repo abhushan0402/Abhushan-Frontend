@@ -13,5 +13,5 @@ export function formatPrice(value) {
 
 export function formatWeight(value) {
   if (value === undefined || value === null) return '—'
-  return `${Number(value).toFixed(2)} g`
+  return `${Number(value)} g`
 }

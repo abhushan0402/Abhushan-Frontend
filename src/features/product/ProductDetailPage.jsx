@@ -27,6 +27,7 @@ import ProductGrid from '../../components/product/ProductGrid'
 import ErrorState from '../../components/common/ErrorState'
 import { ProductDetailPageSkeleton } from '../../components/common/PageSkeleton'
 import { formatWeight } from '../../utils/formatCurrency'
+import { SOCIAL_LINKS } from '../../utils/constants'
 import { useRequireAuth } from '../../hooks/useRequireAuth'
 import { useAddToCart } from '../../hooks/useCart'
 import { useAddToWishlist, useRemoveFromWishlist, useIsWishlisted } from '../../hooks/useWishlist'
@@ -68,14 +69,22 @@ export default function ProductDetailPage() {
   }
 
   const inStock = (product.stock ?? 0) > 0
-  const hasWeight = product.weight !== undefined && product.weight !== null
+  const hasWeight = Number(product.weight) > 0
 
   const handleAddToCart = () => {
     requireAuth(() => addToCart.mutate({ productId: product._id, quantity }))
   }
 
+  // Gold prices move with the live market rate, so the catalog price can be
+  // stale by the time someone checks out — Buy Now sends gold pieces to
+  // WhatsApp for a confirmed live-rate quote instead of straight to checkout.
   const handleBuyNow = () => {
     if (!inStock) return
+    if (product.metalType === 'gold') {
+      const message = `Hi, I'd like to buy "${product.name}" — ${window.location.href}. Please share today's live price.`
+      window.open(`${SOCIAL_LINKS.whatsapp}?text=${encodeURIComponent(message)}`, '_blank', 'noopener,noreferrer')
+      return
+    }
     requireAuth(() => {
       addToCart.mutate(
         { productId: product._id, quantity },

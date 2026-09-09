@@ -75,7 +75,13 @@ export default function HorizontalScroller({
           display: 'flex',
           gap,
           overflowX: 'auto',
+          // overflowX alone makes browsers implicitly clip the Y axis too
+          // (per the CSS overflow spec) — without this, anything that moves
+          // upward (hover lift, entrance animation) gets cut off at the
+          // container's top edge instead of rendering past it.
+          overflowY: 'visible',
           ...(snap ? { scrollSnapType: 'x mandatory' } : {}),
+          pt: 1,
           pb: 1,
           scrollbarWidth: 'none',
           '&::-webkit-scrollbar': { display: 'none' },

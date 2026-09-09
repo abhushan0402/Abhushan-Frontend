@@ -9,6 +9,7 @@ import {
   Avatar,
 } from '@mui/material'
 import { Link as RouterLink, useNavigate } from 'react-router-dom'
+import { motion } from 'framer-motion'
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded'
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded'
 import PersonOutlineRoundedIcon from '@mui/icons-material/PersonOutlineRounded'
@@ -23,6 +24,8 @@ import BrandLogo from './BrandLogo'
 import MegaMenu from './MegaMenu'
 import SearchOverlay from './SearchOverlay'
 import NotificationsMenu from './NotificationsMenu'
+
+const MotionIconButton = motion(IconButton)
 
 export default function Header() {
   const openMobileNav = useUIStore((s) => s.openMobileNav)
@@ -146,9 +149,15 @@ export default function Header() {
         <Box sx={{ flex: 1 }} />
 
         <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 0.5, md: 1 } }}>
-          <IconButton onClick={openSearch} sx={{ color: '#211d17' }} aria-label="Search">
+          <MotionIconButton
+            onClick={openSearch}
+            whileTap={{ scale: 0.85 }}
+            transition={{ duration: 0.15 }}
+            sx={{ color: '#211d17' }}
+            aria-label="Search"
+          >
             <SearchRoundedIcon />
-          </IconButton>
+          </MotionIconButton>
           <NotificationsMenu iconColor="#211d17" />
           <IconButton
             component={RouterLink}
@@ -173,20 +182,42 @@ export default function Header() {
               <PersonOutlineRoundedIcon />
             )}
           </IconButton>
-          <IconButton
+          <MotionIconButton
             onClick={() => navigate('/wishlist')}
+            whileTap={{ scale: 0.85 }}
+            transition={{ duration: 0.15 }}
             sx={{ color: '#211d17' }}
             aria-label="Wishlist"
           >
-            <Badge badgeContent={wishlistCount} color="primary" max={99}>
-              <FavoriteBorderRoundedIcon />
-            </Badge>
-          </IconButton>
-          <IconButton onClick={openCartDrawer} sx={{ color: '#211d17' }} aria-label="Cart">
-            <Badge badgeContent={cartCount} color="primary" max={99}>
-              <ShoppingBagOutlinedIcon />
-            </Badge>
-          </IconButton>
+            <motion.div
+              key={wishlistCount}
+              initial={{ scale: 1.4 }}
+              animate={{ scale: 1 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 15 }}
+            >
+              <Badge badgeContent={wishlistCount} color="primary" max={99}>
+                <FavoriteBorderRoundedIcon />
+              </Badge>
+            </motion.div>
+          </MotionIconButton>
+          <MotionIconButton
+            onClick={openCartDrawer}
+            whileTap={{ scale: 0.85 }}
+            transition={{ duration: 0.15 }}
+            sx={{ color: '#211d17' }}
+            aria-label="Cart"
+          >
+            <motion.div
+              key={cartCount}
+              initial={{ scale: 1.4 }}
+              animate={{ scale: 1 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 15 }}
+            >
+              <Badge badgeContent={cartCount} color="primary" max={99}>
+                <ShoppingBagOutlinedIcon />
+              </Badge>
+            </motion.div>
+          </MotionIconButton>
         </Box>
       </Toolbar>
       <SearchOverlay />

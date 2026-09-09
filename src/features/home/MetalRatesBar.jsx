@@ -1,4 +1,5 @@
 import { Box, Typography, Grid2 as Grid, Skeleton } from '@mui/material'
+import { motion } from 'framer-motion'
 import DiamondRoundedIcon from '@mui/icons-material/DiamondRounded'
 import { useMetalRates } from '../../hooks/useMetalRates'
 import { formatPrice } from '../../utils/formatCurrency'
@@ -14,9 +15,15 @@ function formatUpdatedAt(value) {
   })
 }
 
-function RateCard({ label, price, unit }) {
+function RateCard({ label, price, unit, index = 0 }) {
   return (
     <Box
+      component={motion.div}
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.4 }}
+      whileHover={{ y: -4 }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
       sx={{
         height: '100%',
         textAlign: 'center',
@@ -30,6 +37,11 @@ function RateCard({ label, price, unit }) {
       }}
     >
       <Box
+        component={motion.div}
+        initial={{ scale: 0 }}
+        whileInView={{ scale: 1 }}
+        viewport={{ once: true, amount: 0.4 }}
+        transition={{ duration: 0.4, delay: index * 0.1 + 0.15, type: 'spring', stiffness: 260, damping: 18 }}
         sx={{
           width: 44,
           height: 44,
@@ -86,13 +98,13 @@ export default function MetalRatesBar() {
         ) : (
           <Grid container spacing={2.5}>
             <Grid size={{ xs: 12, sm: 4 }}>
-              <RateCard label="GOLD 24K" price={formatPrice(data.gold24kPer10g)} unit="per 10 grams" />
+              <RateCard index={0} label="GOLD 24K" price={formatPrice(data.gold24kPer10g)} unit="per 10 grams" />
             </Grid>
             <Grid size={{ xs: 12, sm: 4 }}>
-              <RateCard label="GOLD 22K" price={formatPrice(data.gold22kPer10g)} unit="per 10 grams" />
+              <RateCard index={1} label="GOLD 22K" price={formatPrice(data.gold22kPer10g)} unit="per 10 grams" />
             </Grid>
             <Grid size={{ xs: 12, sm: 4 }}>
-              <RateCard label="SILVER 999" price={formatPrice(data.silver9999PerKg)} unit="per kg" />
+              <RateCard index={2} label="SILVER 999" price={formatPrice(data.silver9999PerKg)} unit="per kg" />
             </Grid>
           </Grid>
         )}
