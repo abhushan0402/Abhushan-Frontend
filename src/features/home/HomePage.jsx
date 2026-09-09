@@ -1,4 +1,5 @@
 import Hero from './Hero'
+import MetalRatesBar from './MetalRatesBar'
 import CategoryShowcase from './CategoryShowcase'
 import ProductRail from './ProductRail'
 import ProductTypeStrip from './ProductTypeStrip'
@@ -22,6 +23,7 @@ export default function HomePage() {
   return (
     <>
       <Hero />
+      <MetalRatesBar />
       <CategoryShowcase />
       <ProductRail
         eyebrow="Customer Favourites"

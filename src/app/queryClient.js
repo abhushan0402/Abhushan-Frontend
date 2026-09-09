@@ -33,4 +33,5 @@ export const queryKeys = {
   orders: (params) => ['orders', params],
   order: (id) => ['orders', id],
   notifications: (params) => ['notifications', params],
+  metalRates: ['metal-rates'],
 }
