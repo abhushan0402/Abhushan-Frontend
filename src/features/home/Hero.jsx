@@ -35,9 +35,8 @@ export default function Hero() {
         transition={{ duration: 0.7, ease: 'easeOut' }}
         sx={{
           position: 'absolute',
-          top: '50%',
+          top: { xs: '8%', sm: '10%', md: '12%' },
           left: { xs: '5%', md: '6%' },
-          transform: 'translateY(-50%)',
           width: { xs: '90%', sm: '62%', md: '46%' },
         }}
       >
