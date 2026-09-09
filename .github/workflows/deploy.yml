@@ -5,7 +5,9 @@ name: Deploy Frontend to EC2
 #      vite build) with NO access to EC2 at all. It's the fast-fail gate — if
 #      the code doesn't build cleanly here, we never even attempt to touch
 #      the production server.
-#   2. deploy only runs if build-check succeeds. It SSHes into EC2 and
+#   2. deploy only runs if build-check succeeds. It SSHes into EC2, writes
+#      .env from GitHub Actions secrets (Vite bakes these in at build time,
+#      and .env is gitignored so git pull alone can never deliver it), then
 #      re-runs the same build there (git pull, npm ci, vite build into a
 #      temp dir), then atomically swaps it into place. See
 #      DEPLOYMENT.md for the full rollback/troubleshooting story.
@@ -38,6 +40,9 @@ jobs:
         run: npm run lint
 
       - name: Build
+        env:
+          VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
+          VITE_RAZORPAY_KEY_ID: ${{ secrets.VITE_RAZORPAY_KEY_ID }}
         run: npm run build
 
   deploy:
@@ -86,6 +91,12 @@ jobs:
 
             echo "--- installing dependencies (npm ci) ---"
             npm ci
+
+            echo "--- writing .env from GitHub Actions secrets (Vite bakes these in at build time, so this must run before every build) ---"
+            cat > "$APP_DIR/.env" <<'ENVEOF'
+            VITE_API_BASE_URL=${{ secrets.VITE_API_BASE_URL }}
+            VITE_RAZORPAY_KEY_ID=${{ secrets.VITE_RAZORPAY_KEY_ID }}
+            ENVEOF
 
             echo "--- building into a temporary directory (dist_new) ---"
             rm -rf dist_new
