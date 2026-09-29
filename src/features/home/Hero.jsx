@@ -1,7 +1,4 @@
-import { Box, Typography, Button } from '@mui/material'
-import { Link as RouterLink } from 'react-router-dom'
-import { motion } from 'framer-motion'
-import { BRAND_NAME } from '../../utils/constants'
+import { Box } from '@mui/material'
 
 export default function Hero() {
   return (
