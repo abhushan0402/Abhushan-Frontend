@@ -15,7 +15,7 @@ export default function Hero() {
       <Box sx={{ position: 'absolute', inset: 0, overflow: 'hidden' }}>
         <Box
           component="img"
-          src="/Hero.png"
+          src="/Herro.jpeg"
           alt="Abhushan Vatika — Crafted to Shine, Made to Treasure"
           sx={{
             position: 'absolute',
@@ -28,7 +28,7 @@ export default function Hero() {
         />
       </Box>
 
-      <Box
+      {/* <Box
         component={motion.div}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -86,9 +86,9 @@ export default function Hero() {
         >
           Explore Collection
         </Button>
-      </Box>
+      </Box> */}
 
-      <Box
+      {/* <Box
         aria-hidden
         sx={{ position: 'absolute', left: 0, right: 0, bottom: -1, lineHeight: 0, zIndex: 1 }}
       >
@@ -102,7 +102,7 @@ export default function Hero() {
             fill="#faf7f1"
           />
         </svg>
-      </Box>
+      </Box> */}
     </Box>
   )
 }

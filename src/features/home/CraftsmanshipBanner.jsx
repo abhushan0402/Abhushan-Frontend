@@ -1,4 +1,4 @@
-import { Box, Typography, Button, Grid2 as Grid } from '@mui/material'
+import { Box, Typography, Button } from '@mui/material'
 import { Link as RouterLink } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import DiamondRoundedIcon from '@mui/icons-material/DiamondRounded'
@@ -9,104 +9,69 @@ export default function CraftsmanshipBanner() {
   return (
     <Box component="section" sx={{ bgcolor: '#faf7f1', py: { xs: 7, md: 10 } }}>
       <Box className="av-container">
-        <Grid container spacing={{ xs: 4, md: 8 }} alignItems="center">
-          <Grid size={{ xs: 12, md: 6 }}>
-            <Box
-              component={motion.div}
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, amount: 0.4 }}
-              transition={{ duration: 0.7 }}
-              sx={{ position: 'relative' }}
+        <Box
+          component={motion.div}
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.7 }}
+          sx={{ textAlign: 'center', maxWidth: 640, mx: 'auto' }}
+        >
+          <Box
+            sx={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 1,
+              bgcolor: '#fff',
+              borderRadius: '999px',
+              boxShadow: '0 8px 20px rgba(33,29,23,0.1)',
+              px: 2.5,
+              py: 1,
+              mb: 3,
+            }}
+          >
+            <DiamondRoundedIcon sx={{ color: '#701888', fontSize: 22 }} />
+            <Typography sx={{ fontFamily: 'Lora, serif', fontSize: '0.95rem' }}>
+              Since 1995
+            </Typography>
+            <Typography sx={{ fontSize: '0.7rem', color: 'text.secondary' }}>
+              · 30 Years of Craft
+            </Typography>
+          </Box>
+          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1, mb: 2 }}>
+            <Box sx={{ width: 22, height: '1.5px', bgcolor: 'primary.main', opacity: 0.7 }} />
+            <Typography
+              variant="subtitle2"
+              sx={{ color: 'primary.main', letterSpacing: '0.25em', fontSize: '0.7rem', fontWeight: 600 }}
             >
-              <Box
-                sx={{
-                  aspectRatio: '1536 / 893',
-                  bgcolor: '#e9e2d3',
-                  overflow: 'hidden',
-                  borderRadius: '16px',
-                  boxShadow: '0 20px 40px rgba(46,10,63,0.14)',
-                }}
-              >
-                <Box
-                  component="img"
-                  src="/Abhushan-family.png"
-                  alt="Abhushan Vatika — A Legacy of 30+ Years. Tradition, Trust, Timeless Beauty."
-                  loading="lazy"
-                  sx={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-                />
-              </Box>
-              <Box
-                sx={{
-                  position: 'absolute',
-                  bottom: { xs: -20, md: -24 },
-                  right: { xs: 12, md: -16 },
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 1.5,
-                  bgcolor: '#fff',
-                  borderRadius: '14px',
-                  boxShadow: '0 12px 28px rgba(33,29,23,0.18)',
-                  px: 2.5,
-                  py: 1.75,
-                }}
-              >
-                <DiamondRoundedIcon sx={{ color: '#701888', fontSize: 28 }} />
-                <Box>
-                  <Typography sx={{ fontFamily: 'Lora, serif', fontSize: '1.1rem', lineHeight: 1 }}>
-                    Since 1995
-                  </Typography>
-                  <Typography sx={{ fontSize: '0.7rem', color: 'text.secondary', mt: 0.25 }}>
-                    30 Years of Craft
-                  </Typography>
-                </Box>
-              </Box>
-            </Box>
-          </Grid>
-          <Grid size={{ xs: 12, md: 6 }}>
-            <Box
-              component={motion.div}
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, amount: 0.4 }}
-              transition={{ duration: 0.7, delay: 0.1 }}
-              sx={{ mt: { xs: 3, md: 0 } }}
-            >
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
-                <Box sx={{ width: 22, height: '1.5px', bgcolor: 'primary.main', opacity: 0.7 }} />
-                <Typography
-                  variant="subtitle2"
-                  sx={{ color: 'primary.main', letterSpacing: '0.25em', fontSize: '0.7rem', fontWeight: 600 }}
-                >
-                  OUR CRAFT
-                </Typography>
-              </Box>
-              <Typography variant="h3" sx={{ fontSize: { xs: '1.8rem', md: '2.25rem' }, mb: 2.5 }}>
-                Every Piece Tells a Story
-                <br />
-                of Patience &amp; Precision
-              </Typography>
-              <Typography sx={{ color: 'text.secondary', maxWidth: 460, mb: 4 }}>
-                From the first sketch to the final polish, our artisans pour
-                hundreds of hours into every creation — hand-selecting metals,
-                setting stones with precision, and finishing, each piece to a
-                mirror shine. It's a tradition of craftsmanship passed down
-                through generations.
-              </Typography>
-              <MotionButton
-                component={RouterLink}
-                to="/about"
-                variant="outlined"
-                color="secondary"
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
-                transition={{ duration: 0.15 }}
-              >
-                Our Story
-              </MotionButton>
-            </Box>
-          </Grid>
-        </Grid>
+              OUR CRAFT
+            </Typography>
+            <Box sx={{ width: 22, height: '1.5px', bgcolor: 'primary.main', opacity: 0.7 }} />
+          </Box>
+          <Typography variant="h3" sx={{ fontSize: { xs: '1.8rem', md: '2.25rem' }, mb: 2.5 }}>
+            Every Piece Tells a Story
+            <br />
+            of Patience &amp; Precision
+          </Typography>
+          <Typography sx={{ color: 'text.secondary', maxWidth: 480, mx: 'auto', mb: 4 }}>
+            From the first sketch to the final polish, our artisans pour
+            hundreds of hours into every creation — hand-selecting metals,
+            setting stones with precision, and finishing, each piece to a
+            mirror shine. It's a tradition of craftsmanship passed down
+            through generations.
+          </Typography>
+          <MotionButton
+            component={RouterLink}
+            to="/about"
+            variant="outlined"
+            color="secondary"
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+            transition={{ duration: 0.15 }}
+          >
+            Our Story
+          </MotionButton>
+        </Box>
       </Box>
     </Box>
   )
