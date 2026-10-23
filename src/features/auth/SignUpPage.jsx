@@ -55,7 +55,7 @@ export default function SignUpPage() {
         setPendingPayload(payload)
         setStep(2)
         setResendTimer(30)
-        notify.success('OTP sent to your email')
+        notify.success('OTP sent to your mobile')
       },
       onError: (error) => notify.error(error?.message || 'Could not create account'),
     })
@@ -88,8 +88,8 @@ export default function SignUpPage() {
   if (step === 2) {
     return (
       <AuthLayout
-        title="Verify Your Email"
-        subtitle={`Enter the 6-digit code sent to ${pendingPayload?.email}`}
+        title="Verify Your Mobile Number"
+        subtitle={`Enter the 6-digit code sent to ${pendingPayload?.mobile}`}
       >
         <Box component="form" onSubmit={handleOtpSubmit(submitStep2)} noValidate>
           <Controller

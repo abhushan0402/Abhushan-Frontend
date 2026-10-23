@@ -53,7 +53,7 @@ export default function VideoSection() {
           <Box
             ref={videoRef}
             component="video"
-            src="/Video.mp4"
+            src="/video-craft-story.mp4"
             autoPlay
             muted
             loop
