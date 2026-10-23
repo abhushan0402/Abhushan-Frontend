@@ -14,14 +14,12 @@ const CartPage = lazy(() => import('../features/cart/CartPage'))
 const WishlistPage = lazy(() => import('../features/wishlist/WishlistPage'))
 const SignInPage = lazy(() => import('../features/auth/SignInPage'))
 const SignUpPage = lazy(() => import('../features/auth/SignUpPage'))
-const ForgotPasswordPage = lazy(() => import('../features/auth/ForgotPasswordPage'))
 const AccountLayout = lazy(() => import('../features/account/AccountLayout'))
 const ProfilePage = lazy(() => import('../features/account/ProfilePage'))
 const AddressesPage = lazy(() => import('../features/account/AddressesPage'))
 const OrdersPage = lazy(() => import('../features/account/OrdersPage'))
 const OrderDetailPage = lazy(() => import('../features/account/OrderDetailPage'))
 const PaymentMethodsPage = lazy(() => import('../features/account/PaymentMethodsPage'))
-const ChangePasswordPage = lazy(() => import('../features/account/ChangePasswordPage'))
 const ChatPage = lazy(() => import('../features/account/ChatPage'))
 const CheckoutPage = lazy(() => import('../features/checkout/CheckoutPage'))
 const AboutPage = lazy(() => import('../features/static/AboutPage'))
@@ -48,7 +46,6 @@ export const router = createBrowserRouter([
       { path: 'wishlist', element: withSuspense(<WishlistPage />) },
       { path: 'signin', element: withSuspense(<SignInPage />) },
       { path: 'signup', element: withSuspense(<SignUpPage />) },
-      { path: 'forgot-password', element: withSuspense(<ForgotPasswordPage />) },
       {
         path: 'checkout',
         element: withSuspense(
@@ -71,7 +68,6 @@ export const router = createBrowserRouter([
           { path: 'orders', element: <OrdersPage /> },
           { path: 'orders/:orderId', element: <OrderDetailPage /> },
           { path: 'payment-methods', element: <PaymentMethodsPage /> },
-          { path: 'change-password', element: <ChangePasswordPage /> },
           { path: 'chat', element: <ChatPage /> },
         ],
       },

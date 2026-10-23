@@ -30,8 +30,6 @@ export default function SignUpPage() {
       lastName: '',
       email: '',
       mobile: '',
-      password: '',
-      confirmPassword: '',
     },
   })
 
@@ -52,7 +50,6 @@ export default function SignUpPage() {
 
   const submitStep1 = (values) => {
     const payload = { ...values }
-    delete payload.confirmPassword
     signupInit.mutate(payload, {
       onSuccess: () => {
         setPendingPayload(payload)
@@ -204,37 +201,6 @@ export default function SignUpPage() {
             />
           )}
         />
-        <Controller
-          name="password"
-          control={control}
-          render={({ field }) => (
-            <TextField
-              {...field}
-              fullWidth
-              type="password"
-              label="Password"
-              margin="normal"
-              error={Boolean(errors.password)}
-              helperText={errors.password?.message}
-            />
-          )}
-        />
-        <Controller
-          name="confirmPassword"
-          control={control}
-          render={({ field }) => (
-            <TextField
-              {...field}
-              fullWidth
-              type="password"
-              label="Confirm Password"
-              margin="normal"
-              error={Boolean(errors.confirmPassword)}
-              helperText={errors.confirmPassword?.message}
-            />
-          )}
-        />
-
         <Button
           type="submit"
           variant="contained"

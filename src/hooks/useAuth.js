@@ -24,11 +24,6 @@ export const useMe = () => {
   })
 }
 
-export const useSendOtp = () => useMutation({ mutationFn: authApi.sendOtp })
-
-export const useVerifyOtp = () =>
-  useMutation({ mutationFn: authApi.verifyOtp })
-
 export const useSignupInit = () =>
   useMutation({ mutationFn: authApi.signupInit })
 
@@ -37,9 +32,9 @@ function useApplyAuthResult() {
   const queryClient = useQueryClient()
 
   return (res) => {
-    const { accessToken, user } = res?.data ?? {}
+    const { accessToken, refreshToken, user } = res?.data ?? {}
     if (accessToken) {
-      setAuth({ accessToken, user })
+      setAuth({ accessToken, refreshToken, user })
       queryClient.invalidateQueries({ queryKey: queryKeys.me })
     }
   }
@@ -53,16 +48,16 @@ export const useVerifySignupOtp = () => {
   })
 }
 
-export const useSignin = () => {
+// Sends the login OTP - no tokens yet, those come back from useSigninVerify.
+export const useSignin = () => useMutation({ mutationFn: authApi.signin })
+
+export const useSigninVerify = () => {
   const applyAuthResult = useApplyAuthResult()
   return useMutation({
-    mutationFn: authApi.signin,
+    mutationFn: authApi.signinVerify,
     onSuccess: applyAuthResult,
   })
 }
-
-export const useResetPassword = () =>
-  useMutation({ mutationFn: authApi.resetPassword })
 
 export const useUpdateProfile = () => {
   const setUser = useAuthStore((state) => state.setUser)
@@ -75,9 +70,6 @@ export const useUpdateProfile = () => {
     },
   })
 }
-
-export const useChangePassword = () =>
-  useMutation({ mutationFn: authApi.changePassword })
 
 export const useLogout = () => {
   const clearAuth = useAuthStore((state) => state.clearAuth)

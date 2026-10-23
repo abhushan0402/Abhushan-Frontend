@@ -5,19 +5,22 @@ export const useAuthStore = create(
   persist(
     (set) => ({
       accessToken: null,
+      refreshToken: null,
       user: null,
-      setAuth: ({ accessToken, user }) =>
+      setAuth: ({ accessToken, refreshToken, user }) =>
         set((state) => ({
           accessToken: accessToken ?? state.accessToken,
+          refreshToken: refreshToken ?? state.refreshToken,
           user: user ?? state.user,
         })),
       setUser: (user) => set({ user }),
-      clearAuth: () => set({ accessToken: null, user: null }),
+      clearAuth: () => set({ accessToken: null, refreshToken: null, user: null }),
     }),
     {
       name: 'av-auth',
       partialize: (state) => ({
         accessToken: state.accessToken,
+        refreshToken: state.refreshToken,
         user: state.user,
       }),
     }

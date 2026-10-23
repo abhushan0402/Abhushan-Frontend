@@ -1,114 +1,141 @@
+import { useState, useEffect } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Link as RouterLink, useNavigate, useSearchParams } from 'react-router-dom'
-import {
-  TextField,
-  Button,
-  FormControlLabel,
-  Checkbox,
-  Box,
-  Typography,
-  IconButton,
-  InputAdornment,
-} from '@mui/material'
-import { useState } from 'react'
-import VisibilityRoundedIcon from '@mui/icons-material/VisibilityRounded'
-import VisibilityOffRoundedIcon from '@mui/icons-material/VisibilityOffRounded'
+import { TextField, Button, Box, Typography } from '@mui/material'
 import AuthLayout from './AuthLayout'
-import { signinSchema } from '../../utils/validators'
-import { useSignin } from '../../hooks/useAuth'
+import OtpField from '../../components/common/OtpField'
+import { signinSchema, otpFormSchema } from '../../utils/validators'
+import { useSignin, useSigninVerify } from '../../hooks/useAuth'
 import { useNotify } from '../../components/common/NotificationContext'
 
 export default function SignInPage() {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const notify = useNotify()
-  const signin = useSignin()
-  const [showPassword, setShowPassword] = useState(false)
+  const [step, setStep] = useState(1)
+  const [mobile, setMobile] = useState('')
+  const [resendTimer, setResendTimer] = useState(0)
 
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
+  const signin = useSignin()
+  const signinVerify = useSigninVerify()
+
+  const mobileForm = useForm({
     resolver: zodResolver(signinSchema),
-    defaultValues: { identifier: '', password: '', rememberMe: false },
+    defaultValues: { mobile: '' },
+  })
+  const otpForm = useForm({
+    resolver: zodResolver(otpFormSchema),
+    defaultValues: { otp: '' },
   })
 
-  const onSubmit = (values) => {
-    signin.mutate(values, {
-      onSuccess: () => {
-        notify.success('Welcome back!')
-        navigate(searchParams.get('redirect') || '/')
-      },
-      onError: (error) => notify.error(error?.message || 'Could not sign in'),
-    })
+  useEffect(() => {
+    if (resendTimer <= 0) return
+    const t = setTimeout(() => setResendTimer((s) => s - 1), 1000)
+    return () => clearTimeout(t)
+  }, [resendTimer])
+
+  const submitMobile = ({ mobile: enteredMobile }) => {
+    signin.mutate(
+      { mobile: enteredMobile },
+      {
+        onSuccess: () => {
+          setMobile(enteredMobile)
+          setStep(2)
+          setResendTimer(30)
+          notify.success('OTP sent to your mobile')
+        },
+        onError: (error) => notify.error(error?.message || 'Could not send OTP'),
+      }
+    )
+  }
+
+  const submitOtp = ({ otp }) => {
+    signinVerify.mutate(
+      { mobile, otp },
+      {
+        onSuccess: () => {
+          notify.success('Welcome back!')
+          navigate(searchParams.get('redirect') || '/')
+        },
+        onError: (error) => notify.error(error?.message || 'Invalid OTP'),
+      }
+    )
+  }
+
+  const handleResend = () => {
+    if (resendTimer > 0) return
+    signin.mutate(
+      { mobile },
+      {
+        onSuccess: () => {
+          setResendTimer(30)
+          notify.success('OTP resent')
+        },
+        onError: (error) => notify.error(error?.message || 'Could not resend OTP'),
+      }
+    )
+  }
+
+  if (step === 2) {
+    return (
+      <AuthLayout title="Verify OTP" subtitle={`Enter the 6-digit code sent to ${mobile}`}>
+        <Box component="form" onSubmit={otpForm.handleSubmit(submitOtp)} noValidate>
+          <Controller
+            name="otp"
+            control={otpForm.control}
+            render={({ field }) => (
+              <OtpField
+                value={field.value}
+                onChange={field.onChange}
+                error={Boolean(otpForm.formState.errors.otp)}
+                helperText={otpForm.formState.errors.otp?.message}
+              />
+            )}
+          />
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            fullWidth
+            size="large"
+            disabled={signinVerify.isPending}
+            sx={{ mt: 3 }}
+          >
+            {signinVerify.isPending ? 'Verifying...' : 'Verify & Sign In'}
+          </Button>
+          <Button fullWidth sx={{ mt: 1.5 }} disabled={resendTimer > 0 || signin.isPending} onClick={handleResend}>
+            {resendTimer > 0 ? `Resend OTP in ${resendTimer}s` : 'Resend OTP'}
+          </Button>
+          <Typography
+            variant="body2"
+            sx={{ textAlign: 'center', mt: 1, color: 'text.secondary', cursor: 'pointer' }}
+            onClick={() => setStep(1)}
+          >
+            ← Edit mobile number
+          </Typography>
+        </Box>
+      </AuthLayout>
+    )
   }
 
   return (
     <AuthLayout title="Sign In" subtitle="Welcome back to Abhushan Vatika">
-      <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate>
+      <Box component="form" onSubmit={mobileForm.handleSubmit(submitMobile)} noValidate>
         <Controller
-          name="identifier"
-          control={control}
+          name="mobile"
+          control={mobileForm.control}
           render={({ field }) => (
             <TextField
               {...field}
               fullWidth
-              label="Email or Mobile Number"
+              label="Mobile Number"
               margin="normal"
-              error={Boolean(errors.identifier)}
-              helperText={errors.identifier?.message}
+              error={Boolean(mobileForm.formState.errors.mobile)}
+              helperText={mobileForm.formState.errors.mobile?.message}
             />
           )}
         />
-        <Controller
-          name="password"
-          control={control}
-          render={({ field }) => (
-            <TextField
-              {...field}
-              fullWidth
-              type={showPassword ? 'text' : 'password'}
-              label="Password"
-              margin="normal"
-              error={Boolean(errors.password)}
-              helperText={errors.password?.message}
-              slotProps={{
-                input: {
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton onClick={() => setShowPassword((v) => !v)} edge="end">
-                        {showPassword ? <VisibilityOffRoundedIcon /> : <VisibilityRoundedIcon />}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                },
-              }}
-            />
-          )}
-        />
-
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mt: 1 }}>
-          <Controller
-            name="rememberMe"
-            control={control}
-            render={({ field }) => (
-              <FormControlLabel
-                control={<Checkbox {...field} checked={field.value} size="small" />}
-                label={<Typography variant="body2">Remember me</Typography>}
-              />
-            )}
-          />
-          <Typography
-            component={RouterLink}
-            to="/forgot-password"
-            variant="body2"
-            sx={{ color: 'primary.dark', textDecoration: 'none' }}
-          >
-            Forgot password?
-          </Typography>
-        </Box>
 
         <Button
           type="submit"
@@ -119,7 +146,7 @@ export default function SignInPage() {
           disabled={signin.isPending}
           sx={{ mt: 3 }}
         >
-          {signin.isPending ? 'Signing in...' : 'Sign In'}
+          {signin.isPending ? 'Sending OTP...' : 'Send OTP'}
         </Button>
 
         <Typography variant="body2" sx={{ textAlign: 'center', mt: 3, color: 'text.secondary' }}>

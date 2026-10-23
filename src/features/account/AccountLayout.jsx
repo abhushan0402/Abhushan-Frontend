@@ -4,7 +4,6 @@ import PersonOutlineRoundedIcon from '@mui/icons-material/PersonOutlineRounded'
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined'
 import ReceiptLongOutlinedIcon from '@mui/icons-material/ReceiptLongOutlined'
 import CreditCardOutlinedIcon from '@mui/icons-material/CreditCardOutlined'
-import LockResetRoundedIcon from '@mui/icons-material/LockResetRounded'
 import PolicyOutlinedIcon from '@mui/icons-material/PolicyOutlined'
 import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined'
 import SupportAgentOutlinedIcon from '@mui/icons-material/SupportAgentOutlined'
@@ -17,7 +16,6 @@ const NAV_ITEMS = [
   { label: 'Address Book', to: '/account/addresses', icon: LocationOnOutlinedIcon },
   { label: 'My Orders', to: '/account/orders', icon: ReceiptLongOutlinedIcon },
   { label: 'Payment Methods', to: '/account/payment-methods', icon: CreditCardOutlinedIcon },
-  { label: 'Update Password', to: '/account/change-password', icon: LockResetRoundedIcon },
 ]
 
 const SUPPORT_ITEMS = [

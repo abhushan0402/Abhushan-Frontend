@@ -12,10 +12,39 @@ const axiosClient = axios.create({
   },
 })
 
+// Plain client with no interceptors, used only for the refresh call itself -
+// it must not carry the (possibly expired) access token or trigger the
+// response interceptor's own refresh/retry logic.
+const refreshClient = axios.create({
+  baseURL: import.meta.env.VITE_API_BASE_URL,
+  timeout: 20000,
+  headers: { 'Content-Type': 'application/json' },
+})
+
+// Dedupe concurrent 401s during a refresh - every request that lands while a
+// refresh is already in flight awaits the same promise instead of firing its
+// own POST /api/auth/refresh.
+let refreshPromise = null
+
+function requestRefresh() {
+  if (!refreshPromise) {
+    refreshPromise = refreshClient
+      .post('/api/auth/refresh', { refreshToken: useAuthStore.getState().refreshToken })
+      .then((res) => {
+        const { accessToken, refreshToken } = res.data?.data ?? {}
+        if (!accessToken) throw new Error('Refresh did not return an access token')
+        useAuthStore.getState().setAuth({ accessToken, refreshToken })
+        return accessToken
+      })
+      .finally(() => {
+        refreshPromise = null
+      })
+  }
+  return refreshPromise
+}
+
 axiosClient.interceptors.request.use((config) => {
-  // Allow a call to set its own Authorization header (e.g. the
-  // password-reset flow, which authenticates with a one-time reset token
-  // instead of the normal session access token).
+  // Allow a call to set its own Authorization header.
   if (!config.headers.Authorization) {
     const token = useAuthStore.getState().accessToken
     if (token) {
@@ -27,9 +56,26 @@ axiosClient.interceptors.request.use((config) => {
 
 axiosClient.interceptors.response.use(
   (response) => response,
-  (error) => {
+  async (error) => {
     const status = error?.response?.status
-    const isAuthCall = error?.config?.url?.includes('/api/auth/')
+    const config = error?.config
+    const isAuthCall = config?.url?.includes('/api/auth/')
+
+    if (status === 401 && !isAuthCall && !config?._retried && useAuthStore.getState().refreshToken) {
+      config._retried = true
+      try {
+        const accessToken = await requestRefresh()
+        config.headers.Authorization = `Bearer ${accessToken}`
+        return axiosClient(config)
+      } catch {
+        useAuthStore.getState().clearAuth()
+        if (typeof window !== 'undefined') {
+          const redirect = encodeURIComponent(window.location.pathname + window.location.search)
+          window.location.href = `/signin?redirect=${redirect}`
+        }
+        return Promise.reject(error)
+      }
+    }
 
     if (status === 401 && !isAuthCall) {
       useAuthStore.getState().clearAuth()

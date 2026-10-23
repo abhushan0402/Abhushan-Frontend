@@ -12,25 +12,10 @@ export const mobileSchema = z
 
 export const emailSchema = z.string().email('Enter a valid email address')
 
-export const identifierSchema = z
-  .string()
-  .min(1, 'Email or mobile number is required')
-  .refine(
-    (val) => emailSchema.safeParse(val).success || MOBILE_REGEX.test(val),
-    'Enter a valid email address or 10-digit mobile number'
-  )
-
-export const passwordSchema = z
-  .string()
-  .min(6, 'Password must be at least 6 characters')
-  .max(50, 'Password must be under 50 characters')
-
 export const otpSchema = z.string().regex(OTP_REGEX, 'Enter the 6-digit OTP')
 
 export const signinSchema = z.object({
-  identifier: identifierSchema,
-  password: passwordSchema,
-  rememberMe: z.boolean().optional(),
+  mobile: mobileSchema,
 })
 
 export const signupSchema = z.object({
@@ -38,30 +23,11 @@ export const signupSchema = z.object({
   lastName: z.string().min(1, 'Last name is required'),
   email: emailSchema,
   mobile: mobileSchema,
-  password: passwordSchema,
-  confirmPassword: passwordSchema,
-}).refine((data) => data.password === data.confirmPassword, {
-  message: 'Passwords do not match',
-  path: ['confirmPassword'],
 })
 
 export const otpFormSchema = z.object({
   otp: otpSchema,
 })
-
-export const forgotPasswordIdentifierSchema = z.object({
-  identifier: identifierSchema,
-})
-
-export const resetPasswordSchema = z
-  .object({
-    password: passwordSchema,
-    confirmPassword: passwordSchema,
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: 'Passwords do not match',
-    path: ['confirmPassword'],
-  })
 
 export const addressSchema = z.object({
   label: z.string().min(1, 'Label is required').max(50),
@@ -83,17 +49,6 @@ export const profileSchema = z.object({
   gender: z.enum(['male', 'female', 'other']).optional(),
   profileImage: z.string().optional().or(z.literal('')),
 })
-
-export const changePasswordSchema = z
-  .object({
-    currentPassword: passwordSchema,
-    newPassword: passwordSchema,
-    confirmNewPassword: passwordSchema,
-  })
-  .refine((data) => data.newPassword === data.confirmNewPassword, {
-    message: 'Passwords do not match',
-    path: ['confirmNewPassword'],
-  })
 
 export const reviewSchema = z.object({
   rating: z.number().min(1, 'Please select a rating').max(5),
