@@ -40,7 +40,6 @@ export default function VideoSection() {
           transition={{ duration: 0.7 }}
           sx={{
             position: 'relative',
-            aspectRatio: '9 / 16',
             maxWidth: { xs: '100%', sm: 520, md: 640 },
             mx: 'auto',
             bgcolor: '#2e0a3f',
@@ -59,7 +58,7 @@ export default function VideoSection() {
             loop
             playsInline
             controls
-            sx={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            sx={{ display: 'block', width: '100%', height: 'auto' }}
           />
         </Box>
       </Box>
